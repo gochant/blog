@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        
+        WPF 简单数据绑定 |
+        
+        GRAVE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GRAVE</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Living Life Over</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <!--<div id="search-form-wrap">-->
+        <!--<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>-->
+      <!--</div>-->
+    </div>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/-net/">.net</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ecma-262/">ecma-262</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kendoui/">kendoui</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/veronica/">veronica</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发-团队/">开发 & 团队</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-wpf-simple-databind" class="article article-type-post" itemscope
+         itemprop="blogPost">
+
+    <div class="dropdown toc-trigger">
+        <a data-toggle="dropdown" href="#">目录</a>
+        <div class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手工进行数据同步"><span class="toc-number">2.</span> <span class="toc-text">手工进行数据同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始数据绑定"><span class="toc-number">3.</span> <span class="toc-text">开始数据绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绑定到其他控件"><span class="toc-number">4.</span> <span class="toc-text">绑定到其他控件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数值转换"><span class="toc-number">5.</span> <span class="toc-text">数值转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证"><span class="toc-number">6.</span> <span class="toc-text">验证</span></a></li></ol>
+        </div>
+    </div>
+
+    <div class="article-inner">
+        
+
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      WPF 简单数据绑定
+    </h1>
+  
+
+        </header>
+        
+
+        <div class="article-meta">
+            <a href="/2010/11/28/wpf-simple-databind/" class="article-date">
+  <time datetime="2010-11-28T03:19:07.000Z" itemprop="datePublished">Nov 28 2010</time>
+</a>
+            
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/-net/">.net</a>
+  </div>
+
+        </div>
+
+        <hr/>
+
+        <div class="article-entry" itemprop="articleBody">
+            
+            <h2 id="准备工作">准备工作</h2>
+<p>1、首先实现一个简单的页面布局</p>
+<ul>
+<li>代码：一个简单的个人信息编辑器布局（该布局代码具有典型意义）</li>
+</ul>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;Window</div><div class="line">  x:<span class="variable">Class=</span><span class="string">"WpfApplication1.MainWindow"</span></div><div class="line">  <span class="variable">xmlns=</span><span class="string">"http://schemas.microsoft.com/winfx/2006/xaml/presentation"</span></div><div class="line">  xmlns:<span class="variable">x=</span><span class="string">"http://schemas.microsoft.com/winfx/2006/xaml"</span></div><div class="line">  <span class="variable">Title=</span><span class="string">"WithoutBinding"</span></div><div class="line">  <span class="variable">Height=</span><span class="string">"135"</span></div><div class="line">  <span class="variable">Width=</span><span class="string">"200"</span>&gt;</div><div class="line">    &lt;Grid <span class="variable">Name=</span><span class="string">"grid"</span>&gt;</div><div class="line">        &lt;Grid.RowDefinitions&gt;</div><div class="line">            &lt;RowDefinition <span class="variable">Height=</span><span class="string">"Auto"</span> /&gt;</div><div class="line">            &lt;RowDefinition <span class="variable">Height=</span><span class="string">"Auto"</span> /&gt;</div><div class="line">            &lt;RowDefinition <span class="variable">Height=</span><span class="string">"Auto"</span> /&gt;</div><div class="line">        &lt;/Grid.RowDefinitions&gt;</div><div class="line">        &lt;Grid.ColumnDefinitions&gt;</div><div class="line">            &lt;ColumnDefinition <span class="variable">Width=</span><span class="string">"Auto"</span> /&gt;</div><div class="line">            &lt;ColumnDefinition <span class="variable">Width=</span><span class="string">"*"</span> /&gt;</div><div class="line">        &lt;/Grid.ColumnDefinitions&gt;</div><div class="line">        &lt;TextBlock Grid.<span class="variable">Row=</span><span class="string">"0"</span> Grid.<span class="variable">Column=</span><span class="string">"0"</span> <span class="variable">Margin=</span><span class="string">"5"</span> <span class="variable">VerticalAlignment=</span><span class="string">"Center"</span>&gt;Name:&lt;/TextBlock&gt;</div><div class="line">        &lt;TextBox <span class="variable">Name=</span><span class="string">"nameTextBox"</span> Grid.<span class="variable">Row=</span><span class="string">"0"</span> Grid.<span class="variable">Column=</span><span class="string">"1"</span> <span class="variable">Margin=</span><span class="string">"5"</span> /&gt;</div><div class="line">        &lt;TextBlock Grid.<span class="variable">Row=</span><span class="string">"1"</span> Grid.<span class="variable">Column=</span><span class="string">"0"</span> <span class="variable">Margin=</span><span class="string">"5"</span> <span class="variable">VerticalAlignment=</span><span class="string">"Center"</span> &gt;Age:&lt;/TextBlock&gt;</div><div class="line">        &lt;TextBox <span class="variable">Name=</span><span class="string">"ageTextBox"</span> Grid.<span class="variable">Row=</span><span class="string">"1"</span> Grid.<span class="variable">Column=</span><span class="string">"1"</span> <span class="variable">Margin=</span><span class="string">"5"</span> /&gt;</div><div class="line">        &lt;Button <span class="variable">Name=</span><span class="string">"birthdayButton"</span> Grid.<span class="variable">Row=</span><span class="string">"2"</span> Grid.<span class="variable">Column=</span><span class="string">"1"</span> <span class="variable">Margin=</span><span class="string">"5"</span>&gt;Birthday&lt;/Button&gt;</div><div class="line">    &lt;/Grid&gt;</div><div class="line">&lt;/Window&gt;</div></pre></td></tr></table></figure>
+
+<p>2、实现一个类，该类必须要实现InotifyPropertyChanged接口</p>
+<ul>
+<li>代码：InotifyPropertyChanged接口的标准实现</li>
+</ul>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> Person:INotifyPropertyChanged</div><div class="line">{</div><div class="line">    <span class="comment">//1、该接口就只有一个事件PropertyChanged定义</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">event</span> PropertyChangedEventHandler PropertyChanged;</div><div class="line">    <span class="comment">//4、Notify方法</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Notify</span>(<span class="keyword">string</span> propName)</div><div class="line">    {</div><div class="line">        <span class="keyword">if</span> (PropertyChanged != <span class="keyword">null</span>)</div><div class="line">        {</div><div class="line">            PropertyChanged(<span class="keyword">this</span>, <span class="keyword">new</span> PropertyChangedEventArgs(propName));</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">string</span> name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Age</div><div class="line">    {</div><div class="line">        <span class="keyword">get</span> { <span class="keyword">return</span> age; }</div><div class="line">        <span class="comment">//2、注意这里的实现，只要改变了值，就要触发PropertyChanged事件</span></div><div class="line">        <span class="keyword">set</span> {</div><div class="line">            <span class="keyword">if</span> (age == <span class="keyword">value</span>) <span class="keyword">return</span>;</div><div class="line">            age = <span class="keyword">value</span>;</div><div class="line">            <span class="comment">//3、这里为了使代码更简练，将所有属性的调用PropertyChanged事件</span></div><div class="line">            <span class="comment">//部分的代码进行了封装，Notify方法里面</span></div><div class="line">            Notify(<span class="string">"Age"</span>);</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name</div><div class="line">    {</div><div class="line">        <span class="keyword">get</span> { <span class="keyword">return</span> name; }</div><div class="line">        <span class="keyword">set</span> {</div><div class="line">            <span class="keyword">if</span> (name == <span class="keyword">value</span>) <span class="keyword">return</span>;</div><div class="line">            name = <span class="keyword">value</span>;</div><div class="line">            Notify(<span class="string">"Name"</span>);</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">public</span> <span class="title">Person</span>(<span class="keyword">string</span> name, <span class="keyword">int</span> age)</div><div class="line">    {</div><div class="line">        Name = name;</div><div class="line">        Age = age;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="手工进行数据同步">手工进行数据同步</h2>
+<p>下面我们分两个部分来进行实现，首先，我们手动实现数据同步的过程</p>
+<ul>
+<li>代码：手工实现数据绑定</li>
+</ul>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> MainWindow : Window</div><div class="line">{</div><div class="line"><span class="comment">//0、这里创建一个Person的对象</span></div><div class="line">    <span class="keyword">private</span> Person person = <span class="keyword">new</span> Person(<span class="string">"Tom"</span>, <span class="number">11</span>);</div><div class="line">    <span class="keyword">public</span> <span class="title">MainWindow</span>()</div><div class="line">    {</div><div class="line">        InitializeComponent();</div><div class="line">        <span class="keyword">this</span>.nameTextBox.Text = person.Name;</div><div class="line">        <span class="keyword">this</span>.ageTextBox.Text = person.Age.ToString();</div><div class="line">        <span class="comment">//1、跟踪对象变化：该类要为Person实例对象注册PropertyChanged事件</span></div><div class="line">        person.PropertyChanged += person_PropertyChanged;</div><div class="line">        <span class="comment">//这一段添加事件也可写在XAML里面</span></div><div class="line">        <span class="comment">//3、跟踪界面变化：要注册TextChanged实现</span></div><div class="line">        nameTextBox.TextChanged += nameTextBox_TextChanged;</div><div class="line">        ageTextBox.TextChanged += ageTextBox_TextChanged;</div><div class="line">        birthdayButton.Click += birthdayButton_Click;</div><div class="line">    }</div><div class="line">    <span class="comment">//2、在事件处理函数中要将Person类成员中的变化反应到用户界面中，并视情况转换成字符串</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title">person_PropertyChanged</span>(<span class="keyword">object</span> sender, PropertyChangedEventArgs e)</div><div class="line">    {</div><div class="line">        <span class="keyword">switch</span> (e.PropertyName)</div><div class="line">        {</div><div class="line">            <span class="keyword">case</span> <span class="string">"Name"</span>:</div><div class="line">                nameTextBox.Text = person.Name;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">"Age"</span>:</div><div class="line">                ageTextBox.Text = person.Age.ToString();</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title">birthdayButton_Click</span>(<span class="keyword">object</span> sender, RoutedEventArgs e)</div><div class="line">    {</div><div class="line">        ++person.Age;</div><div class="line">        <span class="comment">//this.ageTextBox.Text = person.Age.ToString();</span></div><div class="line">        MessageBox.Show(<span class="keyword">string</span>.Format(<span class="string">"Happy Birthday,{0},age{1}"</span>, person.Name, person.Age), <span class="string">"Birthday"</span>);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">//4、在处理函数中要将界面的数据赋值给对象数据，并进行必要的类型转换</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title">nameTextBox_TextChanged</span>(<span class="keyword">object</span> sender, TextChangedEventArgs e)</div><div class="line">    {</div><div class="line">        person.Name = nameTextBox.Text;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ageTextBox_TextChanged</span>(<span class="keyword">object</span> sender, TextChangedEventArgs e)</div><div class="line">    {</div><div class="line">        <span class="keyword">int</span> age = <span class="number">0</span>;</div><div class="line">        <span class="comment">//这里要注意复习下TryParse的用法</span></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">int</span>.TryParse(ageTextBox.Text, <span class="keyword">out</span> age))</div><div class="line">        {</div><div class="line">            person.Age = age;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="开始数据绑定">开始数据绑定</h2>
+<p>由上可见，手工实现数据同步还是比较繁琐的，有更好的方法，那就是数据绑定</p>
+<p>核心元素：Binding类、Path属性、DataContext属性</p>
+<p>我们把手工进行数据绑定时处理 PropertyChanged 事件和 TextChanged 的那些代码全部删除</p>
+<p>1、给Window类加上一个命名空间：</p>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xmln<span class="variable">s:local</span>=<span class="string">"clr-namespace:WpfApplication1"</span></div></pre></td></tr></table></figure>
+
+<p>2、然后添加Binding类的绑定语法</p>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;TextBlock <span class="keyword">Grid</span>.<span class="keyword">Row</span>=<span class="string">"0"</span> <span class="keyword">Grid</span>.<span class="keyword">Column</span>=<span class="string">"0"</span> Margin=<span class="string">"5"</span> VerticalAlignment=<span class="string">"Center"</span>&gt;Name:&lt;/TextBlock&gt;</div><div class="line">        &lt;<span class="keyword">TextBox</span> Name=<span class="string">"nameTextBox"</span> <span class="keyword">Grid</span>.<span class="keyword">Row</span>=<span class="string">"0"</span> <span class="keyword">Grid</span>.<span class="keyword">Column</span>=<span class="string">"1"</span> Margin=<span class="string">"5"</span> <span class="keyword">Text</span>=<span class="string">"{Binding Path='Name'}"</span> /&gt;</div><div class="line">        &lt;TextBlock <span class="keyword">Grid</span>.<span class="keyword">Row</span>=<span class="string">"1"</span> <span class="keyword">Grid</span>.<span class="keyword">Column</span>=<span class="string">"0"</span> Margin=<span class="string">"5"</span> VerticalAlignment=<span class="string">"Center"</span> &gt;Age:&lt;/TextBlock&gt;</div><div class="line">        &lt;<span class="keyword">TextBox</span> Name=<span class="string">"ageTextBox"</span> <span class="keyword">Grid</span>.<span class="keyword">Row</span>=<span class="string">"1"</span> <span class="keyword">Grid</span>.<span class="keyword">Column</span>=<span class="string">"1"</span> Margin=<span class="string">"5"</span> <span class="keyword">Text</span>=<span class="string">"{Binding Path='Age'}"</span> /&gt;</div><div class="line">        &lt;<span class="keyword">Button</span> Name=<span class="string">"birthdayButton"</span> <span class="keyword">Grid</span>.<span class="keyword">Row</span>=<span class="string">"2"</span> <span class="keyword">Grid</span>.<span class="keyword">Column</span>=<span class="string">"1"</span> Margin=<span class="string">"5"</span>&gt;Birthday&lt;/<span class="keyword">Button</span>&gt;</div></pre></td></tr></table></figure>
+
+<p>3、再给Grid添加关联数据</p>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">grid.DataContext </span>=<span class="string"> person;</span></div></pre></td></tr></table></figure>
+
+<p>现在就可以实现与上面手工的数据同步一样的功效了，是不是很爽啊，这里需要注意的是，数据类实现必须要实现 InotifyPropertyChanged接口</p>
+<p>一些其他用法和概念：</p>
+<p><strong>隐式数据源：</strong>当我们设置了DataContext属性时，我们就是使用的隐式数据源，并且查找隐式数据源的工作是迭代进行的</p>
+<p><strong>数据岛：</strong>我们可以把数据写在XAML文件里，具体如下：</p>
+<ul>
+<li>代码：数据岛的示例</li>
+</ul>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">Window.Resources</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="title">local:Person</span> <span class="attribute">x:Key</span>=<span class="value">"Tom"</span> <span class="attribute">Name</span>=<span class="value">"Tom"</span> <span class="attribute">Age</span>=<span class="value">"15"</span> /&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="title">Window.Resources</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>这里就相当于我们定义了个Person类型的变量，需要注意的是设置x:Key属性，因为资源本质上来说是个哈希表，我们可以通过在XAML里面访问和在后台代码访问，分别形式如下：</p>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="list">{StaticResource Tom}</span></div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Person peron = (Person)<span class="keyword">this</span>.FindResource(<span class="string">"Tom"</span>);</div></pre></td></tr></table></figure>
+
+<p><strong>显式数据源：</strong></p>
+<p>应用场景：当我们要为每一个Binding对象分别设置数据源时，我们就需要用显式数据源<br>说白了就是设置其Source属性</p>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="keyword">TextBox</span> Name=<span class="string">"nameTextBox"</span> <span class="keyword">Grid</span>.<span class="keyword">Row</span>=<span class="string">"0"</span> <span class="keyword">Grid</span>.<span class="keyword">Column</span>=<span class="string">"1"</span> Margin=<span class="string">"5"</span> <span class="keyword">Text</span>=<span class="string">"{Binding Path=Name, Source={StaticResource Tom}}"</span> /&gt;</div></pre></td></tr></table></figure>
+
+<h2 id="绑定到其他控件">绑定到其他控件</h2>
+<p>应用场景：我们有时候需要将该属性绑定到其他控件的某一属性时，就需要绑定到其他控件。<br>就是使用Binding类的ElementName属性=该控件的Name属性</p>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="keyword">Button</span> Name=<span class="string">"birthdayButton"</span> <span class="keyword">Grid</span>.<span class="keyword">Row</span>=<span class="string">"2"</span> <span class="keyword">Grid</span>.<span class="keyword">Column</span>=<span class="string">"1"</span> Margin=<span class="string">"5"</span> Foreground=<span class="string">"{Binding Path=Foreground,ElementName=ageTextBox}"</span>&gt;Birthday&lt;/<span class="keyword">Button</span>&gt;</div></pre></td></tr></table></figure>
+
+<h2 id="数值转换">数值转换</h2>
+<p>应用场景：当数据源的数据类型与绑定的属性数据类型不一致时</p>
+<p>核心方案：实现IValueConverter接口</p>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//16位数值转换器</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> Base16Converter : IValueConverter</div><div class="line">{</div><div class="line">    <span class="comment">//用于将绑定源数据转换成目标属性数据类型</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">object</span> <span class="title">Convert</span>(<span class="keyword">object</span> <span class="keyword">value</span>, Type targetType, <span class="keyword">object</span> parameter, System.Globalization.CultureInfo culture)</div><div class="line">    {</div><div class="line">        <span class="keyword">return</span> ((<span class="keyword">int</span>)<span class="keyword">value</span>).ToString(<span class="string">"x"</span>);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">//用于将目标属性数据转换成绑定源数据</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">object</span> <span class="title">ConvertBack</span>(<span class="keyword">object</span> <span class="keyword">value</span>, Type targetType, <span class="keyword">object</span> parameter, System.Globalization.CultureInfo culture)</div><div class="line">    {</div><div class="line">        <span class="keyword">return</span> <span class="keyword">int</span>.Parse((<span class="keyword">string</span>)<span class="keyword">value</span>, System.Globalization.NumberStyles.HexNumber);</div><div class="line">    }</div><div class="line">}</div><div class="line"><span class="comment">//Age转换成背景画刷转换器</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> AgeToForegroundConverter : IValueConverter</div><div class="line">{</div><div class="line">    <span class="keyword">public</span> <span class="keyword">object</span> <span class="title">Convert</span>(<span class="keyword">object</span> <span class="keyword">value</span>, Type targetType, <span class="keyword">object</span> parameter, System.Globalization.CultureInfo culture)</div><div class="line">    {</div><div class="line">        <span class="keyword">if</span> (targetType != <span class="keyword">typeof</span>(Brush)) { <span class="keyword">return</span> <span class="keyword">null</span>; }</div><div class="line">        <span class="keyword">int</span> age = <span class="keyword">int</span>.Parse(<span class="keyword">value</span>.ToString());</div><div class="line">        <span class="keyword">return</span> (age &gt; <span class="number">25</span> ? Brushes.Red : Brushes.Black);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">object</span> <span class="title">ConvertBack</span>(<span class="keyword">object</span> <span class="keyword">value</span>, Type targetType, <span class="keyword">object</span> parameter, System.Globalization.CultureInfo culture)</div><div class="line">    {</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>使用转换器，将转换器声明为资源，就可以在XAML中进行访问了</p>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;Window.Resources&gt;</div><div class="line">    &lt;local:Person x:Key=<span class="string">"Tom"</span> Name=<span class="string">"Tom"</span> Age=<span class="string">"15"</span> /&gt;</div><div class="line">    &lt;local:AgeToForegroundConverter x:Key=<span class="string">"ageConverter"</span> /&gt;</div><div class="line">    &lt;local:Base16Converter x:Key=<span class="string">"base16Converter"</span> /&gt;</div><div class="line">&lt;/Window.Resources&gt;</div><div class="line"></div><div class="line">&lt;TextBox <span class="keyword">...</span> Text=<span class="string">"{Binding Path=Age, Converter={StaticResource base16Converter}}"</span> /&gt;</div></pre></td></tr></table></figure>
+
+<h2 id="验证">验证</h2>
+<p>应用场景：确保用户输入正确格式的数据</p>
+<p>核心方案：Binding的ValidationRules属性，Validation.Errors属性（这里我没有理解的是关于这个Validation静态属性，究竟是属于哪一个类里面的，如果是全局的，那么怎么与当前这个Binding类相关，我只能理解为这个类型可根据当前上下文关系设置作用域）</p>
+<p>1、设置验证规则</p>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="keyword">TextBox</span> Name=<span class="string">"ageTextBox"</span> <span class="keyword">Grid</span>.<span class="keyword">Row</span>=<span class="string">"1"</span> <span class="keyword">Grid</span>.<span class="keyword">Column</span>=<span class="string">"1"</span> Margin=<span class="string">"5"</span> Foreground=<span class="string">"{Binding Path=Age, Converter={StaticResource ageConverter}}"</span>&gt;</div><div class="line">    &lt;<span class="keyword">TextBox</span>.<span class="keyword">Text</span>&gt;</div><div class="line">        &lt;Binding <span class="keyword">Path</span>=<span class="string">"Age"</span> NotifyOnValidationError=<span class="string">"True"</span>&gt;</div><div class="line">            &lt;Binding.ValidationRules&gt;</div><div class="line">                    &lt;ExceptionValidationRule /&gt;</div><div class="line">            &lt;/Binding.ValidationRules&gt;       </div><div class="line">        &lt;/Binding&gt;</div><div class="line">    &lt;/<span class="keyword">TextBox</span>.<span class="keyword">Text</span>&gt;</div><div class="line">&lt;/<span class="keyword">TextBox</span>&gt;</div></pre></td></tr></table></figure>
+
+<p>这个时候默认的是在TextBox失去焦点后，WPF会对非法数据以红色进行高亮显示</p>
+<p>2、手动捕获ValidationError事件（不推荐）</p>
+<p>需要注意的是Binding的NotifyOnValidationError设为True才能引发该事件</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="title">MainWindow</span>()</div><div class="line">{</div><div class="line">    InitializeComponent();</div><div class="line">    <span class="comment">//grid.DataContext = person;</span></div><div class="line"></div><div class="line">    birthdayButton.Click += birthdayButton_Click;</div><div class="line"></div><div class="line">    <span class="comment">//这个语法有点特殊，因为是静态方法，所以第一个参数要指明是哪个控件对象绑定处理函数</span></div><div class="line">    Validation.AddErrorHandler(ageTextBox, ageTextBox_ValidationError);</div><div class="line">}</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ageTextBox_ValidationError</span>(<span class="keyword">object</span> sender, ValidationErrorEventArgs e)</div><div class="line">{</div><div class="line">    <span class="comment">//MessageBox.Show((string)e.Error.ErrorContent,"Validation Error");</span></div><div class="line">    ageTextBox.ToolTip = (<span class="keyword">string</span>)e.Error.ErrorContent;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>3、自定义验证规则</p>
+<p>创建自定义的验证规则，需要继承ValidatRule类</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> NumberRangeRule : ValidationRule</div><div class="line">{</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> min;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Min</div><div class="line">    {</div><div class="line">        <span class="keyword">get</span> { <span class="keyword">return</span> min; }</div><div class="line">        <span class="keyword">set</span> { min = <span class="keyword">value</span>; }</div><div class="line">    }</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> max;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Max</div><div class="line">    {</div><div class="line">        <span class="keyword">get</span> { <span class="keyword">return</span> max; }</div><div class="line">        <span class="keyword">set</span> { max = <span class="keyword">value</span>; }</div><div class="line">    }</div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> ValidationResult <span class="title">Validate</span>(<span class="keyword">object</span> <span class="keyword">value</span>, System.Globalization.CultureInfo cultureInfo)</div><div class="line">    {</div><div class="line">        <span class="keyword">int</span> number;</div><div class="line">        <span class="keyword">if</span> (!<span class="keyword">int</span>.TryParse((<span class="keyword">string</span>)<span class="keyword">value</span>, <span class="keyword">out</span> number))</div><div class="line">        {</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ValidationResult(<span class="keyword">false</span>, <span class="string">"Invalid number format"</span>);</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (number &lt; min || number &gt; max)</div><div class="line">        {</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ValidationResult(<span class="keyword">false</span>,</div><div class="line">                <span class="keyword">string</span>.Format(<span class="string">"number is out of range ({0}-{1})"</span>, min, max));</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">//该句等价于:</span></div><div class="line">        <span class="comment">//return new ValidationResult(true, null);</span></div><div class="line">        <span class="keyword">return</span> ValidationResult.ValidResult;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<p>使用自定义验证规则</p>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">Binding.ValidationRules</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">local:NumberRangeRule</span> <span class="attribute">Min</span>=<span class="value">"0"</span> <span class="attribute">Max</span>=<span class="value">"128"</span> /&gt;</span>  </div><div class="line"><span class="tag">&lt;/<span class="title">Binding.ValidationRules</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>4、绑定错误消息</p>
+<p>不需要捕获ValidationError的代码，不需要设置NotifyOnValidationError为True，完成一样的功能</p>
+<figure class="highlight xaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="keyword">TextBox</span> Name=<span class="string">"ageTextBox"</span> ToolTip=<span class="string">"{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"</span></div><div class="line">            <span class="keyword">Grid</span>.<span class="keyword">Row</span>=<span class="string">"1"</span> <span class="keyword">Grid</span>.<span class="keyword">Column</span>=<span class="string">"1"</span> Margin=<span class="string">"5"</span> Foreground=<span class="string">"{Binding Path=Age, Converter={StaticResource ageConverter}}"</span>&gt;</div><div class="line">    &lt;<span class="keyword">TextBox</span>.<span class="keyword">Text</span>&gt;</div><div class="line">        &lt;Binding <span class="keyword">Path</span>=<span class="string">"Age"</span> UpdateSourceTrigger=<span class="string">"PropertyChanged"</span>&gt;</div><div class="line">            &lt;Binding.ValidationRules&gt;</div><div class="line">                &lt;local:NumberRangeRule <span class="keyword">Min</span>=<span class="string">"0"</span> <span class="keyword">Max</span>=<span class="string">"128"</span> /&gt;  </div><div class="line">            &lt;/Binding.ValidationRules&gt;       </div><div class="line">        &lt;/Binding&gt;</div><div class="line">    &lt;/<span class="keyword">TextBox</span>.<span class="keyword">Text</span>&gt;</div><div class="line">&lt;/<span class="keyword">TextBox</span>&gt;</div></pre></td></tr></table></figure>
+
+<p>上面那段代码使用了相对数据源 <code>RelativeSource={RelativeSource Self}</code>，等价于 <code>ElementName=ageTextBox</code></p>
+<p>5、验证规则触发时机</p>
+<p>上面那段代码中的 <code>UpdateSourceTrigger=&quot;PropertyChanged&quot;</code>，可选参数为 <code>Defaut</code>、<code>PropertyChanged</code>、<code>LostFocus</code>、<code>Explicit</code></p>
+<p>EOF</p>
+
+            
+        </div>
+
+    </div>
+
+    
+    
+<nav id="article-nav">
+  
+    <a href="/2013/07/19/intro_introjs/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          创建用户引导——使用Intro.JS
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+    
+
+</article>
+</section>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 gochant<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+    
+  </div>
+  <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+
+  <script src="/js/dropdown.js" type="text/javascript"></script>
+
+</body>
+</html>

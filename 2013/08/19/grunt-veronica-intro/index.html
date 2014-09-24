@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        
+        使用 grunt-veronica 打包应用 |
+        
+        GRAVE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link rel="icon" href="/favicon.png">
+    
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GRAVE</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Living Life Over</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <!--<div id="search-form-wrap">-->
+        <!--<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>-->
+      <!--</div>-->
+    </div>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/-net/">.net</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ecma-262/">ecma-262</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kendoui/">kendoui</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/veronica/">veronica</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发-团队/">开发 & 团队</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-grunt-veronica-intro" class="article article-type-post" itemscope
+         itemprop="blogPost">
+
+    <div class="dropdown toc-trigger">
+        <a data-toggle="dropdown" href="#">目录</a>
+        <div class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行"><span class="toc-number">2.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令列表"><span class="toc-number">3.</span> <span class="toc-text">命令列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置项列表"><span class="toc-number">4.</span> <span class="toc-text">配置项列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用"><span class="toc-number">5.</span> <span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#稍小型项目"><span class="toc-number">5.1.</span> <span class="toc-text">稍小型项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#稍大型项目"><span class="toc-number">5.2.</span> <span class="toc-text">稍大型项目</span></a></li></ol></li></ol>
+        </div>
+    </div>
+
+    <div class="article-inner">
+        
+
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      使用 grunt-veronica 打包应用
+    </h1>
+  
+
+        </header>
+        
+
+        <div class="article-meta">
+            <a href="/2013/08/19/grunt-veronica-intro/" class="article-date">
+  <time datetime="2013-08-19T08:09:16.000Z" itemprop="datePublished">Aug 19 2013</time>
+</a>
+            
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/veronica/">veronica</a>
+  </div>
+
+        </div>
+
+        <hr/>
+
+        <div class="article-entry" itemprop="articleBody">
+            
+            <h2 id="安装">安装</h2>
+<ul>
+<li>联网状态</li>
+</ul>
+<p><strong>1</strong></p>
+<p>安装 grunt 运行时</p>
+<p>```<br>npm install -g grunt-cli<br>```</p>
+<p><strong>2</strong></p>
+<p>在项目目录文件夹下，安装 grunt-veronica</p>
+<p>```<br>npm install grunt-veronica —save-dev<br>```</p>
+<ul>
+<li>断网状态</li>
+</ul>
+<p><strong>1</strong></p>
+<p>安装 grunt</p>
+<p>在安装有 grunt-cli 的机器中，拷贝相关包。（Windows下在用户文件夹下的 Roming/npm 中）</p>
+<p><strong>2</strong></p>
+<p>安装 grunt-veronica</p>
+<p>拷贝 grunt-veronica 源码和相关依赖项到 node_modules 文件夹中</p>
+<h2 id="运行">运行</h2>
+<p>在项目的根目录下，放置 Gruntfile.js 文件</p>
+<ul>
+<li>Gruntfile.js 文件</li>
+</ul>
+<p>```<br>‘use strict’;</p>
+<p>module.exports = function (grunt) {<br>    // 解决方案路径<br>    var solutionPath = ‘./solutions/default/build.js’;<br>    // 项目 RequireJS 配置路径<br>    var reqConf = require(‘./frontend/require-conf.js’)();<br>    var build = require(solutionPath);</p>
+<pre><code>grunt.initConfig({
+    veronica: {
+        <span class="keyword">default</span>: {
+            <span class="comment">// 配置项</span>
+            <span class="keyword">options</span>: {
+                reqConfig: reqConf,
+                modules: build.modules,
+                solution: solutionPath,
+                cssTarget: <span class="string">'./public/styles'</span>
+            }
+        }
+    }
+});
+
+grunt.loadNpmTasks(<span class="string">'grunt-veronica'</span>);
+grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'veronica'</span>]);
+</code></pre><p>};<br>```</p>
+<p>在控制台运行命令 <code>grunt</code></p>
+<h2 id="命令列表">命令列表</h2>
+<p><strong>grunt</strong></p>
+<p>该命令执行以下的工作：</p>
+<ol>
+<li>拷贝 <code>appDir</code> 中所有代码到 <code>dir</code> 目录中；</li>
+<li>利用 RequireJS 的打包逻辑，对 <code>dir</code> 基路径下的 main.js 文件进行打包，打包过程会读取 <code>merge</code>、<code>notMerge</code> 配置，确定哪些文件会被打包到 main 文件里；</li>
+<li>根据 <code>optimize</code> 配置，对 CSS 和 JS 代码进行压缩优化</li>
+<li>根据 <code>modules</code> 配置，将 widgets 和 plugins 拷贝到 <code>dir</code> 中的特定文件夹，并对这些 widgets 和 plugins 分别进行打包（简称：widgets 打包）<ol>
+<li>widgets 打包以每个 module 进行分组，对每个 widgets 分别作为 RequireJS 的单个 module 进行打包，打包时会读取<code>moduleMerge</code>配置，确定哪些公共库会被打包到每个 widgets 中；</li>
+<li>初步打包完成后的 widget 文件夹放置到 _<em>temp</em>_/[moduleName] 目录里，对该目录进行清理，删除多余文件和打包中间文件；</li>
+<li>以 module 为单位，将单个 module 内的所有 widgets 的CSS文件引用放置到一个CSS文件中，称为：modules.css；</li>
+<li>将 _<em>temp</em>_ 中的 widgets 拷贝到正式发布的文件夹中；</li>
+<li>对所有 widgets 目录进行清理；</li>
+</ol>
+</li>
+<li>对 modules.css 执行 css combo，以便将所有CSS合并到一个文件中</li>
+<li>对整个输出目录 <code>dir</code> 进行清理，删除多余文件</li>
+</ol>
+<h2 id="配置项列表">配置项列表</h2>
+<p><strong>appDir</strong></p>
+<p>应用程序根路径</p>
+<p><strong>baseUrl</strong></p>
+<p>应用程序基路径，即主文件：main.js 所在的相对路径</p>
+<p><strong>dir</strong></p>
+<p>打包后的应用程序根路径</p>
+<p><strong>reqConfig</strong> <em>Object</em></p>
+<p>用于 RequireJS 的配置项，包括：</p>
+<ul>
+<li>paths: 第三方库的路径</li>
+<li>shim: </li>
+<li>packages: 第三方库的包路径</li>
+</ul>
+<p><strong>modules</strong> <em>Array</em></p>
+<p>应用中的模块，最终模块的路径会由 source + name 组合而成，默认会查找该模块路径下的 <code>widgets</code> 和 <code>plugins</code> 文件夹，也就是说默认情况下，你应该将部件和插件放到这个位置，如果你放到其他文件夹下，就应该配置 subpaths，例如： </p>
+<p>```<br>[{<br>   name: ‘base’,  // 模块名称<br>   source: ‘./modules’  // 模块放置的路径（该路径相对于应用的基路径）,<br>   subpaths: [‘widgets/widgets1’]  // 如果在默认路径下划分了子路径放置部件或插件，在这里配置<br>}]<br>```</p>
+<p>它的模块目录为： ./modules/base，部件放置在 ./modules/base/widgets/widgets1 中，这个配置反映了一个事实：部件放置在某个已知路径的子文件夹中，也不会被识别，例如配置了部件放置在 ./modules/base/widgets 中，如果你放到 ./modules/base/widgets/widgets1 中则不会被识别，你应该为这个路径配置另外一个 <code>subpaths</code></p>
+<blockquote>
+<p><strong>注意</strong></p>
+<p>如果项目没有 module，那么打包时配置 name 为 ‘.’，并为每个部件源配置 subpaths<br>```js<br>modules: [{<br>    name: ‘.’,<br>    source: ‘.’,<br>    subpaths: [‘./widgets/base’]<br>}]<br>```</p>
+</blockquote>
+<p><strong>optimize</strong> <em>String</em></p>
+<p>代码的优化方案，none 或 uglify，默认是 none</p>
+<p><strong>solution</strong> <em>String</em></p>
+<p>解决方案路径，没有单独的解决方案文件可不填</p>
+<p><strong>merge</strong> <em>Array</em></p>
+<p>要合并进主文件的路径</p>
+<p>eg:</p>
+<p>```<br>merge: [‘veronica-mvc’, ‘app’]<br>```</p>
+<p><strong>notMerge</strong> <em>Array</em></p>
+<p>从文件打包中排除的路径，不合并到任意文件中</p>
+<p><strong>moduleMerge</strong> <em>Array</em></p>
+<p>打包module中的widget或plugin时，要合并的第三方库。默认不会合并任何出现在module中的第三方库，这里的配置可让某些只在一个地方出现的第三方库合并到widget或plugin的主文件中</p>
+<p><strong>clean</strong> <em>Array</em></p>
+<p>合并后清理的文件（夹）</p>
+<p><strong>buildPaths</strong> <em>Object</em></p>
+<p>打包时采用的不同的路径</p>
+<p><strong>cssPack</strong> <em>String</em> （default：’all’）</p>
+<p>css打包的策略，现在暂只支持将所有modules css文件合并到一个文件中</p>
+<blockquote>
+<p><strong>注意</strong></p>
+<p>由于 IE6 - IE9 CSS样式的限制，因此在打包应考虑到在样式文件个数和样式选择器个数之间找到平衡关系。<br>参考：<a href="http://stackoverflow.com/questions/9906794/internet-explorers-css-rules-limits" target="_blank" rel="external">http://stackoverflow.com/questions/9906794/internet-explorers-css-rules-limits</a></p>
+</blockquote>
+<p><strong>cssTarget</strong> <em>String</em></p>
+<p>打包css文件后的目标路径，该路径相对于当前打包的工作路径，默认是打包后应用路径下的 ‘styles’ 文件夹</p>
+<p><strong>removeCombined</strong> <em>Boolean</em></p>
+<p>是否移除合并后的公共库，默认是 true，如果公共库会被其他应用所引用，则应设为 false</p>
+<h2 id="应用">应用</h2>
+<h3 id="稍小型项目">稍小型项目</h3>
+<ul>
+<li>目录结构</li>
+</ul>
+<p>```<br>—app<br>  |—widgets<br>    |—base<br>      |—header<br>      |—portal<br>    |—music<br>      |—widget1<br>      |—widget2<br>    |—account<br>      |—widget3<br>  |—main.js<br>  |—require-conf.js<br>—release<br>—Gruntfile.js<br>```</p>
+<ul>
+<li>打包配置</li>
+</ul>
+<p>```<br>options: {<br>    appDir: ‘./app’,<br>    baseUrl: ‘.’,<br>    dir: ‘./release’,<br>    reqConfig: require(‘./app/require-conf.js’)(),<br>    modules: [{<br>        name: ‘.’,<br>        source: ‘.’,<br>        subpaths: [<br>            ‘./widgets/base’,<br>            ‘./widgets/music’,<br>            ‘./widgets/account’<br>        ]<br>    }]<br>}<br>```</p>
+<h3 id="稍大型项目">稍大型项目</h3>
+<ul>
+<li>目录结构</li>
+</ul>
+<p>```<br>—modules-A<br>  |—music<br>    |—widgets<br>    |—plugins<br>    |—main.js<br>—modules-B<br>  |—account<br>    |—widgets<br>    |—plugins<br>    |—main.js<br>  |—group<br>    |—widgets<br>    |—plugins<br>    |—main.js<br>—solutions<br>  |—build.js<br>—project-main<br>  |—modules-core<br>    |—base<br>      |—widgets<br>        |—header<br>        |—portal<br>  |—main.js<br>  |—require-conf.js<br>—release<br>—Gruntfile.js<br>```</p>
+<ul>
+<li>打包配置</li>
+</ul>
+<p>solutions/build.js</p>
+<p>```js<br>……<br>return {<br>    // 模块<br>    modules: [{<br>           name: ‘music’,<br>           source: ‘../modules-A’<br>       } , {<br>           name: ‘account’,<br>           source: ‘./modules-B’<br>       }, {<br>        name: ‘group’,<br>        source: ‘../modules-B’<br>    }]<br>……<br>```</p>
+<p>Gruntfile.js</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">`<span class="tag">options</span>: <span class="rules">{</span></div><div class="line">	<span class="rule"><span class="attribute">appDir</span>:<span class="value"> <span class="string">'./project/project-large/proj-main'</span>,</span></span></div><div class="line">	baseUrl: <span class="string">'.'</span>,</div><div class="line">	dir: <span class="string">'./release'</span>,</div><div class="line">	reqConfig: <span class="function">require</span>(<span class="string">'./project-main/modules-core/require-conf.js'</span>)(),</div><div class="line">	solution: <span class="string">'./solutions/build.js'</span>,</div><div class="line">	modules: <span class="function">require</span>(<span class="string">'./solutions/build.js'</span>).modules</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>`</p>
+
+            
+        </div>
+
+    </div>
+
+    
+    
+<nav id="article-nav">
+  
+    <a href="/2013/09/18/js-type-detection/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          JavaScript 类型检测
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/07/24/atom_design_cn/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">原子设计</div>
+    </a>
+  
+</nav>
+
+    
+
+</article>
+</section>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 gochant<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+    
+  </div>
+  <script src="/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+
+  <script src="/js/dropdown.js" type="text/javascript"></script>
+
+</body>
+</html>
