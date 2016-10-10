@@ -1,0 +1,648 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript,ECMA-262," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="JS 隐式类型转换是一个坑，平时在开发过程中有时会碰到，例如 [0] == false，1 + &amp;#39;0&amp;#39; 之类的，这里就简单说一下比较容易搞混的几个点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="也谈 JavaScript 隐式类型转换">
+<meta property="og:url" content="http://yoursite.com/2016/05/24/about-js-implicit-type-conversions/index.html">
+<meta property="og:site_name" content="G01">
+<meta property="og:description" content="JS 隐式类型转换是一个坑，平时在开发过程中有时会碰到，例如 [0] == false，1 + &amp;#39;0&amp;#39; 之类的，这里就简单说一下比较容易搞混的几个点">
+<meta property="og:updated_time" content="2016-10-10T15:01:29.998Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="也谈 JavaScript 隐式类型转换">
+<meta name="twitter:description" content="JS 隐式类型转换是一个坑，平时在开发过程中有时会碰到，例如 [0] == false，1 + &amp;#39;0&amp;#39; 之类的，这里就简单说一下比较容易搞混的几个点">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/24/about-js-implicit-type-conversions/"/>
+
+  <title> 也谈 JavaScript 隐式类型转换 | G01 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">G01</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Living Life Over</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                也谈 JavaScript 隐式类型转换
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-24T20:53:52+08:00" content="2016-05-24">
+              2016-05-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/Frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">Frontend</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JS 隐式类型转换是一个坑，平时在开发过程中有时会碰到，例如 <code>[0] == false</code>，<code>1 + &#39;0&#39;</code> 之类的，这里就简单说一下比较容易搞混的几个点</p>
+<a id="more"></a>
+<h3 id="等值判断（-）"><a href="#等值判断（-）" class="headerlink" title="等值判断（==）"></a>等值判断（==）</h3><p>我遵循的准则是在开发过程中都用 <code>===</code>，禁止使用 <code>==</code> 和 <code>!=</code>（只在 判定 <code>val == null</code> 时使用），这样做能够规避许多因不清楚类型转换引起的bug，但有时我们使用第三方库可能也会用到该操作符，因此也有必要有所了解</p>
+<p>关于 <code>==</code> 的操作步骤定义在规范 equlity operators 的 <a href="http://www.ecma-international.org/ecma-262/7.0/index.html#sec-equality-operators-runtime-semantics-evaluation" target="_blank" rel="external">runtime semantics evaluation</a><br>这一小节的第一段，主要关注的是最后一步，对左值右值进行<a href="http://www.ecma-international.org/ecma-262/7.0/index.html#sec-abstract-equality-comparison" target="_blank" rel="external">Abstract Equality Comparison</a>，这里就描述了 <code>==</code> 是怎么判断的，摘抄如下：</p>
+<ol>
+<li>If Type(x) is the same as Type(y), then<ol>
+<li>Return the result of performing Strict Equality Comparison x === y.</li>
+</ol>
+</li>
+<li>If x is null and y is undefined, return true.</li>
+<li>If x is undefined and y is null, return true.</li>
+<li>If Type(x) is Number and Type(y) is String, return the result of the comparison x == ToNumber(y).</li>
+<li>If Type(x) is String and Type(y) is Number, return the result of the comparison ToNumber(x) == y.</li>
+<li>If Type(x) is Boolean, return the result of the comparison ToNumber(x) == y.</li>
+<li>If Type(y) is Boolean, return the result of the comparison x == ToNumber(y).</li>
+<li>If Type(x) is either String, Number, or Symbol and Type(y) is Object, return the result of the comparison x == ToPrimitive(y).</li>
+<li>If Type(x) is Object and Type(y) is either String, Number, or Symbol, return the result of the comparison ToPrimitive(x) == y.</li>
+<li>Return false. </li>
+</ol>
+<p>总结一下大概可归结为：如果不是 Object，则 ToNumber 进行比较，如果是 Object，则 ToPrimitive 进行比较，总之其实都是往 number 类型上进行靠拢来比较</p>
+<blockquote>
+<p>关于 ToPrimtive：该方法签名为 <code>ToPrimitive ( input [ , PreferredType ] )</code>，在未传入第二个参数时，最终采用 number 作为参数，这个与 string 作为参数的最大区别是，number 先调用 valueOf，再调用 toString，而 string 正好相反，在 MDN <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness" target="_blank" rel="external">这篇文章</a>中谈到 toPrimitive 时，我觉得文中说法可能有误</p>
+</blockquote>
+<p>一些例子</p>
+<ol>
+<li><code>undefined == null</code> true</li>
+<li><code>&#39;\n  123  \t&#39; == 123</code> true</li>
+<li><code>[0] == false</code> true</li>
+</ol>
+<h3 id="加减法操作（-，-）"><a href="#加减法操作（-，-）" class="headerlink" title="加减法操作（+，-）"></a>加减法操作（+，-）</h3><p>这个定义在规范 <a href="http://www.ecma-international.org/ecma-262/7.0/index.html#sec-addition-operator-plus-runtime-semantics-evaluation" target="_blank" rel="external">The Addition Operator </a> 这一节，主要注意一点就是如果左值或右值至少有一个为 string（如果是对象，则 ToPrimitive 后，也为 string），那么调用 ToString，否则都调用 ToNumber</p>
+<p>举个例子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&#123;&#125; + <span class="number">1</span> <span class="comment">// [object Object]1</span></div><div class="line"><span class="literal">false</span> + <span class="literal">true</span> <span class="comment">// 1</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意以上例子 <code>{}+1</code> 如果直接控制台执行，会得到 <code>1</code>，这是因为解析时将 ‘{}’ 解析为块语法，所以就变成 <code>+1</code>，同理 <code>{}+&#39;1&#39;</code>也是一样，这点要注意</p>
+</blockquote>
+<p>当数字操作时，有几个感觉比较特殊的：</p>
+<ol>
+<li>任何与 NaN 相加都为 NaN</li>
+<li>同等方向 Infinity 操作，为 +-Infinity</li>
+<li>不同方向 Infinity 加，为 NaN</li>
+<li>两个绝对值相等值，不同符号相加，为 +0</li>
+<li>仅两个 -0 相加，为 -0</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-<span class="literal">Infinity</span> + -<span class="literal">Infinity</span>  <span class="comment">// -Infinity</span></div><div class="line">-<span class="literal">Infinity</span> + <span class="literal">Infinity</span>  <span class="comment">// NaN</span></div><div class="line">+<span class="number">0</span> + <span class="number">-0</span> <span class="comment">// +0</span></div><div class="line"><span class="number">-0</span> + <span class="number">-0</span> <span class="comment">// -0</span></div></pre></td></tr></table></figure>
+<p>减法操作都转换成数字，这个就不做过多赘述</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/blog/tags/ECMA-262/" rel="tag">#ECMA-262</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2016/03/09/do-products-over-the-years/" rel="next" title="做产品这几年">
+                <i class="fa fa-chevron-left"></i> 做产品这几年
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2016/05/28/css2-2-margin-collapse/" rel="prev" title="CSS2.2 外边距折叠">
+                CSS2.2 外边距折叠 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="gochant" />
+          <p class="site-author-name" itemprop="name">gochant</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#等值判断（-）"><span class="nav-number">1.</span> <span class="nav-text">等值判断（==）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加减法操作（-，-）"><span class="nav-number">2.</span> <span class="nav-text">加减法操作（+，-）</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gochant</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

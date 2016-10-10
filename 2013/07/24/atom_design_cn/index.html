@@ -1,113 +1,339 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
 <head>
-    <meta charset="utf-8">
-    
-    <title>
-        
-        原子设计 |
-        
-        GRAVE</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <link rel="icon" href="/favicon.png">
-    
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="design,atomic," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="我们不是在设计页面，我们在设计系统的组件。 ——史蒂芬 · 海
+
+随着web设计工艺的不断演变，我们意识到应该开发一个考虑周到的设计系统，而不是将网页简单的堆砌起来。
+很多已经说过创建设计系统这个话题，大多数都是讲应搭建一个基础，例如通用的颜色、排版、网格系统、结构以及其他类似的东西。这些当然很重要，但是我对这些主观上的东西不是很关心，我更感兴趣的是我们的界面组成和我们怎样以一种更有条理的方式构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原子设计">
+<meta property="og:url" content="http://yoursite.com/2013/07/24/atom_design_cn/index.html">
+<meta property="og:site_name" content="G01">
+<meta property="og:description" content="我们不是在设计页面，我们在设计系统的组件。 ——史蒂芬 · 海
+
+随着web设计工艺的不断演变，我们意识到应该开发一个考虑周到的设计系统，而不是将网页简单的堆砌起来。
+很多已经说过创建设计系统这个话题，大多数都是讲应搭建一个基础，例如通用的颜色、排版、网格系统、结构以及其他类似的东西。这些当然很重要，但是我对这些主观上的东西不是很关心，我更感兴趣的是我们的界面组成和我们怎样以一种更有条理的方式构">
+<meta property="og:image" content="http://yoursite.com/blog/2013/07/24/atom_design_cn/Screen-Shot-2012-11-13-at-5.15.05-PM.png">
+<meta property="og:image" content="http://yoursite.com/blog/2013/07/24/atom_design_cn/atomic-design.png">
+<meta property="og:image" content="http://yoursite.com/blog/2013/07/24/atom_design_cn/atoms.jpg">
+<meta property="og:image" content="http://yoursite.com/blog/2013/07/24/atom_design_cn/molecule.jpg">
+<meta property="og:image" content="http://yoursite.com/blog/2013/07/24/atom_design_cn/organism2.jpg">
+<meta property="og:image" content="http://yoursite.com/blog/2013/07/24/atom_design_cn/organism-examples.jpg">
+<meta property="og:image" content="http://yoursite.com/blog/2013/07/24/atom_design_cn/template1.jpg">
+<meta property="og:image" content="http://yoursite.com/blog/2013/07/24/atom_design_cn/page1.jpg">
+<meta property="og:updated_time" content="2016-10-10T15:01:30.018Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="原子设计">
+<meta name="twitter:description" content="我们不是在设计页面，我们在设计系统的组件。 ——史蒂芬 · 海
+
+随着web设计工艺的不断演变，我们意识到应该开发一个考虑周到的设计系统，而不是将网页简单的堆砌起来。
+很多已经说过创建设计系统这个话题，大多数都是讲应搭建一个基础，例如通用的颜色、排版、网格系统、结构以及其他类似的东西。这些当然很重要，但是我对这些主观上的东西不是很关心，我更感兴趣的是我们的界面组成和我们怎样以一种更有条理的方式构">
+<meta name="twitter:image" content="http://yoursite.com/blog/2013/07/24/atom_design_cn/Screen-Shot-2012-11-13-at-5.15.05-PM.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2013/07/24/atom_design_cn/"/>
+
+  <title> 原子设计 | G01 </title>
 </head>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/blog/" id="logo">GRAVE</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/blog/" id="subtitle">Living Life Over</a>
-        </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-      </nav>
-      <nav id="sub-nav">
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <!--<div id="search-form-wrap">-->
-        <!--<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://gochant.github.io/blog"></form>-->
-      <!--</div>-->
-    </div>
-      
-      <aside id="sidebar">
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/-net/">.net</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/ecma-262/">ecma-262</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/javascript/">javascript</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/kendoui/">kendoui</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/veronica/">veronica</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/开发-团队/">开发 & 团队</a><span class="category-list-count">2</span></li></ul>
-    </div>
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">G01</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
   </div>
+  <p class="site-subtitle">Living Life Over</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
 
   
-</aside>
+    <ul id="menu" class="menu">
       
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-atom_design_cn" class="article article-type-post" itemscope
-         itemprop="blogPost">
-
-    <div class="dropdown toc-trigger">
-        <a data-toggle="dropdown" href="#">目录</a>
-        <div class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是原子设计？"><span class="toc-number">1.</span> <span class="toc-text">什么是原子设计？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原子"><span class="toc-number">1.1.</span> <span class="toc-text">原子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分子"><span class="toc-number">1.2.</span> <span class="toc-text">分子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生物"><span class="toc-number">1.3.</span> <span class="toc-text">生物</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模板"><span class="toc-number">1.4.</span> <span class="toc-text">模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面"><span class="toc-number">1.5.</span> <span class="toc-text">页面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么进行原子设计"><span class="toc-number">2.</span> <span class="toc-text">为什么进行原子设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模式实验室"><span class="toc-number">3.</span> <span class="toc-text">模式实验室</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延伸阅读"><span class="toc-number">4.</span> <span class="toc-text">延伸阅读</span></a></li></ol>
-        </div>
-    </div>
-
-    <div class="article-inner">
         
-
-        
-        <header class="article-header">
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
   
-    <h1 class="article-title" itemprop="name">
-      原子设计
-    </h1>
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
   
 
-        </header>
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                原子设计
+              
+            
+          </h1>
         
 
-        <div class="article-meta">
-            <a href="/blog/2013/07/24/atom_design_cn/" class="article-date">
-  <time datetime="2013-07-24T07:24:55.000Z" itemprop="datePublished">Jul 24 2013</time>
-</a>
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-07-24T15:24:55+08:00" content="2013-07-24">
+              2013-07-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/Architecture/" itemprop="url" rel="index">
+                    <span itemprop="name">Architecture</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
             
+          
+
+          
+
+          
+          
+
+          
         </div>
+      </header>
+    
 
-        <hr/>
 
-        <div class="article-entry" itemprop="articleBody">
-            
-            <blockquote>
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
 <p>我们不是在设计页面，我们在设计系统的组件。 ——史蒂芬 · 海</p>
 </blockquote>
 <p>随着web设计工艺的不断演变，我们意识到应该开发一个考虑周到的设计系统，而不是将网页简单的堆砌起来。</p>
 <p>很多已经说过创建设计系统这个话题，大多数都是讲应搭建一个基础，例如通用的颜色、排版、网格系统、结构以及其他类似的东西。这些当然很重要，但是我对这些主观上的东西不是很关心，我更感兴趣的是我们的界面组成和我们怎样以一种更有条理的方式构建系统。</p>
 <p>在捕捉灵感的过程中，我想到了化学。所有的物质（不论是固体、液体、气体、简单的、复杂的等）是由原子组成的。这些原子组合在一起形成分子，进而组合起来形成更复杂的有机体，最后创造我们宇宙中的所有物质。</p>
 <p>类似的，界面由更小的组件构成，意味着我们能将整个界面分割成基本单元，并从这些基本单元开始着手工作。这是原子设计的基本宗旨。</p>
-<p><img src="http://salmon.yulintu.cn/wp-content/uploads/2013/07/Screen-Shot-2012-11-13-at-5.15.05-PM.png" alt="image"></p>
+<a id="more"></a>
+<img src="/blog/2013/07/24/atom_design_cn/Screen-Shot-2012-11-13-at-5.15.05-PM.png" alt="Screen-Shot-2012-11-13-at-5.15.05-PM.png" title="">
 <p><a href="http://joshduck.com/periodic-table.htm" target="_blank" rel="external">HTML Periodic Table</a></p>
-<h2 id="什么是原子设计？">什么是原子设计？</h2>
-<p>原子设计是创建设计系统的方法。在原子设计中有五种不同的等级：</p>
+<h2 id="什么是原子设计？"><a href="#什么是原子设计？" class="headerlink" title="什么是原子设计？"></a>什么是原子设计？</h2><p>原子设计是创建设计系统的方法。在原子设计中有五种不同的等级：</p>
 <ol>
 <li>原子</li>
 <li>分子</li>
@@ -115,101 +341,338 @@
 <li>模板</li>
 <li>页面</li>
 </ol>
-<p><a href="http://salmon.yulintu.cn/wp-content/uploads/2013/07/atomic-design-process.png" target="_blank" rel="external"><img src="http://salmon.yulintu.cn/wp-content/uploads/2013/07/atomic-design-process_thumb.png" alt="atomic-design-process" title="atomic-design-process"></a></p>
+<img src="/blog/2013/07/24/atom_design_cn/atomic-design.png" alt="atomic-design.png" title="">
 <p>让我们详细介绍每个阶段。</p>
-<h3 id="原子">原子</h3>
-<p>原子是物质的基本单元，对于与Web界面，原子就是我们的HTML标签，例如 <code>form</code> 标签、<code>input</code> 或 <code>button</code>。</p>
-<p><a href="http://salmon.yulintu.cn/wp-content/uploads/2013/07/atoms.jpg" target="_blank" rel="external"><img src="http://salmon.yulintu.cn/wp-content/uploads/2013/07/atoms_thumb.jpg" alt="atoms" title="atoms"></a></p>
+<h3 id="原子"><a href="#原子" class="headerlink" title="原子"></a>原子</h3><p>原子是物质的基本单元，对于与Web界面，原子就是我们的HTML标签，例如 <code>form</code> 标签、<code>input</code> 或 <code>button</code>。</p>
+<img src="/blog/2013/07/24/atom_design_cn/atoms.jpg" alt="atoms.jpg" title="">
 <p>原子也包括更抽象的元素，例如调色板、字体，以及一个界面更无形的方面，例如动画。</p>
 <p>原子本质上是相当抽象的，并且它自己本身不是太有用，然而他们作为你模式库中上下文的参考是很有用的，这样你能一目了然的看到你的所有样式。</p>
-<h3 id="分子">分子</h3>
-<p>当我们开始将原子结合在一起时，事情变得更加有趣和有形。分子是一组原子聚合在一起形成的，它是化合物的最小单元。分子呈现他们自身的属性，并作为设计系统的骨干部分进行服务。</p>
+<h3 id="分子"><a href="#分子" class="headerlink" title="分子"></a>分子</h3><p>当我们开始将原子结合在一起时，事情变得更加有趣和有形。分子是一组原子聚合在一起形成的，它是化合物的最小单元。分子呈现他们自身的属性，并作为设计系统的骨干部分进行服务。</p>
 <p>举个例子，一个表单标签，输入框和按钮它们本身不是很有用，但是把它们组合起来形成一个表单，它们就能做一些实际的事。</p>
-<p><a href="http://salmon.yulintu.cn/wp-content/uploads/2013/07/molecule.jpg" target="_blank" rel="external"><img src="http://salmon.yulintu.cn/wp-content/uploads/2013/07/molecule_thumb.jpg" alt="molecule" title="molecule"></a></p>
+<img src="/blog/2013/07/24/atom_design_cn/molecule.jpg" alt="molecule.jpg" title="">
 <p>从原子构建分子时建议的准则：只做一件事情并把它做好。分子有可能会很复杂，一般来说它们是一些相对简单的原子的组合和重用。</p>
-<h3 id="生物">生物</h3>
-<p>分子给了我们一些构建模块，我们现在能把它们组合起来形成生物。生物是多组分子结合起来形成的一种界面上相对复杂，独特的部分。</p>
-<p><a href="http://salmon.yulintu.cn/wp-content/uploads/2013/07/organism2.jpg" target="_blank" rel="external"><img src="http://salmon.yulintu.cn/wp-content/uploads/2013/07/organism2_thumb.jpg" alt="organism2" title="organism2"></a></p>
+<h3 id="生物"><a href="#生物" class="headerlink" title="生物"></a>生物</h3><p>分子给了我们一些构建模块，我们现在能把它们组合起来形成生物。生物是多组分子结合起来形成的一种界面上相对复杂，独特的部分。</p>
+<img src="/blog/2013/07/24/atom_design_cn/organism2.jpg" alt="organism2.jpg" title="">
+<img src="/blog/2013/07/24/atom_design_cn/organism-examples.jpg" alt="organism-examples.jpg" title="">
 <p>我们开始变得越来越具体化。客户可能不太关心一个设计体系分子层面的东西。但是到了生物层面，我们能看到一些最终界面成形的东西。</p>
 <p>Dan Mail（我和一些其他人工作的几个项目）使用 <a href="http://danielmall.com/articles/rif-element-collages/" target="_blank" rel="external">element collages</a>，清晰表达几个关键生物，促进与用户的沟通并塑造出视觉上的方向（所有的这些无需构造完整的对比方案）。</p>
 <p>生物可以由相似或者不同的分子类型所构成。例如，一个“报头”生物可能由LOGO、主导航、搜索框、和社交媒体列表等组件构成。但是一个“产品表格”可能由一些相同的分子（可能包含产品图片、名称和价格）一遍一遍重复构成。</p>
 <p>从分子构建生物建议的准则：创建独立的、便携的、可重用的组件。</p>
-<h3 id="模板">模板</h3>
-<p>到了模板这个层面，我们脱离化学的领域进入编程语言层面，这样对于客户的交流和最终的输出更有意义。模板主要由成组的生物紧密结合在一些。现在我们能看到很多设计的东西在里面，同时也能看到整个布局的样子。</p>
-<p><a href="http://salmon.yulintu.cn/wp-content/uploads/2013/07/template1.jpg" target="_blank" rel="external"><img src="http://salmon.yulintu.cn/wp-content/uploads/2013/07/template1_thumb.jpg" alt="template1" title="template1"></a></p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><p>到了模板这个层面，我们脱离化学的领域进入编程语言层面，这样对于客户的交流和最终的输出更有意义。模板主要由成组的生物紧密结合在一些。现在我们能看到很多设计的东西在里面，同时也能看到整个布局的样子。</p>
+<img src="/blog/2013/07/24/atom_design_cn/template1.jpg" alt="template1" title="template1">
 <p>模板是非常具体的，它为所有这些相对抽象的分子和生物提供上下文环境。模板也能够让用户看到最终设计的位置分布。从我使用这个方法论的经验来看，模板从HTML线框图开始它的生命周期，随着时间的增加不断提高保真度，从而成为最终交付物。在匹兹堡的大胡子工作室采用一套相似的流程，一开始设计是灰度的并且布局很弱，然后在每个位置慢慢增加保真度直到最终设计。</p>
-<h3 id="页面">页面</h3>
-<p>页面是模板的一个实例。在这里，占位内容被替换成真实的内容，给用户最终所见的最准确的描述。</p>
-<p><a href="http://salmon.yulintu.cn/wp-content/uploads/2013/07/page1.jpg" target="_blank" rel="external"><img src="http://salmon.yulintu.cn/wp-content/uploads/2013/07/page1_thumb.jpg" alt="page1" title="page1"></a></p>
+<h3 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h3><p>页面是模板的一个实例。在这里，占位内容被替换成真实的内容，给用户最终所见的最准确的描述。</p>
+<img src="/blog/2013/07/24/atom_design_cn/page1.jpg" alt="page1.jpg" title="">
 <p>页面是高保真的，因为他们是有形的，它会花费最多的时间，并且会引来人们最多的评论。</p>
 <p>页面阶段是必须的，我们能以此来测试设计系统的有效性，并让我们能够不断循环迭代修改我们的分子、生物和模板以满足实际环境的需要。</p>
 <p>页面也是测试模板可变性的地方。例如，你可能想表示一个标题包含40个字符时像什么样子，也可能想展示包含340个字符时看起来像什么样子。或者展示一个用户在购物车添加一件商品和十件商品应用折扣时的不同样子。所有的这些特殊实例都会影响我们怎样循环构建我们的系统。</p>
-<h2 id="为什么进行原子设计">为什么进行原子设计</h2>
-<p>以上提到的，很多是我们一直就这样做的，即使我们没有以这种特殊的方式有意识的进行思考。</p>
+<h2 id="为什么进行原子设计"><a href="#为什么进行原子设计" class="headerlink" title="为什么进行原子设计"></a>为什么进行原子设计</h2><p>以上提到的，很多是我们一直就这样做的，即使我们没有以这种特殊的方式有意识的进行思考。</p>
 <p>原子设计提供一种清晰的方法论用于制作设计系统。</p>
 <p>客户和团队成员能通过实际看到摆在他们前面的这些步骤，更好的解读一个设计系统的理念。</p>
 <p>原子设计给我们一种贯穿抽象到具象的能力。有了这些，我们能创建一个提高一致性和可伸缩性，并最终在他们的上下文中显示事物的系统。通过组装而不是解构，我们站在正确之门构建系统而不是事后随意的应用各种模式。</p>
-<h2 id="模式实验室">模式实验室</h2>
-<p>为了将这个方法论应用到我的工作中，我（和伟大的 <a href="http://dmolsen.com/" target="_blank" rel="external">Dave Olsen</a> 帮助）创建了一个叫做 <a href="http://patternlab.bradfrostweb.com/" target="_blank" rel="external">Pattern Lab</a> 的工具，实际创建这些原子设计系统。我将在后面详细介绍 Pattern Lab，但可随时<a href="https://github.com/bradfrost/patternlab" target="_blank" rel="external">在Github上迁出它</a>。</p>
-<h2 id="延伸阅读">延伸阅读</h2>
-<ul>
-<li>_<a href="https://shop.smashingmagazine.com/smashing-book-3.html" target="_blank" rel="external">Smashing Book 3</a>    <a href="http://malarkey.github.io/Rock-Hammer/" target="_blank" rel="external">Rock Hammer</a>   <a href="http://stuffandnonsense.co.uk/blog/about/rock-hammer-a-curated-responsive-project-library" target="_blank" rel="external">construct a pattern library</a> _Andy Clarke</li>
+<h2 id="模式实验室"><a href="#模式实验室" class="headerlink" title="模式实验室"></a>模式实验室</h2><p>为了将这个方法论应用到我的工作中，我（和伟大的 <a href="http://dmolsen.com/" target="_blank" rel="external">Dave Olsen</a> 帮助）创建了一个叫做 <a href="http://patternlab.bradfrostweb.com/" target="_blank" rel="external">Pattern Lab</a> 的工具，实际创建这些原子设计系统。我将在后面详细介绍 Pattern Lab，但可随时<a href="https://github.com/bradfrost/patternlab" target="_blank" rel="external">在Github上迁出它</a>。</p>
+<h2 id="延伸阅读"><a href="#延伸阅读" class="headerlink" title="延伸阅读"></a>延伸阅读</h2><ul>
+<li><a href="https://shop.smashingmagazine.com/smashing-book-3.html" target="_blank" rel="external">Smashing Book 3</a><br><a href="http://malarkey.github.io/Rock-Hammer/" target="_blank" rel="external">Rock Hammer</a><br><a href="http://stuffandnonsense.co.uk/blog/about/rock-hammer-a-curated-responsive-project-library" target="_blank" rel="external">construct a pattern library</a> Andy Clarke</li>
 <li><a href="http://www.youtube.com/watch?v=fqULJBBEVQE" target="_blank" rel="external">Web Components: A Tectonic Shift for Web Development</a>  Google I / O</li>
 <li><a href="http://www.w3.org/DesignIssuesPrinciples.html#Modular" target="_blank" rel="external">Modularity</a> Tim Berners-Lee</li>
 <li><a href="http://daverupert.com/2013/04/responsive-deliverables/" target="_blank" rel="external">Responsive Deliverables</a> Dave Rupert</li>
-<li><a href="http://bradfrostweb.com/blog/post/atomic-web-design/" target="_blank" rel="external">http://bradfrostweb.com/blog/post/atomic-web-design/</a> 英文原文</li>
 </ul>
+<p>英文原文: <a href="http://bradfrostweb.com/blog/post/atomic-web-design/" target="_blank" rel="external">http://bradfrostweb.com/blog/post/atomic-web-design/</a></p>
 <p><strong>后记：</strong></p>
 <p>原子设计本质上是一种自底向下设计系统的理念，化繁为简，做简单事情，在实际开发过程中这种思想很重要。</p>
 
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/design/" rel="tag">#design</a>
+          
+            <a href="/blog/tags/atomic/" rel="tag">#atomic</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/blog/2013/07/19/intro_introjs/" rel="next" title="创建用户引导——使用 Intro.js">
+                <i class="fa fa-chevron-left"></i> 创建用户引导——使用 Intro.js
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2013/08/19/grunt-veronica-intro/" rel="prev" title="使用 grunt-veronica 打包应用">
+                使用 grunt-veronica 打包应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="gochant" />
+          <p class="site-author-name" itemprop="name">gochant</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
         </div>
 
-    </div>
-
-    
-    
-<nav id="article-nav">
-  
-    <a href="/blog/2013/08/19/grunt-veronica-intro/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
         
-          使用 grunt-veronica 打包应用
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是原子设计？"><span class="nav-number">1.</span> <span class="nav-text">什么是原子设计？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原子"><span class="nav-number">1.1.</span> <span class="nav-text">原子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分子"><span class="nav-number">1.2.</span> <span class="nav-text">分子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生物"><span class="nav-number">1.3.</span> <span class="nav-text">生物</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模板"><span class="nav-number">1.4.</span> <span class="nav-text">模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页面"><span class="nav-number">1.5.</span> <span class="nav-text">页面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么进行原子设计"><span class="nav-number">2.</span> <span class="nav-text">为什么进行原子设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模式实验室"><span class="nav-number">3.</span> <span class="nav-text">模式实验室</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延伸阅读"><span class="nav-number">4.</span> <span class="nav-text">延伸阅读</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
         
       </div>
-    </a>
-  
-  
-    <a href="/blog/2013/07/19/intro_introjs/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">创建用户引导——使用Intro.JS</div>
-    </a>
-  
-</nav>
+    </main>
 
-    
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gochant</span>
+</div>
 
-</article>
-</section>
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
 
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2014 gochant<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    
-    
-  </div>
-  <script src="/blog/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+    </footer>
 
-  <script src="/blog/js/dropdown.js" type="text/javascript"></script>
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

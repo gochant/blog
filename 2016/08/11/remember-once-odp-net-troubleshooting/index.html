@@ -1,0 +1,627 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ODP.NET,Oracle," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="最近项目组遇到很多 Oracle 开发的问题，由于近来后端人员极度缺乏，同事也叫我看了一下关于 Oracle 连接相关的问题，通过查资料和问题排查，我把几个同事碰到的几类问题总结一下记在这里：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次 ODP.NET 问题排查">
+<meta property="og:url" content="http://yoursite.com/2016/08/11/remember-once-odp-net-troubleshooting/index.html">
+<meta property="og:site_name" content="G01">
+<meta property="og:description" content="最近项目组遇到很多 Oracle 开发的问题，由于近来后端人员极度缺乏，同事也叫我看了一下关于 Oracle 连接相关的问题，通过查资料和问题排查，我把几个同事碰到的几类问题总结一下记在这里：">
+<meta property="og:updated_time" content="2016-10-10T15:01:31.235Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次 ODP.NET 问题排查">
+<meta name="twitter:description" content="最近项目组遇到很多 Oracle 开发的问题，由于近来后端人员极度缺乏，同事也叫我看了一下关于 Oracle 连接相关的问题，通过查资料和问题排查，我把几个同事碰到的几类问题总结一下记在这里：">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/08/11/remember-once-odp-net-troubleshooting/"/>
+
+  <title> 记一次 ODP.NET 问题排查 | G01 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">G01</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Living Life Over</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                记一次 ODP.NET 问题排查
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-11T12:31:15+08:00" content="2016-08-11">
+              2016-08-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/NET/" itemprop="url" rel="index">
+                    <span itemprop="name">.NET</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近项目组遇到很多 Oracle 开发的问题，由于近来后端人员极度缺乏，同事也叫我看了一下关于 Oracle 连接相关的问题，通过查资料和问题排查，我把几个同事碰到的几类问题总结一下记在这里：</p>
+<a id="more"></a>
+<h2 id="如果条件允许，使用托管-dll"><a href="#如果条件允许，使用托管-dll" class="headerlink" title="如果条件允许，使用托管 dll"></a>如果条件允许，使用托管 dll</h2><p>Oracle 对于 .NET 开发者提供了官方的 Oracle Data Access Components (ODAC)，主要是用的 Oracle Data Provider for .NET（odp.net），这个又分两种：托管的和非托管的。出问题的那个项目用的是非托管的 dll，如果使用托管的版本，就不会出现这些杂七杂八的问题，以下问题记录都是针对非托管的版本，也就是 Oracle.DataAccess.dll 这个库</p>
+<h2 id="Oracle-DataAccess-dll-找不到依赖项"><a href="#Oracle-DataAccess-dll-找不到依赖项" class="headerlink" title="Oracle.DataAccess.dll 找不到依赖项"></a>Oracle.DataAccess.dll 找不到依赖项</h2><p>这个是技术支持部署遇到的问题，看了下是在 IIS 上部署网站或服务的时候，应用程序域开启了启用 32 位程序，禁用该选项即可解决问题。这个是比较常见的问题，主要是搞不清什么时候应该启用 32 位，所以凡是部署网站都启用 32 位，似乎也没啥问题，但是遇到非托管 dll 就悲剧了，因为程序 odp.net 使用的是x64的非托管dll</p>
+<blockquote>
+<p>关于 32 位 和 64 位</p>
+<p>开发时编译生成的版本基本都是 any cpu 的，这个结果就是生成的程序集在 32 位进程中被 JIT 成 32 位代码，64 位进程中被 JIT 成 64 位代码，IIS 启用 32 位就是将该应用程序域进程（w3wp）搞成了 32 位环境，虽然也能运行，但进行大内存占用的行为时就会比较有局限性，另外如果程序内使用了 非托管的 dll，这个就必须注意版本了，32位的在32位上跑，64位在64位上跑</p>
+</blockquote>
+<h2 id="Oracle-DataAccess-Client-OracleException-The-provider-is-not-compatible-with-the-version-of-Oracle-client"><a href="#Oracle-DataAccess-Client-OracleException-The-provider-is-not-compatible-with-the-version-of-Oracle-client" class="headerlink" title="Oracle.DataAccess.Client.OracleException: The provider is not compatible with the version of Oracle client"></a>Oracle.DataAccess.Client.OracleException: The provider is not compatible with the version of Oracle client</h2><p>provider 与 Oracle client 版本不兼容，这个是一开始同事叫我看的问题，说的是安装了 Oracle 11g 后就会出现该问题，后来看了下我们程序用的 odp.net 的版本，是 12c 的，会不会是因为 Oracle 11g 把配置给污染了呢？后来我自己找了个干净的环境安装了 11g，并布上我们的网站和服务，能够正常运行，说明不单纯是 11g 的问题，后来翻了一遍官方文档，发现了一些<a href="https://docs.oracle.com/html/E18754_01/InstallODP.htm" target="_blank" rel="external">线索</a>，这篇文档提到 Oracle.DataAccess.dll 与 非托管 dll 版本必须要匹配的问题，并介绍了查找路径的规则：</p>
+<p>The Oracle.DataAccess.dll searches for dependent unmanaged DLLs (such as Oracle Client) based on the following order:</p>
+<ol>
+<li>Directory of the application or executable.</li>
+<li>DllPath setting specified by application config or web.config.`</li>
+<li>DllPath setting specified by machine.config.</li>
+<li><p>DllPath setting specified by the Windows Registry.</p>
+<p> HKEY_LOCAL_MACHINE\Software\Oracle\ODP.NET\version\DllPath</p>
+</li>
+<li><p>Directories specified by the Windows PATH environment variable.</p>
+</li>
+</ol>
+<p>原来是的 dllpath 的问题，最粗暴的方法是在 web.config 中配置 dllpath，另外也可去查 machine.config 和 注册表中是否配置正确</p>
+<p>比较奇怪的是按理来说优先去应用执行目录下查找 dll，应该不会发生这个问题，所以还存在其他因素我没找到，但后来无意中搞好后，原有的问题环境反而无法复现了</p>
+<h2 id="依赖注入失败，程序调用-NullReference"><a href="#依赖注入失败，程序调用-NullReference" class="headerlink" title="依赖注入失败，程序调用 NullReference"></a>依赖注入失败，程序调用 NullReference</h2><p>这个主要是缺少 dll 或放入了不正确的版本 dll 造成的，因为 odp.net 主要是两个版本：2 和 4，这个倒是个比较清晰的问题</p>
+<p>以上</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/ODP-NET/" rel="tag">#ODP.NET</a>
+          
+            <a href="/blog/tags/Oracle/" rel="tag">#Oracle</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2016/07/29/pug-as-a-frontend-templates/" rel="next" title="Pug 作为纯前端模板提高复用性">
+                <i class="fa fa-chevron-left"></i> Pug 作为纯前端模板提高复用性
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2016/09/28/veronica2-design/" rel="prev" title="Veronica2 设计思想">
+                Veronica2 设计思想 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="gochant" />
+          <p class="site-author-name" itemprop="name">gochant</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如果条件允许，使用托管-dll"><span class="nav-number">1.</span> <span class="nav-text">如果条件允许，使用托管 dll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Oracle-DataAccess-dll-找不到依赖项"><span class="nav-number">2.</span> <span class="nav-text">Oracle.DataAccess.dll 找不到依赖项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Oracle-DataAccess-Client-OracleException-The-provider-is-not-compatible-with-the-version-of-Oracle-client"><span class="nav-number">3.</span> <span class="nav-text">Oracle.DataAccess.Client.OracleException: The provider is not compatible with the version of Oracle client</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖注入失败，程序调用-NullReference"><span class="nav-number">4.</span> <span class="nav-text">依赖注入失败，程序调用 NullReference</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gochant</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

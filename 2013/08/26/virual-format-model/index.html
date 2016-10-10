@@ -1,0 +1,765 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CSS,Basic," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="可视化格式模型简介本章描述可视化格式模型：即用户代理如何为视觉媒体处理文档树
+在VFM中，文档树中的每一个元素根据盒模型生成零个或多个盒子，这些盒子的布局受以下因素支配：
+
+盒子的大小和类型
+定位方案（正常流、浮动和绝对定位）
+元素在文档树之间的关系
+外部信息（如：视口的大小、图像的固有尺寸，等）
+
+本章定义的同时适用于连续介质和分页媒体，但 margin 可能有所区别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="可视化格式模型">
+<meta property="og:url" content="http://yoursite.com/2013/08/26/virual-format-model/index.html">
+<meta property="og:site_name" content="G01">
+<meta property="og:description" content="可视化格式模型简介本章描述可视化格式模型：即用户代理如何为视觉媒体处理文档树
+在VFM中，文档树中的每一个元素根据盒模型生成零个或多个盒子，这些盒子的布局受以下因素支配：
+
+盒子的大小和类型
+定位方案（正常流、浮动和绝对定位）
+元素在文档树之间的关系
+外部信息（如：视口的大小、图像的固有尺寸，等）
+
+本章定义的同时适用于连续介质和分页媒体，但 margin 可能有所区别">
+<meta property="og:updated_time" content="2016-10-10T15:01:31.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="可视化格式模型">
+<meta name="twitter:description" content="可视化格式模型简介本章描述可视化格式模型：即用户代理如何为视觉媒体处理文档树
+在VFM中，文档树中的每一个元素根据盒模型生成零个或多个盒子，这些盒子的布局受以下因素支配：
+
+盒子的大小和类型
+定位方案（正常流、浮动和绝对定位）
+元素在文档树之间的关系
+外部信息（如：视口的大小、图像的固有尺寸，等）
+
+本章定义的同时适用于连续介质和分页媒体，但 margin 可能有所区别">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2013/08/26/virual-format-model/"/>
+
+  <title> 可视化格式模型 | G01 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">G01</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Living Life Over</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                可视化格式模型
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-08-26T14:22:19+08:00" content="2013-08-26">
+              2013-08-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/Frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">Frontend</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="可视化格式模型简介"><a href="#可视化格式模型简介" class="headerlink" title="可视化格式模型简介"></a>可视化格式模型简介</h2><p>本章描述可视化格式模型：即用户代理如何为视觉媒体处理文档树</p>
+<p>在VFM中，文档树中的每一个元素根据<strong>盒模型</strong>生成零个或多个盒子，这些盒子的布局受以下因素支配：</p>
+<ul>
+<li>盒子的大小和类型</li>
+<li>定位方案（正常流、浮动和绝对定位）</li>
+<li>元素在文档树之间的关系</li>
+<li>外部信息（如：视口的大小、图像的固有尺寸，等）</li>
+</ul>
+<p>本章定义的同时适用于<strong>连续介质</strong>和<strong>分页媒体</strong>，但 <code>margin</code> 可能有所区别</p>
+<a id="more"></a>
+<h3 id="视口"><a href="#视口" class="headerlink" title="视口"></a>视口</h3><p>用于连续介质的用户代理通常为用户提供一个视口（屏幕上的窗口或者其他可视区域），通过它，用户访问文档。当视口大小调整时，用户代理可以改变文档的布局。</p>
+<p>当视口比呈现的文档小时，用户代理应提供滚动机制</p>
+<h3 id="包含块（Containing-blocks）"><a href="#包含块（Containing-blocks）" class="headerlink" title="包含块（Containing blocks）"></a>包含块（Containing blocks）</h3><p>在CSS2.1中，许多盒子的位置和大小计算需要考虑一个矩形框的边缘，这个矩形框称为：包含块。一般情况下，生成的盒子实际上作为包含块的子孙盒子。我们说，一个盒子为它的子孙盒子“建立”包含块。因此，短语“一个盒子的包含块”是指这个盒子所存在的包含块，而不是它生成的。</p>
+<p>一个盒子的位置与它的包含块有关，但它不受这个包含块的束缚，它有可能溢出。</p>
+<p>在下一章将介绍详细的包含块大小计算的细节。</p>
+<h2 id="控制盒子生成（Controlling-box-generation）"><a href="#控制盒子生成（Controlling-box-generation）" class="headerlink" title="控制盒子生成（Controlling box generation）"></a>控制盒子生成（Controlling box generation）</h2><p>CSS 视觉格式化模型的一部分工作是从文档元素生成盒。生成的盒拥有不同类型，并在某种程度上影响可视化格式模型的行为。生成盒的类型取决于 CSS 属性 <code>display</code>。</p>
+<h3 id="块级元素和块盒"><a href="#块级元素和块盒" class="headerlink" title="块级元素和块盒"></a>块级元素和块盒</h3><p><strong>块级元素（block-level element）</strong>是在源文件中被格式化为块的元素（例如：段落）。</p>
+<blockquote>
+<p>设置<code>display</code>值，使元素为块级元素：<br>“block”，“list-item”，“table”，“flex”，“grid”。</p>
+</blockquote>
+<p><strong>块级盒（block-level box）</strong>参与块级格式上下文（BFC）。每个块级元素生成一个主要的块级盒，包含子孙盒和生成的内容，它也是可以使用任何定位方案的盒。一些块级元素，例如：“list-item” 元素，除了主盒子之外，也产生额外的盒来放置项目符号，不过多数元素只生成一个主要块级盒。</p>
+<p>除了 “table” 盒，将在后面的章节描述，和可替换元素，一个块级盒也是一个 <strong>块容器盒（block container box）</strong>。一个块容器盒只包含块级元素，或者建立一个行内格式上下文（inline formatting context），只包含行内盒。不是所有的块容器盒是块级元素，例如：非替换行内块和非替换表格单元格是块容器但是不是块级盒。</p>
+<ul>
+<li>在非块级格式化上下文中的块容器总是会创建新的块级格式化上下文：如display为inline-blocks, table-cells, 和table-captions所生成的盒。</li>
+<li>而自身也在块级格式化上下文中的块容器，则只有overflow不为visible的情形下才会创建新的块级格式化上下文。</li>
+<li>绝对定位和浮动的块容器则总是会创建新的块级格式化上下文。</li>
+<li>display值为table或者inline-table的元素将会生成表格（table），表格内部会使用特殊的格式化方式来排布其内部元素。</li>
+<li>display值为grid或者inline-grid的元素将会生成格元素（grid element），与table情形类似，它内部也是使用特殊的格式化方式来排布其内部元素，</li>
+<li>display值为flex或者inline-flex的元素将会生成自适应容器（flex container），自适应容器在其内部产生自适应格式化上下文（flex formatting context）。</li>
+</ul>
+<p>注意块级盒与块容器盒概念不同。 前者描述元素跟它的父元素与兄弟元素之间的表现，后者描述元素跟它的后代之间的影响。</p>
+<p>既是块级盒又是块容器盒的，被称为：块盒。</p>
+<p>(img)</p>
+<p>这三个术语：“块级盒（block-level box）“，”块容器盒（block container box）“和“块盒（block box）”，有时在含义清楚的地方简写成“块（block）”。</p>
+<h4 id="匿名块盒（Anonymous-block-boxes）"><a href="#匿名块盒（Anonymous-block-boxes）" class="headerlink" title="匿名块盒（Anonymous block boxes）"></a>匿名块盒（Anonymous block boxes）</h4><p><strong>块盒中包含块级盒</strong></p>
+<p>块容器盒要么只包含行内级盒，要么只包含块级盒。但通常文档会同时包含两者。在这种情况下，将创建匿名块盒来包含毗邻的行内级盒。</p>
+<p>有如下代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">    Some text</div><div class="line">     <span class="tag">&lt;<span class="name">p</span>&gt;</span>More text</div><div class="line"> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>(img)</p>
+<p>换句话说：如果一个块容器盒子（如上例中为DIV生成的框）在其中包含另外一个块框（如上例中的P），我们强迫它在其内只包含块框，而将任何的行内盒都包含在一个匿名块框之内。</p>
+<p><strong>行内盒中包含块级盒</strong></p>
+<p>当一个行内盒包含一个正常流中的块级盒，这个行内盒（和他在相同行内盒中的行内祖先）被块级盒子打破（任何块级兄弟姐妹是连续的或者只被可折叠的空白或 out-of-flow 元素分开），这个行内盒分裂成两个部分（即使任何一边为空）放置于这个块盒前后。然后分别被两个匿名的块盒包含，而这个块级盒就成为这些匿名盒的兄弟。当这样一个行内盒受相对定位影响时，任何结果将传递并影响在这个行内盒中包含的块级盒。</p>
+<p>接下来是个这样的例子：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">p</span>    &#123; <span class="attribute">display</span>: inline &#125;</div><div class="line"><span class="selector-tag">span</span> &#123; <span class="attribute">display</span>: block &#125;</div></pre></td></tr></table></figure>
+<p>使用如下HTML：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!doctype html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Anonymous text interrupted by a block~<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>This is anonymous text before the SPAN. <span class="tag">&lt;<span class="name">span</span>&gt;</span>This is the content of SPAN.<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">This is anonymous text after the SPAN.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>以上的结果是：生成一个代表 body 的块盒，它包含了：围绕第一段文本的一个匿名块盒，一个 span 块盒和围绕第二段文本的另一个匿名块盒。</p>
+<p>……</p>
+<h3 id="行内级元素和行内盒（Inline-level-elements-and-inline-boxes）"><a href="#行内级元素和行内盒（Inline-level-elements-and-inline-boxes）" class="headerlink" title="行内级元素和行内盒（Inline-level elements and inline boxes）"></a>行内级元素和行内盒（Inline-level elements and inline boxes）</h3><h4 id="行内级元素和行内级盒"><a href="#行内级元素和行内级盒" class="headerlink" title="行内级元素和行内级盒"></a>行内级元素和行内级盒</h4><p><strong>行内级元素</strong>是源文档中那些不形成新的内容块的元素，内容在行内分布（例如，段落内着重的文本，行内图形等等）</p>
+<p>以下的 <code>display</code> 值将使一个元素变成行内级：“inline”，“inline-block”，和“inline-table”</p>
+<p>行内级元素生成 <strong>行内级盒（inline-level boxes）</strong>，这个盒子参与一个行内格式上下文。</p>
+<h4 id="行内盒（inline-box）"><a href="#行内盒（inline-box）" class="headerlink" title="行内盒（inline box）"></a>行内盒（inline box）</h4><p><strong>行内盒</strong> 首先是行内级盒，并且它的内容也参与它的行内格式上下文。一个非替换元素的“display”属性设为“inline”，就生成一个行内盒。</p>
+<h4 id="原子行内级盒（atomic-inline-level-boxes）"><a href="#原子行内级盒（atomic-inline-level-boxes）" class="headerlink" title="原子行内级盒（atomic inline-level boxes）"></a>原子行内级盒（atomic inline-level boxes）</h4><p>有些行内级盒（Inline-level boxes）不是行内盒，例如可替换的inline-level、inline-block、inline-table元素，它被称作原子行内级盒</p>
+<p>它们是以一个单独的<strong>不透明</strong>的盒子来参与它们的行内格式化上下文，也就是说内容并不参与行内格式化上下文。</p>
+<p>(img)</p>
+<blockquote>
+<p>原子行内盒在行内格式化上下文里不能分成多行。</p>
+</blockquote>
+<h4 id="匿名行内盒"><a href="#匿名行内盒" class="headerlink" title="匿名行内盒"></a>匿名行内盒</h4><p>任何直接被包含在块级容器元素下的文本（不是在一个行内元素内），必须被作为一个 <strong>匿名的行内元素</strong>对待。</p>
+<p>如下的HTML文本：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Some <span class="tag">&lt;<span class="name">em</span>&gt;</span>emphasized<span class="tag">&lt;/<span class="name">em</span>&gt;</span> text<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>&lt;p&gt;</code> 生成一个块盒，有几个行内盒在它里面，内容 “emphasized” 的盒子是一个行内盒，它由行内元素 <code>&lt;em&gt;</code> 生成，其他两个盒子（“Some”和“text”）是由块级元素 <code>&lt;p&gt;</code> 生成的行内盒，后者被称为匿名的行内盒，因为它们没有与之关联的行内元素。</p>
+<p>因此匿名行内盒从它们的父级块级盒子那里继承可继承的属性，不能继承的属性使用初始值。</p>
+<p>空白如果使用 <code>white-space</code> 去掉，则不会生成任何匿名行内盒。</p>
+<p>有时如果文章上下文描述很清晰，无论匿名行内盒还是匿名块盒可以简称为 <strong>匿名盒</strong>。</p>
+<p>有更多匿名盒子类型将会出现，当格式化“tables”时。</p>
+<h3 id="其他类型盒"><a href="#其他类型盒" class="headerlink" title="其他类型盒"></a>其他类型盒</h3><h4 id="行盒-Line-boxes"><a href="#行盒-Line-boxes" class="headerlink" title="行盒(Line boxes)"></a>行盒(Line boxes)</h4><p>行盒由行内格式化上下文(inline formatting context)产生的盒，用于表示一行。在块盒里面，行盒从块盒一边排版到另一边。 当有浮动时, 行盒从左浮动的最右边排版到右浮动的最左边。</p>
+<blockquote>
+<p>行盒是技术上的实现，开发者通常不用操心它。</p>
+</blockquote>
+<h4 id="插入盒（Run-in-boxes）"><a href="#插入盒（Run-in-boxes）" class="headerlink" title="插入盒（Run-in boxes）"></a>插入盒（Run-in boxes）</h4><p>插入盒，由  display:run-in 定义，由后续盒的类型决定是块盒还是行盒。可以用来在第一个段落中插入标题。</p>
+<blockquote>
+<p>插入盒(Run-in boxes)从 CSS 2.1 标准中移除了，因为可操作的实现定义不足。 可能 CSS3 会引入，但是这是实验性质，不能用于生产环境。</p>
+</blockquote>
+<h3 id="“display”-属性"><a href="#“display”-属性" class="headerlink" title="“display” 属性"></a>“display” 属性</h3><h2 id="定位方案（Positioning-schemes）"><a href="#定位方案（Positioning-schemes）" class="headerlink" title="定位方案（Positioning schemes）"></a>定位方案（Positioning schemes）</h2><p>CSS 2.1 中，有三种：</p>
+<ul>
+<li>正常排版（块格式化、行内格式化、块框行框的相对定位）</li>
+<li>浮动</li>
+<li>绝对定位</li>
+</ul>
+<p>如果一个元素是浮动、绝对定位或根元素，那么称为 <strong>排版流之外（out of flow）</strong>，反之则是 <strong>排版流之内的元素（in-flow）</strong>。</p>
+<p>元素A的排版流包括元素A和所有在排版流之内的A的子孙元素，并且这些元素的最近的排版流外祖先元素是A。</p>
+<h3 id="正常流（Normal-flow）"><a href="#正常流（Normal-flow）" class="headerlink" title="正常流（Normal flow）"></a>正常流（Normal flow）</h3><p><strong>格式化上下文（Formatting context）</strong></p>
+<blockquote>
+<p>格式化上下文指的是：初始化元素定义的环境。包含两个要点，一个是元素定义的环境，一个是初始化。</p>
+</blockquote>
+<h4 id="块格式化上下文（Block-formatting-context）"><a href="#块格式化上下文（Block-formatting-context）" class="headerlink" title="块格式化上下文（Block formatting context）"></a>块格式化上下文（Block formatting context）</h4><p>块格式化上下文是页面 CSS 视觉渲染的一部分，是块盒子及浮动所在的地方。</p>
+<p><strong>布局规则</strong></p>
+<ul>
+<li>框会从包含块的顶部开始，一个接一个地，垂直向下地摆放</li>
+<li>两个兄弟框之间的垂直距离由 <code>margin</code> 属性来决定</li>
+<li>在同一个块格式化上下文中，相邻的块级框之间的垂直外边距会出现折叠(TODO: 外边距折叠)</li>
+<li>每个框的左外边距边要紧贴其包含块的左边。即使在有浮动的情景下也是如此，除非框创建了一个新的块格式化上下文(在这种情况下该框可能会为了避开浮动框而变窄)</li>
+</ul>
+<p><strong>何时创建</strong></p>
+<p>下列情况将创建一个块格式化上下文：</p>
+<ul>
+<li>根元素或其它包含它的元素</li>
+<li>浮动 (元素 float 不为 none)</li>
+<li>绝对定位元素 (元素 position 为 absolute 或 fixed)</li>
+<li>内联块 inline-blocks (元素 display: inline-block)</li>
+<li>表格单元格 (元素 display: table-cell，表格单元格默认属性)</li>
+<li>表格标题 (元素 display: table-caption, 表格标题默认属性)</li>
+<li>元素 overflow 不为 visible</li>
+<li>弹性盒 flex boxes (元素 display: flex 或 inline-flex)</li>
+</ul>
+<p>一个块格式化上下文包含这个元素的所有的后代元素，非后代元素将创建新的块格式化上下文。</p>
+<p>块格式化上下文对定位 (参见 float) 与清除浮动 (参见 clear) 很重要。定位与清除浮动只适用于同一块格式化上下文。浮动不会影响其它块格式化上下文的布局，清除浮动只是清除同一块格式化上下文里在它前面的浮动。在块格式化上下文中相邻的块级元素的垂直外边距会折叠( collapse )。</p>
+<p>在 CSS3 中，对块格式化上下文这个概念做了改动，将 “Block formatting context” 叫做 “flow root”。</p>
+<p>对于触发方式也做了修改，更加准确：<br>The value of ‘position’ is neither “static” nor “relative”.</p>
+<blockquote>
+<p>注意，”display:table” 本身并不产生 “block formatting contexts”。但是，它可以产生匿名框 ， 其中包含 “display:table-cell” 的框会产生块格式化上下文。 总之，对于 “display:table” 的元素，产生块格式化上下文的是匿名框而不是 “display:table”。</p>
+</blockquote>
+<h4 id="行内格式上下文"><a href="#行内格式上下文" class="headerlink" title="行内格式上下文"></a>行内格式上下文</h4><p>相对于块格式化上下文，在行内格式化上下文中，盒子( boxes )一个接一个地水平排列，起点是包含块的顶部。包含那些盒子的长方形区域，会形成一行，叫做行盒。</p>
+<p><strong>布局规则</strong></p>
+<ul>
+<li>水平方向上的 margin，border 和 padding 在盒子之间得到保留，竖直方向 margin 无效。</li>
+<li>盒子在垂直方向上可以以不同的方式对齐：它们的顶部或底部对齐，或根据其中文字的基线对齐。</li>
+<li>行框的宽度由它的包含块和其中的浮动元素决定。高度的确定由行高度计算规则决定</li>
+</ul>
+<p><strong>行内框的分割</strong></p>
+<p>如果一个行内框超出包含它的行框的宽度，它会被分割成几个框，并且这些框会被分布到几个行框内。如果一个行框不能被分割（例如， 行内框只包含单个字符，或者语言特殊的断字规则不允许在行内框里换行，或者行内框受到带有 “nowrap” 或 “pre” 值的 ‘white-space’ 特性的影响），这时，行内框会溢出行框。</p>
+<blockquote>
+<p>如果一个行内框被分割，margin、padding 和 border 在所有分割处没有视觉效果。</p>
+</blockquote>
+<p>行内框还可能由于双向文本处理（bidirectional text processing）而在同一个行框内被分割为好几个框。</p>
+<p><strong>行内框的忽略</strong></p>
+<ul>
+<li>不包含文本</li>
+<li>保留空白符</li>
+<li>margin/padding/border 非0的行内元素</li>
+<li>其他常规流中的内容(比如，图片，inline blocks 和 inline tables) 并且不是以换行结束的行框</li>
+</ul>
+<p>以上必须被当作零高度行框对待，如果为了其它的一些目的，则必须以其不存在来对待。</p>
+<p><strong>何时创建</strong></p>
+<p>块容器盒子创建行内上下文</p>
+<h4 id="相对定位"><a href="#相对定位" class="headerlink" title="相对定位"></a>相对定位</h4><p>以下三个规则是等价的：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span><span class="selector-class">.a8</span> \&#123; <span class="attribute">position</span>: relative; <span class="attribute">direction</span>: ltr; <span class="attribute">left</span>: -<span class="number">1em</span>; <span class="attribute">right</span>: auto &#125;</div><div class="line"><span class="selector-tag">div</span><span class="selector-class">.a8</span> \&#123; <span class="attribute">position</span>: relative; <span class="attribute">direction</span>: ltr; <span class="attribute">left</span>: auto; <span class="attribute">right</span>: <span class="number">1em</span> &#125;</div><div class="line"><span class="selector-tag">div</span><span class="selector-class">.a8</span> \&#123; <span class="attribute">position</span>: relative; <span class="attribute">direction</span>: ltr; <span class="attribute">left</span>: -<span class="number">1em</span>; <span class="attribute">right</span>: <span class="number">5em</span> &#125;</div></pre></td></tr></table></figure>
+<h3 id="浮动（Floats）"><a href="#浮动（Floats）" class="headerlink" title="浮动（Floats）"></a>浮动（Floats）</h3><h3 id="绝对定位"><a href="#绝对定位" class="headerlink" title="绝对定位"></a>绝对定位</h3><h3 id="‘display’、’position’-与-‘float’-的关系"><a href="#‘display’、’position’-与-‘float’-的关系" class="headerlink" title="‘display’、’position’ 与 ‘float’ 的关系"></a>‘display’、’position’ 与 ‘float’ 的关系</h3><h3 id="正常排版，浮动和绝对定位的对比"><a href="#正常排版，浮动和绝对定位的对比" class="headerlink" title="正常排版，浮动和绝对定位的对比"></a>正常排版，浮动和绝对定位的对比</h3>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/CSS/" rel="tag">#CSS</a>
+          
+            <a href="/blog/tags/Basic/" rel="tag">#Basic</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2013/08/19/grunt-veronica-intro/" rel="next" title="使用 grunt-veronica 打包应用">
+                <i class="fa fa-chevron-left"></i> 使用 grunt-veronica 打包应用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2013/09/18/js-type-detection/" rel="prev" title="JavaScript 类型检测">
+                JavaScript 类型检测 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="gochant" />
+          <p class="site-author-name" itemprop="name">gochant</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#可视化格式模型简介"><span class="nav-number">1.</span> <span class="nav-text">可视化格式模型简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#视口"><span class="nav-number">1.1.</span> <span class="nav-text">视口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包含块（Containing-blocks）"><span class="nav-number">1.2.</span> <span class="nav-text">包含块（Containing blocks）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制盒子生成（Controlling-box-generation）"><span class="nav-number">2.</span> <span class="nav-text">控制盒子生成（Controlling box generation）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#块级元素和块盒"><span class="nav-number">2.1.</span> <span class="nav-text">块级元素和块盒</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#匿名块盒（Anonymous-block-boxes）"><span class="nav-number">2.1.1.</span> <span class="nav-text">匿名块盒（Anonymous block boxes）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行内级元素和行内盒（Inline-level-elements-and-inline-boxes）"><span class="nav-number">2.2.</span> <span class="nav-text">行内级元素和行内盒（Inline-level elements and inline boxes）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#行内级元素和行内级盒"><span class="nav-number">2.2.1.</span> <span class="nav-text">行内级元素和行内级盒</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#行内盒（inline-box）"><span class="nav-number">2.2.2.</span> <span class="nav-text">行内盒（inline box）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原子行内级盒（atomic-inline-level-boxes）"><span class="nav-number">2.2.3.</span> <span class="nav-text">原子行内级盒（atomic inline-level boxes）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#匿名行内盒"><span class="nav-number">2.2.4.</span> <span class="nav-text">匿名行内盒</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他类型盒"><span class="nav-number">2.3.</span> <span class="nav-text">其他类型盒</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#行盒-Line-boxes"><span class="nav-number">2.3.1.</span> <span class="nav-text">行盒(Line boxes)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入盒（Run-in-boxes）"><span class="nav-number">2.3.2.</span> <span class="nav-text">插入盒（Run-in boxes）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“display”-属性"><span class="nav-number">2.4.</span> <span class="nav-text">“display” 属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定位方案（Positioning-schemes）"><span class="nav-number">3.</span> <span class="nav-text">定位方案（Positioning schemes）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正常流（Normal-flow）"><span class="nav-number">3.1.</span> <span class="nav-text">正常流（Normal flow）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#块格式化上下文（Block-formatting-context）"><span class="nav-number">3.1.1.</span> <span class="nav-text">块格式化上下文（Block formatting context）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#行内格式上下文"><span class="nav-number">3.1.2.</span> <span class="nav-text">行内格式上下文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相对定位"><span class="nav-number">3.1.3.</span> <span class="nav-text">相对定位</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮动（Floats）"><span class="nav-number">3.2.</span> <span class="nav-text">浮动（Floats）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绝对定位"><span class="nav-number">3.3.</span> <span class="nav-text">绝对定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#‘display’、’position’-与-‘float’-的关系"><span class="nav-number">3.4.</span> <span class="nav-text">‘display’、’position’ 与 ‘float’ 的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正常排版，浮动和绝对定位的对比"><span class="nav-number">3.5.</span> <span class="nav-text">正常排版，浮动和绝对定位的对比</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gochant</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

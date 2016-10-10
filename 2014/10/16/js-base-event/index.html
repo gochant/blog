@@ -1,0 +1,848 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript,Basic," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 基础（四）事件、HTTP">
+<meta property="og:url" content="http://yoursite.com/2014/10/16/js-base-event/index.html">
+<meta property="og:site_name" content="G01">
+<meta property="og:description" content="这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点">
+<meta property="og:updated_time" content="2016-10-10T15:01:30.817Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 基础（四）事件、HTTP">
+<meta name="twitter:description" content="这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/10/16/js-base-event/"/>
+
+  <title> JavaScript 基础（四）事件、HTTP | G01 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">G01</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Living Life Over</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaScript 基础（四）事件、HTTP
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-10-16T23:10:54+08:00" content="2014-10-16">
+              2014-10-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/Frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">Frontend</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><p>客户端JS采用了异步事件编程模型，简而言之，事件就是Web浏览器通知应用程序发生了什么事。事件的定义包括：</p>
+<ul>
+<li>事件类型（event type）</li>
+<li>事件目标（event target）</li>
+<li>事件对象（event object）</li>
+<li>事件传播（event propagation）</li>
+</ul>
+<a id="more"></a>
+<h3 id="事件类型"><a href="#事件类型" class="headerlink" title="事件类型"></a>事件类型</h3><p>事件类型来源：</p>
+<ul>
+<li>DOM3 事件规范</li>
+<li>HTML5 规范</li>
+<li>移动设备和触摸</li>
+</ul>
+<p>分类：</p>
+<ul>
+<li>依赖于设备的输入事件</li>
+</ul>
+<p>mousedown、mousemove、mouseup、keydown、keypress、keyup 等，touchmove、gesturechange 等</p>
+<ul>
+<li>独立于设备的输入事件</li>
+</ul>
+<p>click、textinput（未广泛实现，） 等</p>
+<ul>
+<li>UI事件</li>
+</ul>
+<p>较高级的事件，包括：focus、change、submit 等</p>
+<ul>
+<li>状态变化事件</li>
+</ul>
+<p>load、DOMContentLoaded；历史管理：popstate；离线API：online、offline；Ajax：readystatechange；本地文件异步IO：loadstart、 progress、loaded 等</p>
+<ul>
+<li>特定API事件</li>
+</ul>
+<p>拖放：dragstart、dragenter、dragover、drop；播放器：waiting、playing、seeking、volumechange 等</p>
+<ul>
+<li>计时器和错误处理</li>
+</ul>
+<h4 id="表单事件"><a href="#表单事件" class="headerlink" title="表单事件"></a>表单事件</h4><ul>
+<li>form 元素：submit、reset</li>
+<li>可点击的元素（如按钮、单选复选框）：click</li>
+<li>具有value的元素（文本框、选择框、复选框等）：change（对于文本输入域，只有离开元素时才会触发change）</li>
+<li>可得到焦点的元素：focus、blur</li>
+</ul>
+<blockquote>
+<p>focus和blur不会冒泡，其他表单事件会，IE定义了不标准的focusin 和 focusout，支持冒泡，jQuery模拟了它，该事件正在标准化（TODO）</p>
+</blockquote>
+<h4 id="Window-事件"><a href="#Window-事件" class="headerlink" title="Window 事件"></a>Window 事件</h4><ul>
+<li>load</li>
+<li>DOMContentLoaded、readystatechange</li>
+<li>unload</li>
+<li>beforeunload</li>
+<li>onerror</li>
+</ul>
+<blockquote>
+<p>img 也有 load、error，也有 abort（HTML5标准）</p>
+</blockquote>
+<ul>
+<li>focus、blur：代表浏览器窗口得到或失去键盘焦点</li>
+<li>resize、scroll</li>
+</ul>
+<blockquote>
+<p>scroll 也能在可以滚动的元素上触发</p>
+</blockquote>
+<h4 id="鼠标事件"><a href="#鼠标事件" class="headerlink" title="鼠标事件"></a>鼠标事件</h4><p>单击：mousedown -&gt; mouseup -&gt; click<br>拖动：mousedown -&gt; mousemove (-&gt; mouseup -&gt; click)<br>双击：mousedown -&gt; mouseup -&gt; click -&gt; mousedown -&gt; mouseup -&gt; click -&gt; dblclick<br>鼠标悬停：mouseover、mouseout；mouseenter、mouseleave</p>
+<blockquote>
+<p>由于mouseover和mouseout要冒泡，因此你无法检测鼠标是真的离开某个元素，还是仅仅从该元素的一个子元素进入到另一个子元素，使用mouseenter、mouseleave不冒泡版本会更方便；这个仅IE支持，DOM3 Event规范标准化了，jQuery模拟了它</p>
+</blockquote>
+<p>鼠标滚轮：mousewheel，DOM3规范规定了更规范的wheel事件，取代mousewheel</p>
+<blockquote>
+<p>在Firefox中，mousewheel 叫 DOMMouseScroll</p>
+</blockquote>
+<h4 id="键盘事件"><a href="#键盘事件" class="headerlink" title="键盘事件"></a>键盘事件</h4><p>keydown、keyup、keypress（产生可打印字符）</p>
+<p>按下某个键：keydown -&gt; keypress… -&gt; keyup</p>
+<h4 id="新的DOM事件"><a href="#新的DOM事件" class="headerlink" title="新的DOM事件"></a>新的DOM事件</h4><p>新的DOM3 Event 规范的主要改进：</p>
+<ul>
+<li>使用冒泡的focusin、focusout 取代不冒泡的 focus、blur事件</li>
+<li>使用不冒泡的mouseenter、mouseleave 取代 mouseover、mouseout</li>
+<li>标准化 wheel</li>
+<li>使用 textinput，而不是 keypress，监视文本输入（包括：键盘、剪切粘贴、拖放等方式）</li>
+</ul>
+<h4 id="HTML5-事件"><a href="#HTML5-事件" class="headerlink" title="HTML5 事件"></a>HTML5 事件</h4><p>audio、video 事件：canplay、loadeddata<br>拖放事件：dragstart、drag<br>历史管理事件：Window：hashchange、popstate<br>表单验证事件：Form：invalid<br>离线Web：Window：online、offline<br>异步通信：message<br>异步IO：XMLHttpRequest、FileReader：loadstart、progress、loadend<br>Web存储：storage<br>打印：beforeprint、afterprint<br>……</p>
+<h4 id="触摸屏、移动设备事件"><a href="#触摸屏、移动设备事件" class="headerlink" title="触摸屏、移动设备事件"></a>触摸屏、移动设备事件</h4><p>手势（两个手指的缩放旋转）：gesturestart、gestureend<br>低级触摸事件：touchstart、touchend、touchover<br>方位：orientationchanged</p>
+<h3 id="注册事件处理程序"><a href="#注册事件处理程序" class="headerlink" title="注册事件处理程序"></a>注册事件处理程序</h3><h4 id="使用事件触发对象的属性"><a href="#使用事件触发对象的属性" class="headerlink" title="使用事件触发对象的属性"></a>使用事件触发对象的属性</h4><p>on + 事件名</p>
+<h4 id="使用HTML标签属性"><a href="#使用HTML标签属性" class="headerlink" title="使用HTML标签属性"></a>使用HTML标签属性</h4><p>在HTML中的js代码里，可以使用一个 event 对象，同时 this 指向事件触发对象DOM，浏览器会把js代码串包装成如下函数中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function(event)&#123;</div><div class="line">    with(document)&#123;</div><div class="line">        with(this.form || &#123;&#125;)&#123;</div><div class="line">            with(this)&#123;</div><div class="line">                // code</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种会带来很多问题，包括命名冲突、作用域混乱等，因避免使用</p>
+<h4 id="使用-addEventListener"><a href="#使用-addEventListener" class="headerlink" title="使用 addEventListener"></a>使用 addEventListener</h4><p>使用对象：Window、Document、Element</p>
+<p><code>addEventListener(事件名, 处理程序, false)</code></p>
+<p>第三个参数代表是否注册为在捕获阶段的事件处理程序，除非特殊需求，应总是传递 false</p>
+<p><code>removeEventListener(事件名, 处理程序, false)</code></p>
+<p>IE9 之前不支持 addEventListener，使用 attachEvent 和 detachEvent，它与标准方法的区别是：</p>
+<ul>
+<li>没有第三个参数，因为IE事件模型不支持事件捕获</li>
+<li>IE的第一个参数的事件名应该带 on</li>
+<li>未传入 event 参数</li>
+<li>事件处理程序内的this指向全局对象：Window</li>
+<li>可以为同一个事件注册多个相同的事件处理程序，注册了多少次，就调用多少次</li>
+<li>调用顺序是任意的，不是按照注册顺序调用</li>
+</ul>
+<h3 id="事件处理程序的调用"><a href="#事件处理程序的调用" class="headerlink" title="事件处理程序的调用"></a>事件处理程序的调用</h3><h4 id="事件对象参数"><a href="#事件对象参数" class="headerlink" title="事件对象参数"></a>事件对象参数</h4><p>在IE8及以前的版本中，没有传入这个对象，兼容性代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function handler(e)&#123;</div><div class="line">    e = e || window.event</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h4><p>在通过<strong>设置对象属性</strong>和<strong>HTML属性</strong>注册事件，返回 <code>false</code> 可以阻止浏览器的默认行为，但这种方式通过add监听器方式无效，需要自己写方法实现</p>
+<h4 id="调用顺序"><a href="#调用顺序" class="headerlink" title="调用顺序"></a>调用顺序</h4><ul>
+<li>通过设置对象属性和HTML属性注册的处理程序一直优先调用</li>
+<li>addEventListener则按照它们注册的顺序调用</li>
+<li>attachEvent 调用顺序不依赖于注册顺序</li>
+</ul>
+<h4 id="事件传播"><a href="#事件传播" class="headerlink" title="事件传播"></a>事件传播</h4><p>三个阶段：</p>
+<ul>
+<li>事件捕获</li>
+<li>触发当前元素的事件处理程序</li>
+<li>事件冒泡</li>
+</ul>
+<blockquote>
+<p>不冒泡的事件：focus、blur、scroll、mouseenter、mouseleave、load 会冒泡，但会在document上停止冒泡，只有整个文档加载完，才会触发 window 的 load</p>
+</blockquote>
+<p>事件捕获阶段最先调用 window 的捕获处理程序，然后沿着DOM树向下，调用到目标元素的父级元素，不调用目标对象本身注册的处理程序；而事件冒泡刚好相反<br>事件冒泡可实现事件代理，而事件捕获则提供了事件到达目标前查看的机会，可用于程序调试、事件取消</p>
+<h4 id="事件取消"><a href="#事件取消" class="headerlink" title="事件取消"></a>事件取消</h4><p><strong>取消默认行为</strong></p>
+<p>标准用法 <code>event.preventDefault()</code>；在IE8中，可以设置<code>event.returnValue</code> 为 false来达到同样效果；在对象属性和HTML属性事件处理程序中，直接 <code>return false</code></p>
+<p>在标准中，Event对象定义了 <code>defaultPrevented</code> 查看是否阻止了默认行为</p>
+<p><strong>取消事件传播</strong></p>
+<p>标准用法 <code>event.stopPropagation()</code>，能阻止后续事件的传播，但无法阻止定义在同一对象的其他处理程序，它能工作在捕获阶段，事件目标本身和冒泡阶段</p>
+<p>IE8的事件对象有一个cancelBubble属性，设置为true则能阻止事件的进一步传播</p>
+<p>使用 <code>event.stopImmediatePropagation()</code> 阻止事件传播，也能阻止在同一对象上注册的其他事件调用</p>
+<h3 id="常用事件"><a href="#常用事件" class="headerlink" title="常用事件"></a>常用事件</h3><h4 id="文档加载事件"><a href="#文档加载事件" class="headerlink" title="文档加载事件"></a>文档加载事件</h4><p>window.load、document.DOMContentLoaded、document.readystatechange<br>document.readyState</p>
+<h4 id="鼠标事件-1"><a href="#鼠标事件-1" class="headerlink" title="鼠标事件"></a>鼠标事件</h4><h4 id="鼠标滚轮事件"><a href="#鼠标滚轮事件" class="headerlink" title="鼠标滚轮事件"></a>鼠标滚轮事件</h4><h4 id="文本事件"><a href="#文本事件" class="headerlink" title="文本事件"></a>文本事件</h4><h4 id="键盘事件-1"><a href="#键盘事件-1" class="headerlink" title="键盘事件"></a>键盘事件</h4><h4 id="拖放事件"><a href="#拖放事件" class="headerlink" title="拖放事件"></a>拖放事件</h4><h2 id="脚本化-HTML"><a href="#脚本化-HTML" class="headerlink" title="脚本化 HTML"></a>脚本化 HTML</h2><p>传统方式：设置 location、submit，缺点：浏览器重新加载页面</p>
+<ul>
+<li>Ajax：用脚本操纵HTTP的Web应用架构</li>
+<li>Comet：Web服务器发起通信，并异步发送消息到客户端</li>
+</ul>
+<p>实现方式（通信协议）：</p>
+<p>Ajax：</p>
+<ul>
+<li>使用 img 的src</li>
+<li>使用 iframe 元素</li>
+<li>使用 script 元素</li>
+<li>使用 XMLHttpRequest</li>
+</ul>
+<p>Commet</p>
+<ul>
+<li>iframe</li>
+<li>XMLHttpRequest</li>
+<li>HTML5 的 Server-Sent</li>
+</ul>
+<p>更高级的协议：RPC</p>
+<h3 id="使用-XMLHttpRequest"><a href="#使用-XMLHttpRequest" class="headerlink" title="使用 XMLHttpRequest"></a>使用 XMLHttpRequest</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var request = new XMLHttpRequest()</div></pre></td></tr></table></figure>
+<p>IE6下使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var request = new ActiveXObject(&apos;Msxml2.XMLHTTP.6.0&apos;);</div></pre></td></tr></table></figure>
+<p>HTTP 请求组成：</p>
+<ul>
+<li>verb（动作、方法）</li>
+<li>url</li>
+<li>请求头</li>
+<li>请求主体</li>
+</ul>
+<p>HTTP 响应组成部分：</p>
+<ul>
+<li>状态码</li>
+<li>响应头</li>
+<li>响应主体</li>
+</ul>
+<blockquote>
+<p>由于同源策略的原因，使用本地文件测试 XMLHttpRequest 请求会失败</p>
+</blockquote>
+<h4 id="发起请求"><a href="#发起请求" class="headerlink" title="发起请求"></a>发起请求</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">request.open(&apos;GET&apos;, &apos;data.json&apos;);</div><div class="line"></div><div class="line">request.setHeader(&apos;Content-Type&apos;, &apos;text/plain&apos;);</div><div class="line"></div><div class="line">request.send(msg);</div></pre></td></tr></table></figure>
+<p>这里有几点注意：</p>
+<ul>
+<li>应遵循特定的书写顺序，例如 setHeader在open后，send前，否则会报错 </li>
+<li>允许的 verb 包括：GET、POST、DELETE、HEAD、OPTIONS、PUT，禁止 TRACE、TRACK、HTTPCONNECT（因为安全问题），旧浏览器可能不支持其中的某些</li>
+<li>某些头不能自己指定，例如：Content-Length、Date、Referer、cookie 等</li>
+<li>URL 使用相对路径（待考证）</li>
+<li>GET 请求，请求主体为null，request.send(null)</li>
+</ul>
+<h4 id="接收响应"><a href="#接收响应" class="headerlink" title="接收响应"></a>接收响应</h4><p>request的几个属性：<code>status</code> 和 <code>statusText</code> 分别以数字和文本的方式返回HTTP状态码</p>
+<p>使用方法 <code>getResponseHeader()</code> 和 <code>getAllResponseHeaders()</code> 查询响应头</p>
+<p>使用 <code>responseText</code> 中获取响应主体文本，或者 <code>responseXML</code> 中获取 XML、XHTML、HTML 的 Document</p>
+<p>使用 <code>readyState</code> 查询请求的状态</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>常量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>UNSENT</td>
+<td>open还未调用</td>
+</tr>
+<tr>
+<td>1</td>
+<td>OPENED</td>
+<td>open已调用</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HEADERS_RECEIVED</td>
+<td>接收到头信息</td>
+</tr>
+<tr>
+<td>3</td>
+<td>LOADING</td>
+<td>接收到响应主体</td>
+</tr>
+<tr>
+<td>4</td>
+<td>DONE</td>
+<td>响应完成</td>
+</tr>
+</tbody>
+</table>
+<p>实际使用中，应监听 <code>readystatechange</code> 事件，获取 request.readyState 属性进行判断，可使用 on+xxx 监听，也可使用 addEventListenr，通常使用 onreadystatechange 更容易（因为通常只监听一次）</p>
+<p>每次readyState变化，都会触发readystatechange事件，但有些例外：当状态变为0或1时，可能不会触发；调用send时，状态为改变（仍为1），也通常会触发；某些浏览器会多次触发3，以便进行进度反馈</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">request.onreadystatechange = function()&#123;</div><div class="line">    if(request.readyState === 4 &amp;&amp; request.status === 200)&#123;</div><div class="line">        callback(request.responseText);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>同步的响应</strong></p>
+<p>如果是同步响应（open 的第三个参数传入false），则不用监听readystatechange事件，直接读取即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">request.send(null);</div><div class="line">if(request.status === 200) return request.responseText;</div></pre></td></tr></table></figure>
+<p>? 在那些场景下可以使用同步请求</p>
+<p><strong>处理响应</strong></p>
+<p>获取响应头 Content-Type，根据具体的头信息选择合适的处理方式，如果是 xml 或 xhtml，则会在responseXML中获取到响应（Document类型）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">request.onreadystatechange = function()&#123;</div><div class="line">    var type = request.getResponseHeader(&apos;Content-Type&apos;);</div><div class="line">    if(type === &apos;application/json&apos;)&#123;</div><div class="line">        callback(JSON.parse(request.responseText));</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">request.send(null);</div></pre></td></tr></table></figure>
+<p>responseText 只能处理文本，不能处理二进制数据，XHR2定义了处理二进制响应的方法，但浏览器厂商还未实现（使用Blob）<br>如果服务器未设置正确的mime和字符集，可能会解析错误，那么可以在浏览器端设置，强制使用一种mime来解析响应</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">request.overrideMimeType(&apos;text/plain;charset=utf-8&apos;);</div></pre></td></tr></table></figure>
+<h4 id="请求主体编码"><a href="#请求主体编码" class="headerlink" title="请求主体编码"></a>请求主体编码</h4><p><strong>表单编码：application/x-www-form-urlencoded</strong></p>
+<p>执行普通的URL编码，并将特殊字符进行十六进制转义码替换，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find=pizza&amp;zipcode=0213&amp;radius=1km</div></pre></td></tr></table></figure>
+<p>如果使用GET请求，则该字符串会附加到URL以？开始的查询字符串上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">request.setRequestHeader(&apos;Content-Type&apos;, &apos;application/x-www-form-urlencoded&apos;);</div><div class="line">request.send(encodeForm(data));</div></pre></td></tr></table></figure>
+<p><strong>JSON编码</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">request.setRequestHeader(&apos;Content-Type&apos;, &apos;application/json&apos;);</div><div class="line">request.send(JSON.stringify(data));</div></pre></td></tr></table></figure>
+<p><strong>XML编码</strong></p>
+<p>request.send可以直接传入一个 Document 对象，则不用设置Content-Type</p>
+<p><strong>上传文件</strong></p>
+<p>不能通过XHR，但XHR2可以</p>
+<p><strong>multipart/form-data</strong></p>
+<p>当既包含文件和文本数据时，XHR2定义了FormData对象，用于构造多部分请求主体</p>
+<h4 id="进度事件"><a href="#进度事件" class="headerlink" title="进度事件"></a>进度事件</h4><p>XHR2定义了更多有用的事件集，因此可以不必使用readystatechange事件</p>
+<p>当调用 send 时，触发loadstart事件，然后加载响应时，通常每隔50ms，触发progress事件（如果完成太快，可能就不会触发），完成后，触发load事件；如果无法完成，由三种情况：请求超时，则触发timeout，请求中止，触发abort，网络错误，会触发error；浏览器对于请求只会触发load、timeout、abort、error中的一个，XHR2规定，出现其中一个，则触发loadend事件</p>
+<p><strong>上传进度</strong></p>
+<p>TODO</p>
+<h4 id="中止请求和超时"><a href="#中止请求和超时" class="headerlink" title="中止请求和超时"></a>中止请求和超时</h4><p>XHR2定义了 通过request.timeout 设置超时事件（毫秒数），请求中止：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">request.abort()</div></pre></td></tr></table></figure></p>
+<h3 id="跨域HTTP请求"><a href="#跨域HTTP请求" class="headerlink" title="跨域HTTP请求"></a>跨域HTTP请求</h3><p>CORS</p>
+<h3 id="JSONP-技术"><a href="#JSONP-技术" class="headerlink" title="JSONP 技术"></a>JSONP 技术</h3><p>服务器端返回的JSON数据通过一个函数调用表达式包裹，用在不支持CORS的浏览器上</p>
+<h3 id="Comet-技术"><a href="#Comet-技术" class="headerlink" title="Comet 技术"></a>Comet 技术</h3>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/blog/tags/Basic/" rel="tag">#Basic</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2014/10/12/js-base-client/" rel="next" title="JavaScript 基础（三） 浏览器、DOM、CSS 操纵">
+                <i class="fa fa-chevron-left"></i> JavaScript 基础（三） 浏览器、DOM、CSS 操纵
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2015/04/08/jquery-data/" rel="prev" title="JavaScript 基础：jQuery 数据存储">
+                JavaScript 基础：jQuery 数据存储 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="gochant" />
+          <p class="site-author-name" itemprop="name">gochant</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#事件处理"><span class="nav-number">1.</span> <span class="nav-text">事件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件类型"><span class="nav-number">1.1.</span> <span class="nav-text">事件类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#表单事件"><span class="nav-number">1.1.1.</span> <span class="nav-text">表单事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Window-事件"><span class="nav-number">1.1.2.</span> <span class="nav-text">Window 事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#鼠标事件"><span class="nav-number">1.1.3.</span> <span class="nav-text">鼠标事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#键盘事件"><span class="nav-number">1.1.4.</span> <span class="nav-text">键盘事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新的DOM事件"><span class="nav-number">1.1.5.</span> <span class="nav-text">新的DOM事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTML5-事件"><span class="nav-number">1.1.6.</span> <span class="nav-text">HTML5 事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#触摸屏、移动设备事件"><span class="nav-number">1.1.7.</span> <span class="nav-text">触摸屏、移动设备事件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注册事件处理程序"><span class="nav-number">1.2.</span> <span class="nav-text">注册事件处理程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用事件触发对象的属性"><span class="nav-number">1.2.1.</span> <span class="nav-text">使用事件触发对象的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用HTML标签属性"><span class="nav-number">1.2.2.</span> <span class="nav-text">使用HTML标签属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-addEventListener"><span class="nav-number">1.2.3.</span> <span class="nav-text">使用 addEventListener</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件处理程序的调用"><span class="nav-number">1.3.</span> <span class="nav-text">事件处理程序的调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事件对象参数"><span class="nav-number">1.3.1.</span> <span class="nav-text">事件对象参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#返回值"><span class="nav-number">1.3.2.</span> <span class="nav-text">返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调用顺序"><span class="nav-number">1.3.3.</span> <span class="nav-text">调用顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件传播"><span class="nav-number">1.3.4.</span> <span class="nav-text">事件传播</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件取消"><span class="nav-number">1.3.5.</span> <span class="nav-text">事件取消</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用事件"><span class="nav-number">1.4.</span> <span class="nav-text">常用事件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文档加载事件"><span class="nav-number">1.4.1.</span> <span class="nav-text">文档加载事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#鼠标事件-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">鼠标事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#鼠标滚轮事件"><span class="nav-number">1.4.3.</span> <span class="nav-text">鼠标滚轮事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文本事件"><span class="nav-number">1.4.4.</span> <span class="nav-text">文本事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#键盘事件-1"><span class="nav-number">1.4.5.</span> <span class="nav-text">键盘事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拖放事件"><span class="nav-number">1.4.6.</span> <span class="nav-text">拖放事件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚本化-HTML"><span class="nav-number">2.</span> <span class="nav-text">脚本化 HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-XMLHttpRequest"><span class="nav-number">2.1.</span> <span class="nav-text">使用 XMLHttpRequest</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#发起请求"><span class="nav-number">2.1.1.</span> <span class="nav-text">发起请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接收响应"><span class="nav-number">2.1.2.</span> <span class="nav-text">接收响应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请求主体编码"><span class="nav-number">2.1.3.</span> <span class="nav-text">请求主体编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进度事件"><span class="nav-number">2.1.4.</span> <span class="nav-text">进度事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中止请求和超时"><span class="nav-number">2.1.5.</span> <span class="nav-text">中止请求和超时</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跨域HTTP请求"><span class="nav-number">2.2.</span> <span class="nav-text">跨域HTTP请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSONP-技术"><span class="nav-number">2.3.</span> <span class="nav-text">JSONP 技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Comet-技术"><span class="nav-number">2.4.</span> <span class="nav-text">Comet 技术</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gochant</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

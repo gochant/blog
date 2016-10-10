@@ -1,0 +1,680 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content=".NET,ASP.NET MVC," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="CMMI 体系和严谨的软件工程讲究整个开发生命周期的所有活动都要留下相关证据，并且整个路径的相关记录都要保持一致性。举个例子：如果发生变更，那么相应会有变更的申请单以及评审表，某个文档发生变更，其他影响到的文档或代码都应该变更并形成相应记录，并且维持好对应的需求跟踪矩阵。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个快速开发工具">
+<meta property="og:url" content="http://yoursite.com/2016/03/07/a-rapid-development-tool/index.html">
+<meta property="og:site_name" content="G01">
+<meta property="og:description" content="CMMI 体系和严谨的软件工程讲究整个开发生命周期的所有活动都要留下相关证据，并且整个路径的相关记录都要保持一致性。举个例子：如果发生变更，那么相应会有变更的申请单以及评审表，某个文档发生变更，其他影响到的文档或代码都应该变更并形成相应记录，并且维持好对应的需求跟踪矩阵。">
+<meta property="og:updated_time" content="2016-10-10T15:01:29.982Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个快速开发工具">
+<meta name="twitter:description" content="CMMI 体系和严谨的软件工程讲究整个开发生命周期的所有活动都要留下相关证据，并且整个路径的相关记录都要保持一致性。举个例子：如果发生变更，那么相应会有变更的申请单以及评审表，某个文档发生变更，其他影响到的文档或代码都应该变更并形成相应记录，并且维持好对应的需求跟踪矩阵。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/03/07/a-rapid-development-tool/"/>
+
+  <title> 一个快速开发工具 | G01 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">G01</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Living Life Over</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                一个快速开发工具
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-07T23:00:52+08:00" content="2016-03-07">
+              2016-03-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/Architecture/" itemprop="url" rel="index">
+                    <span itemprop="name">Architecture</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CMMI 体系和严谨的软件工程讲究整个开发生命周期的所有活动都要留下相关证据，并且整个路径的相关记录都要保持一致性。举个例子：如果发生变更，那么相应会有变更的申请单以及评审表，某个文档发生变更，其他影响到的文档或代码都应该变更并形成相应记录，并且维持好对应的需求跟踪矩阵。</p>
+<a id="more"></a>
+<p>最基本的，其实就是需求-设计-编码-测试这些关键子过程要保持一致，在项目开发过程中，经常由于资源、环境配置、管理不到位，造成以下几个方面的问题：</p>
+<ul>
+<li>需求详细程度不够</li>
+<li>工期太短，无法形成有效设计</li>
+<li>开发人员水平参差不齐，编码质量无法维持一致性，增加重构成本</li>
+<li>后期变更有些过程文档没有照顾到，无法进行双向追溯</li>
+</ul>
+<p>这里面的核心矛盾就是开发速度与成果质量，如果能够让开发人员不写代码或尽量少些代码，那么就会降低出错的几率，最好是能够从需求直接生成实现，那是再好不过了。</p>
+<h2 id="快速生产的一些途径"><a href="#快速生产的一些途径" class="headerlink" title="快速生产的一些途径"></a>快速生产的一些途径</h2><p>我见过两种能够显著提高开发速度的工具：</p>
+<ul>
+<li>可配置系统<ul>
+<li>优点：热插拔、可视化配置，用户也可使用，业务逻辑易拷贝</li>
+<li>缺点：开发人员不友好（提供一套新的机制，限制较多、扩展一般只能通过插件实现）、性能优化不易（并且可能采用了动态加载，效率会变慢）、深度定制成本增大</li>
+</ul>
+</li>
+<li>代码生成器<ul>
+<li>优点：仅提供脚手架，即减轻工作量，又高度自由；与现有开发模式一致，易于接受</li>
+<li>缺点：开发模式比较原始，不够智能，可能仍有较大开发工作量，效率提高不够显著</li>
+</ul>
+</li>
+</ul>
+<p>从时间和个人偏好以及后期维护角度考虑，我打算做一个可以认为是代码生成器的东西，它面向开发人员，并期望提供一些不一样的东西，主要达到以下几个目标：</p>
+<ol>
+<li><strong>维护一致</strong> 维持需求与实现的一致性</li>
+<li><strong>开发效率</strong> 最大限度降低开发人员工作量和出错几率</li>
+<li><strong>可扩展</strong> 在需要自定义的场景能够任意定制满足其需求</li>
+</ol>
+<p><strong>确保一致性</strong></p>
+<p>为了实现维护一致性，最好的方式就是一旦改了需求，那么代码就自动更改，单一般来说，需求规格说明书都是Word等非结构化数据，要实现从需求到实现的目的，首先是要将其转换成结构化数据，例如XML，也就是<strong>结构化需求（SRS -&gt; SDD -&gt; Code）</strong>，在我的解决方案，SRS的几个关键部分被结构化如下：</p>
+<ul>
+<li>总体功能模块图  -&gt; *.sitemap</li>
+<li>功能需求<ul>
+<li>用户故事 -&gt; *.bmx</li>
+<li>数据描述 -&gt; *.edmx</li>
+</ul>
+</li>
+<li>非功能需求（安全、性能……） -&gt; 底层框架（Orzoo）</li>
+</ul>
+<blockquote>
+<p>说明：模块图是一棵树，用站点地图文件可以很好地表达，它会被程序读取用来构建导航和菜单；用户故事这里我创建了一种新的XML数据（业务模型文件，用来描述模型之间的关系，另外用户故事的场景逻辑部分则通过底层框架预置）；数据描述则最直接的方式通过实体数据模型来定义；非功能需求则通过底层框架来保证达到相应的指标</p>
+</blockquote>
+<p><strong>提高开发效率</strong></p>
+<p>有了结构化的需求文档，就可以通过程序读取该文档并生成代码，生成代码这里采用了 T4 模板引擎，对于 sitemap 和 edmx 文件，在VS里面都能很方便的维护，对于自创的 bmx 文件，我不得不为它单独写了一个 VisualStudio 的插件去完成可视化的编辑</p>
+<p><strong>扩展性</strong></p>
+<p>由于代码生成器只是为你生成了你不需要手工编写的代码，因此跟你自己平时开发一样，你可以任意更改和扩展，但出于维持一致性的考虑，开发人员最好不要去动生成器生成的代码，因此对于每一个生成的类，都应该定义成一个 <code>partial</code> class。另外，一种常见的扩展方式是通过AOP的机制注入一些拦截代码，由于时间因素，暂未实现</p>
+<h2 id="基础设施"><a href="#基础设施" class="headerlink" title="基础设施"></a>基础设施</h2><ul>
+<li>业务模型（bmx）编辑插件：VerGen</li>
+<li>轻量级ASP.NET框架：Orzoo</li>
+<li>前端框架：veronica（单页面框架）、tinyui（bootstrap扩展库）、veronica-ui（第三方库集合）</li>
+</ul>
+<p><strong>Orzoo 组成</strong></p>
+<ul>
+<li>Orzoo.Core（核心）</li>
+<li>Orzoo.AspNet（ASP.NET增强）</li>
+<li>Orzoo.Office（Excel、Word导入导出）</li>
+<li>Orzoo.WebBase（通用界面的封装）</li>
+<li>Orzoo.Business（二级缓存、用户行为记录、日志、权限、组织架构、访问控制）</li>
+</ul>
+<p><strong>Orzoo 依赖</strong></p>
+<ul>
+<li>Orzoo.Core (System.Linq.Dynamic)</li>
+<li>Orzoo.AspNet (Orzoo.Core、AspNet.Mvc、EntityFramework、AutoMapper) </li>
+<li>Orzoo.Office (NPOI、RazorEngine)</li>
+<li>Orzoo.WebBase (Orzoo.AspNet、MvcSiteMapProvider)</li>
+</ul>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>我写了个 Demo 利用了以上的架构和工具，现在不方便的就是这些东西并没有发布到 Nuget 上，因此只有手动获取下来编译运行。在这个标准示例项目中，我额外用了以下库或工具，你可以在自己的其他项目中替换我的选型：</p>
+<ul>
+<li>依赖注入：SimpleInjector</li>
+<li>模板预编译：RazorGenerator</li>
+<li>诊断：Glimpse</li>
+<li>错误日志：Elmah</li>
+<li>单元测试：MSTest</li>
+<li>安全测试：AppScan</li>
+</ul>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p>Orzoo：<a href="https://github.com/gochant/Orzoo" target="_blank" rel="external">https://github.com/gochant/Orzoo</a><br>VerGen：<a href="https://github.com/gochant/VerGen" target="_blank" rel="external">https://github.com/gochant/VerGen</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/NET/" rel="tag">#.NET</a>
+          
+            <a href="/blog/tags/ASP-NET-MVC/" rel="tag">#ASP.NET MVC</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2015/04/08/jquery-data/" rel="next" title="JavaScript 基础：jQuery 数据存储">
+                <i class="fa fa-chevron-left"></i> JavaScript 基础：jQuery 数据存储
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2016/03/09/do-products-over-the-years/" rel="prev" title="做产品这几年">
+                做产品这几年 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="gochant" />
+          <p class="site-author-name" itemprop="name">gochant</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速生产的一些途径"><span class="nav-number">1.</span> <span class="nav-text">快速生产的一些途径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础设施"><span class="nav-number">2.</span> <span class="nav-text">基础设施</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例"><span class="nav-number">3.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目地址"><span class="nav-number">4.</span> <span class="nav-text">项目地址</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gochant</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

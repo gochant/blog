@@ -1,0 +1,697 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="veronica," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这篇文章主要罗列一些项目升级了 veronica 库后需要注意的一些点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="veronica v0.2.x 升级到 v1.0.x 指南">
+<meta property="og:url" content="http://yoursite.com/2016/06/29/veronica-update-0-2-to-1-x/index.html">
+<meta property="og:site_name" content="G01">
+<meta property="og:description" content="这篇文章主要罗列一些项目升级了 veronica 库后需要注意的一些点">
+<meta property="og:updated_time" content="2016-10-10T15:01:31.256Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="veronica v0.2.x 升级到 v1.0.x 指南">
+<meta name="twitter:description" content="这篇文章主要罗列一些项目升级了 veronica 库后需要注意的一些点">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/29/veronica-update-0-2-to-1-x/"/>
+
+  <title> veronica v0.2.x 升级到 v1.0.x 指南 | G01 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">G01</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Living Life Over</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                veronica v0.2.x 升级到 v1.0.x 指南
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-29T10:32:01+08:00" content="2016-06-29">
+              2016-06-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/Frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">Frontend</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>注意</strong> 请结合官方 API 文档进行观看</p>
+</blockquote>
+<h2 id="类式继承不被推荐，使用-mixins"><a href="#类式继承不被推荐，使用-mixins" class="headerlink" title="类式继承不被推荐，使用 mixins"></a>类式继承不被推荐，使用 mixins</h2><blockquote>
+<p>mixins 也不是最好用的复用模式，但比类式继承还是要好用一些，小心使用，避免混乱</p>
+</blockquote>
+<p>不推荐的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> View = app.mvc.tableView(...)</div></pre></td></tr></table></figure>
+<p>推荐的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> View = app.view.define(&#123;</div><div class="line">    mixins: <span class="function"><span class="keyword">function</span> (<span class="params">app</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> [app.mvc.tableView];</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="使用简单的组件定义模式"><a href="#使用简单的组件定义模式" class="headerlink" title="使用简单的组件定义模式"></a>使用简单的组件定义模式</h2><p>不推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> sandbox = options.sandbox;</div><div class="line">    <span class="keyword">var</span> app = sandbox.app;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> appView = app.mvc.tableView(...)</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> appView(options)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> &#123;</div><div class="line">    template: ...</div><div class="line">    defaults: ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="全局参数获取"><a href="#全局参数获取" class="headerlink" title="全局参数获取"></a>全局参数获取</h3><p>使用简单组件定义模式不能像以前那样可通过闭包的方式访问 <code>app</code> 对象，因此提供了其他几种方法。eg: </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 对大部分自有函数，例如 listen, rendered, mixins ...,均将 app, _, $ 注入到方法参数里，因此可以直接使用</span></div><div class="line"></div><div class="line">listen: <span class="function"><span class="keyword">function</span> (<span class="params">app, _, $</span>) </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;,</div><div class="line"></div><div class="line"><span class="comment">// 如果该函数本来有参数，则将这些通用参数放到自有参数后面，例如 ...Handler</span></div><div class="line">clickHandler: <span class="function"><span class="keyword">function</span> (<span class="params">e, app, _, $</span>) </span>&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 如果不从参数中获取 app 对象，则可通过 sandbox 获取</span></div><div class="line">xMethod: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> $ = <span class="keyword">this</span>.sandbox.app.core.$;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="模板使用"><a href="#模板使用" class="headerlink" title="模板使用"></a>模板使用</h2><p>不推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">template: _.template(tpl)</div></pre></td></tr></table></figure>
+<p>推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">template: tpl</div></pre></td></tr></table></figure>
+<h3 id="新特性"><a href="#新特性" class="headerlink" title="新特性"></a>新特性</h3><ul>
+<li>使用 <code>templateUrl</code> 加载后台模板</li>
+<li>重写 <code>rendered</code> 方法可代替监听 <code>rendered</code></li>
+<li>不推荐再使用 <code>enhance</code></li>
+<li>重写 <code>_activeUI</code> 可全局控制一些界面交互行为</li>
+</ul>
+<h2 id="监听"><a href="#监听" class="headerlink" title="监听"></a>监听</h2><p>不推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">listen: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.listenToDelay(<span class="string">'view'</span>, <span class="string">'saved'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 使用 listenTo 可替代以前的 listenToDeley 的功能</span></div><div class="line">listen: funciton () &#123;</div><div class="line">    <span class="keyword">this</span>.listenTo(<span class="string">'view'</span>, <span class="string">'saved'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;)</div><div class="line">    <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>, <span class="string">'selected'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="窗口"><a href="#窗口" class="headerlink" title="窗口"></a>窗口</h2><p>不推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.window(&#123;</div><div class="line">    type: <span class="string">'view'</span>,</div><div class="line">    children: [&#123;</div><div class="line">        ...</div><div class="line">    &#125;]</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 将 type 放到 children 的配置里</span></div><div class="line"><span class="keyword">this</span>.window(&#123;</div><div class="line">    children: [&#123;</div><div class="line">        type: <span class="string">'view'</span></div><div class="line">    &#125;]</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="API-变动"><a href="#API-变动" class="headerlink" title="API 变动"></a>API 变动</h3><ul>
+<li>废弃了 <code>widgetOpt</code> 和 <code>viewOpt</code> 两个配置项，统一使用 <code>children</code></li>
+<li>如果不涉及多个 <code>children</code> 的情况，尽量使用 <code>viewWindow</code>, <code>widgetWindow</code>, <code>htmlWindow</code> 等简写形式</li>
+</ul>
+<h2 id="组织结构"><a href="#组织结构" class="headerlink" title="组织结构"></a>组织结构</h2><p>现在可以使用多层级文件组织，使代码结构更清晰</p>
+<p>对于原来的唯一widget文件夹命名法，如果是模块间隔，用 <code>-</code>，如果是模块内部的多个单词，用 <code>_</code> 分隔</p>
+<p>原来的方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-- moduleName</div><div class="line">  -- widgets</div><div class="line">    -- moduleName-xx-widget1</div><div class="line">    -- moduleName-xx-widget2</div></pre></td></tr></table></figure>
+<p>更好的方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-- moduleName</div><div class="line">  -- xx1</div><div class="line">    -- widget1</div><div class="line">    -- widget2</div></pre></td></tr></table></figure>
+<p><strong>注意</strong> 即使采用了多层级文件夹，widget 的名称也是唯一命名，例如上一个例子，调用 widget 的时候，使用的名称也应该是 <code>moduleName-xx1-widget1</code></p>
+<h2 id="控件引用"><a href="#控件引用" class="headerlink" title="控件引用"></a>控件引用</h2><p>不要使用 require-config 中的 <code>controls</code> 配置</p>
+<p>不推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">controls: [</div><div class="line">    <span class="string">'cbd-kj-gry@cbd-common'</span></div><div class="line">]</div></pre></td></tr></table></figure>
+<h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><p>不推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> url = <span class="keyword">this</span>.options.url[<span class="string">'read'</span>]</div></pre></td></tr></table></figure>
+<p>推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> url = <span class="keyword">this</span>.url(<span class="string">'read'</span>)</div></pre></td></tr></table></figure>
+<p>推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 不需要 controls 配置，可用 ver 插件引入</span></div><div class="line"></div><div class="line">define([</div><div class="line">    <span class="string">'ver!cbd-kj-gry@cbd-common'</span></div><div class="line">], <span class="function"><span class="keyword">function</span> (<span class="params">control</span>) </span>&#123;</div><div class="line">    </div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="写法规范上的改进"><a href="#写法规范上的改进" class="headerlink" title="写法规范上的改进"></a>写法规范上的改进</h2><h3 id="公共代码管理"><a href="#公共代码管理" class="headerlink" title="公共代码管理"></a>公共代码管理</h3><p>不是所有扩展都放到 <code>ext</code> 命名空间里面，针对不同的模块扩展，单独开辟命名空间管理公共方法，例如 <code>app.dashboardExt</code> …</p>
+<p>不推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">app.ext.ssxxsd</div><div class="line">app.ext.ssxxxs</div><div class="line">app.ext.xcvdsf</div><div class="line"><span class="comment">// 太多了，可能会冲突</span></div></pre></td></tr></table></figure>
+<p>推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">app.moduleNameExt = xxx</div><div class="line"><span class="comment">// 或层级关系</span></div><div class="line"></div><div class="line">app.moduleName.ext.xxx = <span class="string">'xxxx'</span></div><div class="line">app.moduleName.helper.xxxx = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; ... &#125;</div></pre></td></tr></table></figure>
+<h3 id="消息与事件"><a href="#消息与事件" class="headerlink" title="消息与事件"></a>消息与事件</h3><ul>
+<li>消息的名称代表动作的状态，是动词分词形式，而不是动词，并且正确表达语义</li>
+</ul>
+<p>不推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 什么意思？？？？</span></div><div class="line"><span class="keyword">this</span>.pub(<span class="string">'gq-land-complete'</span>)</div></pre></td></tr></table></figure>
+<p>推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.pub(<span class="string">'gq-land-selected'</span>)</div></pre></td></tr></table></figure>
+<ul>
+<li>消息名称全局唯一，因此需要足够长，并且放到统一的文件维护，作为常量由其他文件引用，并写好注释，eg:</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> constants = &#123;</div><div class="line">    LAND_CHANGED: <span class="string">'cbd-land-changed'</span>,  <span class="comment">// 承包地地块变更</span></div><div class="line">    ZONE_CHANGED: <span class="string">'zone-changed'</span>, <span class="comment">// 地域变化</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 常量的名称就不用很长了，因为已经有前面的命名空间限定了</span></div><div class="line">constants.REGISTER_SELECTED = <span class="string">'cbd-register-selected'</span>;</div><div class="line"></div><div class="line"><span class="comment">// 这里的名字自取</span></div><div class="line">app.cbdMsgName = constants;</div></pre></td></tr></table></figure>
+<ul>
+<li>事件名称因为有上下文，所以尽量短并表达含义，例如 <code>changed</code>, <code>saved</code>, <code>loading</code> …</li>
+</ul>
+<p>不推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.trigger(<span class="string">'cb-changed'</span>)</div></pre></td></tr></table></figure>
+<p>推荐的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.trigger(<span class="string">'changed'</span>)</div></pre></td></tr></table></figure>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><ul>
+<li>事件和消息这类公共接口必定写注释</li>
+<li>公共方法和组件必写注释</li>
+<li>自定义的 <code>options</code> 必写注释</li>
+<li>不常见的代码逻辑必写注释</li>
+</ul>
+<h3 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h3><ul>
+<li>不要自己写 Ajax 调用，均使用 <code>app.request</code> 下的方法</li>
+<li>不要使用 <code>app.ext.download</code>，已有 <code>app.request.download</code></li>
+</ul>
+<h3 id="字符串管理"><a href="#字符串管理" class="headerlink" title="字符串管理"></a>字符串管理</h3><p>代码里面的各类字符串是维护时的一大难点，主要包括：</p>
+<ul>
+<li>url，形如：’/CBD/xxx/xxx’，（公共管理，便于调试和后台替换）</li>
+<li>组件名，形如：’cbd-xxx-xxx’，（避免重复）</li>
+<li>消息名，形如：  ‘zone-change’</li>
+<li>字符串，形如： ‘确认删除该数据？’（本地化文本）</li>
+</ul>
+<p>可考虑按模块使用公共文件进行放置，便于维护，为了降低耦合，可采用 <code>Register</code> 或 <code>Provider</code> 模式</p>
+<p>待续。。。。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/veronica/" rel="tag">#veronica</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2016/05/28/css2-2-margin-collapse/" rel="next" title="CSS2.2 外边距折叠">
+                <i class="fa fa-chevron-left"></i> CSS2.2 外边距折叠
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2016/07/29/pug-as-a-frontend-templates/" rel="prev" title="Pug 作为纯前端模板提高复用性">
+                Pug 作为纯前端模板提高复用性 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="gochant" />
+          <p class="site-author-name" itemprop="name">gochant</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类式继承不被推荐，使用-mixins"><span class="nav-number">1.</span> <span class="nav-text">类式继承不被推荐，使用 mixins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用简单的组件定义模式"><span class="nav-number">2.</span> <span class="nav-text">使用简单的组件定义模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局参数获取"><span class="nav-number">2.1.</span> <span class="nav-text">全局参数获取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板使用"><span class="nav-number">3.</span> <span class="nav-text">模板使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新特性"><span class="nav-number">3.1.</span> <span class="nav-text">新特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监听"><span class="nav-number">4.</span> <span class="nav-text">监听</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#窗口"><span class="nav-number">5.</span> <span class="nav-text">窗口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#API-变动"><span class="nav-number">5.1.</span> <span class="nav-text">API 变动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组织结构"><span class="nav-number">6.</span> <span class="nav-text">组织结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控件引用"><span class="nav-number">7.</span> <span class="nav-text">控件引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URL"><span class="nav-number">8.</span> <span class="nav-text">URL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写法规范上的改进"><span class="nav-number">9.</span> <span class="nav-text">写法规范上的改进</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#公共代码管理"><span class="nav-number">9.1.</span> <span class="nav-text">公共代码管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息与事件"><span class="nav-number">9.2.</span> <span class="nav-text">消息与事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注释"><span class="nav-number">9.3.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ajax"><span class="nav-number">9.4.</span> <span class="nav-text">Ajax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串管理"><span class="nav-number">9.5.</span> <span class="nav-text">字符串管理</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gochant</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

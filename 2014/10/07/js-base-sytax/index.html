@@ -1,0 +1,727 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript,Basic," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 基础（一） 语法、表达式、语句">
+<meta property="og:url" content="http://yoursite.com/2014/10/07/js-base-sytax/index.html">
+<meta property="og:site_name" content="G01">
+<meta property="og:description" content="这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点">
+<meta property="og:updated_time" content="2016-10-10T15:01:30.852Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 基础（一） 语法、表达式、语句">
+<meta name="twitter:description" content="这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/10/07/js-base-sytax/"/>
+
+  <title> JavaScript 基础（一） 语法、表达式、语句 | G01 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">G01</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Living Life Over</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaScript 基础（一） 语法、表达式、语句
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-10-07T08:25:54+08:00" content="2014-10-07">
+              2014-10-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/Frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">Frontend</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点</p>
+<p>当然，前端老司机也可时常翻看作为巩固基础的检查单，主要是对应 ES3/ES5 规范</p>
+<a id="more"></a>
+<h2 id="词法结构"><a href="#词法结构" class="headerlink" title="词法结构"></a>词法结构</h2><ul>
+<li>JavaScript 由 UTF-16 编码的 Unicode 字符集编写</li>
+<li>区分大小写</li>
+<li>Unicode 转义序列（为了支持老式机器 <code>\u00e9</code>）</li>
+<li>注释</li>
+<li>直接量（数字、字符串、正则表达式、null、数组、对象）</li>
+<li>标识符</li>
+<li>保留字</li>
+<li>分号</li>
+</ul>
+<h2 id="类型、值、变量"><a href="#类型、值、变量" class="headerlink" title="类型、值、变量"></a>类型、值、变量</h2><h3 id="类型分类"><a href="#类型分类" class="headerlink" title="类型分类"></a>类型分类</h3><p>六种：</p>
+<ul>
+<li>原始类型（primitive type）：数字、字符串、布尔值、null、undefined</li>
+<li>对象类型（object type）：普通对象、数组、函数</li>
+</ul>
+<p>另一种分类：</p>
+<ul>
+<li>可变类型（mutable）：值可以修改的（引用类型）。对象、数组</li>
+<li>不可变类型（immutable）：数字、布尔、null、undefined、字符串（均为原始类型）</li>
+</ul>
+<h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><p>IEEE 754 64位浮点格式（double）</p>
+<ul>
+<li>整型</li>
+</ul>
+<p>十进制、十六进制（0x 或 0X）、八进制（0开头，ES规范没有，ES6 严格模式禁止）</p>
+<ul>
+<li>浮点型</li>
+</ul>
+<p>实数写法<br>指数写法（1.473E(或e)-32）</p>
+<p><strong>算数运算</strong></p>
+<ul>
+<li>1/0、1/-0</li>
+<li>Infinity、-Infinity、NaN</li>
+<li>NaN与任何值都不相等</li>
+<li>isNaN、isFinite</li>
+<li>-0 与 0 全等</li>
+</ul>
+<p>二进制浮点数和四舍五入错误： .3-.2 === .2-.1<br>解决方案：使用小单位，避免小数运算</p>
+<blockquote>
+<p>bug: ES3 中，Infinity 和 NaN 可读可写，ES5中纠正了这个错误</p>
+</blockquote>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>由一组16位值组成的不可变有序序列</p>
+<ul>
+<li>字符串操作均针对 16 位值，不保证合法</li>
+<li>长度计算的误区</li>
+<li>单引号和双引号</li>
+<li>转义字符（\）</li>
+<li>字符串的用法</li>
+<li>模式匹配</li>
+</ul>
+<h3 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h3><ul>
+<li>真值，假值（null、undefined、0、-0、NaN、””）</li>
+</ul>
+<h3 id="null-和-undefined"><a href="#null-和-undefined" class="headerlink" title="null 和 undefined"></a>null 和 undefined</h3><ul>
+<li>使用typeof（null：object、undefined：undefined）</li>
+</ul>
+<blockquote>
+<p>bug：ES3中undefined是可读写变量，ES5中修正</p>
+</blockquote>
+<h3 id="全局对象"><a href="#全局对象" class="headerlink" title="全局对象"></a>全局对象</h3><p>它的属性包括：全局属性（undefined、Infinity、NaN）、全局函数（isNaN、parseInt、eval）、构造函数（Date、RegExp、String、Object、Array）、全局对象（Math、JSON）</p>
+<p>引用：this、window</p>
+<h3 id="包装对象"><a href="#包装对象" class="headerlink" title="包装对象"></a>包装对象</h3><ul>
+<li>作用于：数字、布尔、字符串</li>
+<li>运行机制：即用即创建、用完销毁</li>
+<li>显式创建包装对象，区别：typeof、=== 不等</li>
+</ul>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><ul>
+<li>== 会引发隐式类型转换</li>
+</ul>
+<p><strong>显式类型转换</strong></p>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><ul>
+<li>变量作用域，函数作用域，无块级作用域</li>
+<li>预编译与 hoisting</li>
+<li>declarative environment record</li>
+<li>作用域链查找，如果找不到，抛 ReferenceError；嵌套函数，每次调用外部函数，内部函数重新定义，因为作用域链不同</li>
+</ul>
+<h2 id="表达式与运算符"><a href="#表达式与运算符" class="headerlink" title="表达式与运算符"></a>表达式与运算符</h2><h3 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h3><p>表达式是JavaScript的一个短句，JS解释器会将其计算（evaluate）出一个结果</p>
+<p>运算符会将简单表达式组合成一个复杂表达式</p>
+<p><strong>原始表达式</strong></p>
+<p>常量、直接量、关键字、变量</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 直接量、常量</span></div><div class="line"><span class="number">1.24</span></div><div class="line"><span class="string">"hello"</span></div><div class="line">/pattern/</div><div class="line"><span class="literal">true</span></div><div class="line"><span class="comment">// 关键字</span></div><div class="line"><span class="keyword">this</span></div><div class="line"><span class="literal">null</span></div><div class="line"><span class="comment">// 变量</span></div><div class="line">i</div><div class="line"><span class="literal">undefined</span></div><div class="line"></div><div class="line">**初始化表达式**</div><div class="line"></div><div class="line"><span class="string">``</span><span class="string">`js</span></div><div class="line">[]  // 数组初始化</div><div class="line">&#123; x: 1, y: 2 &#125;  // 对象初始化</div></pre></td></tr></table></figure>
+<p><strong>函数定义表达式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123; <span class="keyword">return</span> x; &#125;</div></pre></td></tr></table></figure>
+<p><strong>属性访问表达式</strong></p>
+<p><em>expression . identifier</em><br><em>expression [ expression ]</em></p>
+<ul>
+<li>先计算前面的表达式，如果是 null 或 undefined，抛出 TypeError</li>
+<li>后面如果是 <code>.</code>，则查找标识符指定的属性值；如果是 <code>[</code>，则计算表达式值，并转换为字符串</li>
+<li>未找到属性，则返回 undefined</li>
+</ul>
+<p>如果属性名不是合法标识符（数字、包含空格标点）或需要通过运算得出的值，则必须使用方括号</p>
+<p><strong>调用表达式</strong></p>
+<p>写法：函数表达式后面接 <code>( arguments )</code></p>
+<ul>
+<li>如果有 return，则这个就是表达式值，如果没有，则返回 undefined</li>
+<li>括号前面是属性访问表达式，称为：方法调用，this指向调用对象</li>
+</ul>
+<p><strong>对象创建表达式</strong></p>
+<p>写法：<em>new 函数调用表达式</em></p>
+<ul>
+<li>如果不传任何参数，括号可省略</li>
+<li>计算该表达式值时，首先创建空对象，将该空对象作为 this 调用函数，并将该对象返回</li>
+<li>如果构造函数内返回了一个对象，那么原来新创建的对象就被废弃了</li>
+</ul>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><blockquote>
+<p>左值<br>变量、对象属性、数组元素均是左值</p>
+</blockquote>
+<h2 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h2><h3 id="表达式语句"><a href="#表达式语句" class="headerlink" title="表达式语句"></a>表达式语句</h3><h3 id="复合语句和空语句"><a href="#复合语句和空语句" class="headerlink" title="复合语句和空语句"></a>复合语句和空语句</h3><h3 id="声明语句"><a href="#声明语句" class="headerlink" title="声明语句"></a>声明语句</h3><p><strong>var</strong></p>
+<p>变量声明语句</p>
+<p><strong>function</strong></p>
+<p>函数声明语句</p>
+<h3 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h3><p><strong>if</strong></p>
+<p><strong>else if</strong></p>
+<p><strong>switch</strong></p>
+<p>swtich 判断相等使用的时 ===</p>
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><p><strong>while</strong></p>
+<p><strong>do/while</strong></p>
+<p><strong>for</strong></p>
+<p>与之等价的 while 语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">initialize;</div><div class="line">while(test)&#123;</div><div class="line">    statement</div><div class="line">    increment;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>for/in</strong></p>
+<h3 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h3><h4 id="标签语句"><a href="#标签语句" class="headerlink" title="标签语句"></a>标签语句</h4><h4 id="break"><a href="#break" class="headerlink" title="break"></a>break</h4><h4 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h4><h4 id="return"><a href="#return" class="headerlink" title="return"></a>return</h4><h4 id="throw"><a href="#throw" class="headerlink" title="throw"></a>throw</h4><h4 id="try-catch-finally"><a href="#try-catch-finally" class="headerlink" title="try/catch/finally"></a>try/catch/finally</h4><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><h4 id="with语句"><a href="#with语句" class="headerlink" title="with语句"></a>with语句</h4><h4 id="debugger语句"><a href="#debugger语句" class="headerlink" title="debugger语句"></a>debugger语句</h4><h4 id="“use-strict”"><a href="#“use-strict”" class="headerlink" title="“use strict”"></a>“use strict”</h4>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/blog/tags/Basic/" rel="tag">#Basic</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2014/06/23/js-executable-code/" rel="next" title="执行代码与执行上下文">
+                <i class="fa fa-chevron-left"></i> 执行代码与执行上下文
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2014/10/07/js-base-object/" rel="prev" title="JavaScript 基础（二） 对象、数组">
+                JavaScript 基础（二） 对象、数组 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="gochant" />
+          <p class="site-author-name" itemprop="name">gochant</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#词法结构"><span class="nav-number">2.</span> <span class="nav-text">词法结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型、值、变量"><span class="nav-number">3.</span> <span class="nav-text">类型、值、变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类型分类"><span class="nav-number">3.1.</span> <span class="nav-text">类型分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字"><span class="nav-number">3.2.</span> <span class="nav-text">数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-number">3.3.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#布尔值"><span class="nav-number">3.4.</span> <span class="nav-text">布尔值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null-和-undefined"><span class="nav-number">3.5.</span> <span class="nav-text">null 和 undefined</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局对象"><span class="nav-number">3.6.</span> <span class="nav-text">全局对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包装对象"><span class="nav-number">3.7.</span> <span class="nav-text">包装对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型转换"><span class="nav-number">3.8.</span> <span class="nav-text">类型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">3.9.</span> <span class="nav-text">变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表达式与运算符"><span class="nav-number">4.</span> <span class="nav-text">表达式与运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表达式"><span class="nav-number">4.1.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运算符"><span class="nav-number">4.2.</span> <span class="nav-text">运算符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语句"><span class="nav-number">5.</span> <span class="nav-text">语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表达式语句"><span class="nav-number">5.1.</span> <span class="nav-text">表达式语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复合语句和空语句"><span class="nav-number">5.2.</span> <span class="nav-text">复合语句和空语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#声明语句"><span class="nav-number">5.3.</span> <span class="nav-text">声明语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件语句"><span class="nav-number">5.4.</span> <span class="nav-text">条件语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环"><span class="nav-number">5.5.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跳转"><span class="nav-number">5.6.</span> <span class="nav-text">跳转</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标签语句"><span class="nav-number">5.6.1.</span> <span class="nav-text">标签语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#break"><span class="nav-number">5.6.2.</span> <span class="nav-text">break</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#continue"><span class="nav-number">5.6.3.</span> <span class="nav-text">continue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#return"><span class="nav-number">5.6.4.</span> <span class="nav-text">return</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#throw"><span class="nav-number">5.6.5.</span> <span class="nav-text">throw</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#try-catch-finally"><span class="nav-number">5.6.6.</span> <span class="nav-text">try/catch/finally</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">5.7.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#with语句"><span class="nav-number">5.7.1.</span> <span class="nav-text">with语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#debugger语句"><span class="nav-number">5.7.2.</span> <span class="nav-text">debugger语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#“use-strict”"><span class="nav-number">5.7.3.</span> <span class="nav-text">“use strict”</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gochant</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

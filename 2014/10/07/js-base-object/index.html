@@ -1,0 +1,809 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript,Basic," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 基础（二） 对象、数组">
+<meta property="og:url" content="http://yoursite.com/2014/10/07/js-base-object/index.html">
+<meta property="og:site_name" content="G01">
+<meta property="og:description" content="这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点">
+<meta property="og:updated_time" content="2016-10-10T15:01:30.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 基础（二） 对象、数组">
+<meta name="twitter:description" content="这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/10/07/js-base-object/"/>
+
+  <title> JavaScript 基础（二） 对象、数组 | G01 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">G01</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Living Life Over</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaScript 基础（二） 对象、数组
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-10-07T15:58:54+08:00" content="2014-10-07">
+              2014-10-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/Frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">Frontend</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>对象的特征：</p>
+<ul>
+<li>包含属性</li>
+<li>原型</li>
+<li>类</li>
+<li>扩展标记</li>
+</ul>
+<p>对象分类：</p>
+<ul>
+<li>内置对象：ES规范定义的对象或类</li>
+<li>宿主对象：JS的解释器所嵌入的宿主环境定义的</li>
+<li>自定义对象：JS代码创建的</li>
+</ul>
+<p>属性分类：</p>
+<ul>
+<li>自有属性</li>
+<li>继承属性</li>
+</ul>
+<p>属性的特性</p>
+<ul>
+<li>可写</li>
+<li>可枚举</li>
+<li>可配置</li>
+</ul>
+<a id="more"></a>
+<h3 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h3><ul>
+<li>直接量</li>
+<li>new</li>
+<li>Object.create</li>
+</ul>
+<blockquote>
+<p>原型</p>
+<p>强类型、弱类型、无类型</p>
+</blockquote>
+<h3 id="属性访问和赋值"><a href="#属性访问和赋值" class="headerlink" title="属性访问和赋值"></a>属性访问和赋值</h3><p>. 或 []</p>
+<blockquote>
+<p>注意: ES3中<code>.</code>后不能是保留字，ES5放宽了限制</p>
+</blockquote>
+<ul>
+<li>查询不存在属性，返回 undefined</li>
+<li>对象不存在，查询属性抛 TypeError</li>
+</ul>
+<p>属性赋值要么失败，要么赋值成功，要么创建新属性，属性赋值失败的情况：</p>
+<ul>
+<li>属性只读（但defineProperty有例外）</li>
+<li>属性是继承的，且只读</li>
+<li>对象不可扩展的</li>
+</ul>
+<blockquote>
+<p>注意: ES3中，设置属性失败不报错，只是不改变值，ES5的严格模式中，会抛TypeError</p>
+</blockquote>
+<h3 id="删除属性"><a href="#删除属性" class="headerlink" title="删除属性"></a>删除属性</h3><p>删除属性时，只是切断属性与宿主的联系，不会操作属性中的属性，因此在某些时候，容易引起内存泄露，严谨一些的做法可遍历属性对象，依次删除</p>
+<p>delete 在删除成功、删除不存在属性和后面不是一个属性访问表达式时，均返回true；在删除可配置型为false的属性时，返回false</p>
+<blockquote>
+<p>在严格模式中，删除不可配置属性会报TypeError</p>
+</blockquote>
+<p>（通过变量声明和函数声明创建的全局对象属性是不可配置的）</p>
+<blockquote>
+<p>非严格模式下，删除全局对象属性时，可省略全局对象，直接用属性，但在严格模式下不能这样做</p>
+</blockquote>
+<h3 id="检测属性"><a href="#检测属性" class="headerlink" title="检测属性"></a>检测属性</h3><ul>
+<li>检测自由和继承属性：”x” in o</li>
+<li>检测自有属性：o.hasOwnProperty(“x”)</li>
+<li>检测自有且可枚举的属性：o.propertyIsEnumerable(“x”)</li>
+</ul>
+<h3 id="枚举属性"><a href="#枚举属性" class="headerlink" title="枚举属性"></a>枚举属性</h3><ul>
+<li>for/in</li>
+<li>Object.keys() 返回数组，获取所有可枚举的自有属性名称</li>
+<li>Object.getOwnPropertyNames() 返回数组，获取所有自有属性名称</li>
+</ul>
+<h3 id="属性getter和setter"><a href="#属性getter和setter" class="headerlink" title="属性getter和setter"></a>属性getter和setter</h3><ul>
+<li>存取器属性</li>
+<li>数据属性</li>
+</ul>
+<p>存取器属性可创建只读、只写、可读写的属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> o = &#123;</div><div class="line">    <span class="comment">// 普通数据属性</span></div><div class="line">    data_prop: <span class="number">1</span>,</div><div class="line">    <span class="comment">// 存取器属性</span></div><div class="line">    get accessor_prop()&#123; <span class="keyword">return</span>  &#125;,</div><div class="line">    set accessor_prop(value)&#123;&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="属性特性"><a href="#属性特性" class="headerlink" title="属性特性"></a>属性特性</h3><p>数据属性特性有：value、writable、enumerable、configurable<br>存取器属性特性：get、set、enumerable、configurable</p>
+<p>使用 <code>Object.getOwnPropertyDescriptor()</code> 获取某个对象属性的描述符</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="built_in">Object</span>.getOwnPropertyDescriptor(&#123;x:<span class="number">1</span>&#125;, <span class="string">"x"</span>);</div><div class="line"><span class="comment">// Object &#123;value: 1, writable: true, enumerable: true, configurable: true&#125; </span></div><div class="line"></div><div class="line"><span class="keyword">var</span> random = &#123;</div><div class="line">    get octet()&#123; <span class="keyword">return</span> <span class="number">1</span> &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> b = <span class="built_in">Object</span>.getOwnPropertyDescriptor(random, <span class="string">"octet"</span>);</div><div class="line"><span class="comment">// Object &#123;get: function, set: undefined, enumerable: true, configurable: true&#125;</span></div></pre></td></tr></table></figure>
+<p>使用 <code>Object.defineProperty()</code> 和 <code>Object.defineProperties()</code> 设置属性，设置时不必包含所有属性，默认会设置为 false 或 undefined，并且不能修改继承的属性</p>
+<p>设置属性有以下规则，违反会抛TypeError</p>
+<ul>
+<li>如果对象是不可扩展的，则不能新增属性，只能更新已有属性</li>
+<li>如果属性不可配置，则不能修改可配置型和可枚举性</li>
+<li>如果存取器属性不可配置，则也不能修改getter和setter，也不能转为数据属性</li>
+<li>如果数据属性不可配置，则不能转为存取器属性；不能将可写性从false改为true，但可从true改为false；如果它既不可配置又不可写，那么不能修改它的值，但如果它可配置但不可写，那可以修改它的值。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> o = &#123;&#125;;</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.defineProperty(o, <span class="string">"x"</span>, &#123;</div><div class="line">    value: <span class="number">1</span>,</div><div class="line">    writable: <span class="literal">true</span>,</div><div class="line">    enumerable: <span class="literal">false</span>,</div><div class="line">    configurable: <span class="literal">true</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.defineProperty(o, <span class="string">"y"</span>, &#123;</div><div class="line">    get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">10</span>;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.defineProperties(o, &#123;</div><div class="line">    <span class="string">"z"</span>:&#123;</div><div class="line">        get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">10</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><strong>老式API</strong></p>
+<p>在老式浏览器中，可能存在 __lookupGetter<strong> 和 \</strong>lookupSetter<strong>、\</strong>defineSetter<strong>、\</strong>defineGetter__ 等方法</p>
+<h3 id="对象的属性"><a href="#对象的属性" class="headerlink" title="对象的属性"></a>对象的属性</h3><h4 id="原型属性"><a href="#原型属性" class="headerlink" title="原型属性"></a>原型属性</h4><p>获取</p>
+<p>ES5：Object.getPrototypeOf()<br>ES3：o.constructor.prototype</p>
+<p>检测</p>
+<p>pro.isPrototypeOf(o)</p>
+<h4 id="类属性"><a href="#类属性" class="headerlink" title="类属性"></a>类属性</h4><p>是一段字符串，可通过 Object.prototype.toString 间接查看</p>
+<h4 id="可扩展性"><a href="#可扩展性" class="headerlink" title="可扩展性"></a>可扩展性</h4><p>所有内置对象和自定义对象都是显式可扩展</p>
+<ul>
+<li>检测是否可扩展</li>
+</ul>
+<p>Object.isExtensible(o)</p>
+<ul>
+<li>设为不可扩展</li>
+</ul>
+<p>Object.preventExtensions(o)</p>
+<p>设为不可扩展后，不能转换回可扩展，不可扩展仅代表对象本身不可扩展，它原型链上的对象无法控制</p>
+<ul>
+<li>设为封闭</li>
+</ul>
+<p>Object.seal</p>
+<p>既不能扩展，所有属性也变为不可配置，可通过 <code>Object.isSealed</code> 检测是否是封闭的；设为封闭后，不能解封</p>
+<ul>
+<li>冻结对象</li>
+</ul>
+<p>Object.freeze</p>
+<p>设为不可扩展、不可配置，将所有数据属性设为只读（但具有setter的存取器属性不受影响），使用 <code>Object.isFrozon</code> 检测是否冻结</p>
+<h3 id="序列化对象"><a href="#序列化对象" class="headerlink" title="序列化对象"></a>序列化对象</h3><p>JSON.stringify<br>JSON.parse</p>
+<ul>
+<li>NaN、Infinity、-Infinity被序列化为null</li>
+<li>function 和 undefined 的属性都不会被序列化，RegExp 和 Error 会被序列化成空对象，日期对象会被序列化成 ISO 格式字符串</li>
+</ul>
+<h3 id="对象方法"><a href="#对象方法" class="headerlink" title="对象方法"></a>对象方法</h3><ul>
+<li>toJSON</li>
+<li>toString</li>
+<li>toLocalString</li>
+<li>valueOf</li>
+</ul>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><h3 id="join"><a href="#join" class="headerlink" title="join"></a>join</h3><p>string.split 的逆操作</p>
+<h3 id="reverse"><a href="#reverse" class="headerlink" title="reverse"></a>reverse</h3><h3 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h3><h3 id="concat"><a href="#concat" class="headerlink" title="concat"></a>concat</h3><h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h3><h3 id="splice"><a href="#splice" class="headerlink" title="splice"></a>splice</h3><h3 id="push、pop、unshift、shift"><a href="#push、pop、unshift、shift" class="headerlink" title="push、pop、unshift、shift"></a>push、pop、unshift、shift</h3><blockquote>
+<p>unshift 多个参数是一次加入，因此顺序跟预想的可能有差别</p>
+</blockquote>
+<h3 id="toString-toLocalString"><a href="#toString-toLocalString" class="headerlink" title="toString toLocalString"></a>toString toLocalString</h3><p>与不带参数调 join 是一样的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[<span class="number">1</span>, [<span class="number">2</span>, <span class="string">"c"</span>]].toString()</div><div class="line"><span class="comment">// '1, 2, c'</span></div></pre></td></tr></table></figure>
+<h3 id="ES5方法"><a href="#ES5方法" class="headerlink" title="ES5方法"></a>ES5方法</h3><p>forEach、map、filter、every、some、reduce、reduceRight、indexOf、lastIndexOf</p>
+<h3 id="判断是否数组"><a href="#判断是否数组" class="headerlink" title="判断是否数组"></a>判断是否数组</h3><ul>
+<li>ES5: Array.isArray</li>
+<li>Object.toString</li>
+</ul>
+<h3 id="类数组、字符串数组"><a href="#类数组、字符串数组" class="headerlink" title="类数组、字符串数组"></a>类数组、字符串数组</h3><h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="函数定义"><a href="#函数定义" class="headerlink" title="函数定义"></a>函数定义</h3><h4 id="函数声明语句"><a href="#函数声明语句" class="headerlink" title="函数声明语句"></a>函数声明语句</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 函数声明</div><div class="line">function F()&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="函数定义表达式"><a href="#函数定义表达式" class="headerlink" title="函数定义表达式"></a>函数定义表达式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 函数表达式（通常要赋值给一个变量）</div><div class="line">var a = function ()&#123;</div><div class="line">&#125;;</div><div class="line">// 命名的函数表达式</div><div class="line">var b = function a()&#123;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>关于函数定义表达式，有几点注意：</p>
+<ul>
+<li>函数定义表达式一般用在更大的表达式中，例如赋值和调用；如果语句中只包含定义表达式，则可能会报错，因为它会被识别为函数声明，可以在外面加 ()，强制识别为表达式；</li>
+<li>命名的函数定义表达式的名称只能在函数内部使用，通过 toString 可以让外部看到；</li>
+</ul>
+<p>在调用中传入函数表达式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dat.sort(<span class="function"><span class="keyword">function</span>(<span class="params">x, y</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> x + y;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：函数声明语句不是真正的语句（？），因此不能出现在条件、循环、try、with 语句中</p>
+</blockquote>
+<h3 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h3><p>有四种调用方式：直接调用、作为方法调用、作为构造函数调用、间接调用</p>
+<h4 id="直接调用"><a href="#直接调用" class="headerlink" title="直接调用"></a>直接调用</h4><p>严格模式，函数调用上下文为 undefined（不是全局对象），因此可用来判断是否是严格模式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var strict = (function()&#123;&#125;( return !this; ));</div></pre></td></tr></table></figure>
+<h4 id="作为方法"><a href="#作为方法" class="headerlink" title="作为方法"></a>作为方法</h4><p>方法的链式调用</p>
+<h4 id="作为构造函数"><a href="#作为构造函数" class="headerlink" title="作为构造函数"></a>作为构造函数</h4><blockquote>
+<p>如果构造函数显式使用return语句返回对象，那么调用表达式的值就是这个对象；如果使用了return，但没有返回值，或者返回<strong>原始值</strong>，则将会忽略返回值，使用新创建的对象</p>
+</blockquote>
+<h4 id="间接调用"><a href="#间接调用" class="headerlink" title="间接调用"></a>间接调用</h4><p>使用 call 或 apply</p>
+<h3 id="函数的参数"><a href="#函数的参数" class="headerlink" title="函数的参数"></a>函数的参数</h3><p>实参、形参</p>
+<h4 id="arguments"><a href="#arguments" class="headerlink" title="arguments"></a>arguments</h4><ul>
+<li>可接收不定实参（通过arguments[i]进行遍历）</li>
+<li>在ES5，arguments[x]不在与命名的形参共享值，同时严格模式中，不允许使用arguments作为标识符</li>
+<li>arguments.callee 和 caller（非标准） 在 ES5 严格模式中禁止访问</li>
+</ul>
+<p>最佳实践：</p>
+<ul>
+<li>如果不定长参数，一般将一个对象作为实参</li>
+<li>必要时候，检测传入实参的类型，可使用 || 进行默认值填充</li>
+<li>将函数作为值传递</li>
+<li>函数可设置属性值，这样该函数既可以调用，又可以当模块使用</li>
+<li>函数作为命名空间</li>
+<li>闭包的特性</li>
+</ul>
+<h3 id="函数的属性、方法和构造函数"><a href="#函数的属性、方法和构造函数" class="headerlink" title="函数的属性、方法和构造函数"></a>函数的属性、方法和构造函数</h3><h4 id="length"><a href="#length" class="headerlink" title="length"></a>length</h4><p>代表函数定义是命名的形参数量，只读属性</p>
+<blockquote>
+<p>arguments.length 则是实参个数</p>
+</blockquote>
+<h4 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h4><p>原型</p>
+<h4 id="call-和-apply-方法"><a href="#call-和-apply-方法" class="headerlink" title="call 和 apply 方法"></a>call 和 apply 方法</h4><ul>
+<li>ES5严格模式中，第一个参数永远为this</li>
+<li>apply可以传入类数组，例如arguments</li>
+<li>传入函数，返回包装函数的函数称为泛函数，有时候叫做 monkey-patching</li>
+</ul>
+<h4 id="bind-（ES5）"><a href="#bind-（ES5）" class="headerlink" title="bind （ES5）"></a>bind （ES5）</h4><ul>
+<li>使用ES3怎么模拟</li>
+<li>ES5 bind 的一些隐藏特性</li>
+<li>ES3 中无法模拟的部分</li>
+</ul>
+<h4 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString"></a>toString</h4><p>返回函数定义字符串，内置函数返回 “[native code]”</p>
+<h4 id="Function-构造函数"><a href="#Function-构造函数" class="headerlink" title="Function() 构造函数"></a>Function() 构造函数</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> f = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"return x*y;"</span>);</div></pre></td></tr></table></figure>
+<p>等价于创建一个匿名函数</p>
+<ul>
+<li>允许运行时创建并编译函数</li>
+<li>每次都会解析，创建函数，多次执行效率有问题</li>
+<li>在全局代码中执行</li>
+<li>实际中很少用到</li>
+</ul>
+<h4 id="可调用对象"><a href="#可调用对象" class="headerlink" title="可调用对象"></a>可调用对象</h4><p>看起来像函数，但实现上不是函数，这种对象会越来越少，例如老版本IE的window.alert、getElementById，以及浏览器的RegExp</p>
+<p>尽量少使用</p>
+<h3 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h3><p>（函数式编程库:<a href="http://osteele.com/sources/javascript/functional/）" target="_blank" rel="external">http://osteele.com/sources/javascript/functional/）</a><br>学习函数式编程思想</p>
+<p>一些技巧：</p>
+<ul>
+<li>currying 柯里化</li>
+<li>高阶函数</li>
+<li>偏函数（不完全函数）</li>
+<li>记忆 memorization</li>
+</ul>
+<h2 id="类和模块"><a href="#类和模块" class="headerlink" title="类和模块"></a>类和模块</h2>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/blog/tags/Basic/" rel="tag">#Basic</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2014/10/07/js-base-sytax/" rel="next" title="JavaScript 基础（一） 语法、表达式、语句">
+                <i class="fa fa-chevron-left"></i> JavaScript 基础（一） 语法、表达式、语句
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2014/10/12/js-base-client/" rel="prev" title="JavaScript 基础（三） 浏览器、DOM、CSS 操纵">
+                JavaScript 基础（三） 浏览器、DOM、CSS 操纵 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="gochant" />
+          <p class="site-author-name" itemprop="name">gochant</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象"><span class="nav-number">1.</span> <span class="nav-text">对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建对象"><span class="nav-number">1.1.</span> <span class="nav-text">创建对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性访问和赋值"><span class="nav-number">1.2.</span> <span class="nav-text">属性访问和赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除属性"><span class="nav-number">1.3.</span> <span class="nav-text">删除属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检测属性"><span class="nav-number">1.4.</span> <span class="nav-text">检测属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#枚举属性"><span class="nav-number">1.5.</span> <span class="nav-text">枚举属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性getter和setter"><span class="nav-number">1.6.</span> <span class="nav-text">属性getter和setter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性特性"><span class="nav-number">1.7.</span> <span class="nav-text">属性特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的属性"><span class="nav-number">1.8.</span> <span class="nav-text">对象的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原型属性"><span class="nav-number">1.8.1.</span> <span class="nav-text">原型属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类属性"><span class="nav-number">1.8.2.</span> <span class="nav-text">类属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可扩展性"><span class="nav-number">1.8.3.</span> <span class="nav-text">可扩展性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序列化对象"><span class="nav-number">1.9.</span> <span class="nav-text">序列化对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象方法"><span class="nav-number">1.10.</span> <span class="nav-text">对象方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组"><span class="nav-number">2.</span> <span class="nav-text">数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#join"><span class="nav-number">2.1.</span> <span class="nav-text">join</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reverse"><span class="nav-number">2.2.</span> <span class="nav-text">reverse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort"><span class="nav-number">2.3.</span> <span class="nav-text">sort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#concat"><span class="nav-number">2.4.</span> <span class="nav-text">concat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#slice"><span class="nav-number">2.5.</span> <span class="nav-text">slice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#splice"><span class="nav-number">2.6.</span> <span class="nav-text">splice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#push、pop、unshift、shift"><span class="nav-number">2.7.</span> <span class="nav-text">push、pop、unshift、shift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toString-toLocalString"><span class="nav-number">2.8.</span> <span class="nav-text">toString toLocalString</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES5方法"><span class="nav-number">2.9.</span> <span class="nav-text">ES5方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断是否数组"><span class="nav-number">2.10.</span> <span class="nav-text">判断是否数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类数组、字符串数组"><span class="nav-number">2.11.</span> <span class="nav-text">类数组、字符串数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数"><span class="nav-number">3.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数定义"><span class="nav-number">3.1.</span> <span class="nav-text">函数定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数声明语句"><span class="nav-number">3.1.1.</span> <span class="nav-text">函数声明语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数定义表达式"><span class="nav-number">3.1.2.</span> <span class="nav-text">函数定义表达式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数调用"><span class="nav-number">3.2.</span> <span class="nav-text">函数调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#直接调用"><span class="nav-number">3.2.1.</span> <span class="nav-text">直接调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#作为方法"><span class="nav-number">3.2.2.</span> <span class="nav-text">作为方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#作为构造函数"><span class="nav-number">3.2.3.</span> <span class="nav-text">作为构造函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#间接调用"><span class="nav-number">3.2.4.</span> <span class="nav-text">间接调用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数的参数"><span class="nav-number">3.3.</span> <span class="nav-text">函数的参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#arguments"><span class="nav-number">3.3.1.</span> <span class="nav-text">arguments</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数的属性、方法和构造函数"><span class="nav-number">3.4.</span> <span class="nav-text">函数的属性、方法和构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#length"><span class="nav-number">3.4.1.</span> <span class="nav-text">length</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#prototype"><span class="nav-number">3.4.2.</span> <span class="nav-text">prototype</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#call-和-apply-方法"><span class="nav-number">3.4.3.</span> <span class="nav-text">call 和 apply 方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bind-（ES5）"><span class="nav-number">3.4.4.</span> <span class="nav-text">bind （ES5）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#toString-NaN"><span class="nav-number">3.4.5.</span> <span class="nav-text">toString</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Function-构造函数"><span class="nav-number">3.4.6.</span> <span class="nav-text">Function() 构造函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可调用对象"><span class="nav-number">3.4.7.</span> <span class="nav-text">可调用对象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数式编程"><span class="nav-number">3.5.</span> <span class="nav-text">函数式编程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类和模块"><span class="nav-number">4.</span> <span class="nav-text">类和模块</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gochant</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

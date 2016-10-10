@@ -1,0 +1,769 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript,ECMA-262," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="原文：ECMA-262-5 in detail. Chapter 3.1. Lexical environments: Common Theory.
+简介本章我们将详细讨论词法环境——在相同的语言中用于管理静态作用域的一种机制。为了完全理解这个概念，我们也将选择性地讨论另外一个方面——动态作用域（尽管没在ECMAScript中直接使用）。我们也将看到是怎样的环境管理代码层级词法结构，以及提供完整的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="词法环境：公共理论">
+<meta property="og:url" content="http://yoursite.com/2014/06/19/lexical-environments-common-theory/index.html">
+<meta property="og:site_name" content="G01">
+<meta property="og:description" content="原文：ECMA-262-5 in detail. Chapter 3.1. Lexical environments: Common Theory.
+简介本章我们将详细讨论词法环境——在相同的语言中用于管理静态作用域的一种机制。为了完全理解这个概念，我们也将选择性地讨论另外一个方面——动态作用域（尽管没在ECMAScript中直接使用）。我们也将看到是怎样的环境管理代码层级词法结构，以及提供完整的">
+<meta property="og:image" content="http://yoursite.com/blog/2014/06/19/lexical-environments-common-theory/rebinding.png">
+<meta property="og:image" content="http://yoursite.com/blog/2014/06/19/lexical-environments-common-theory/mutation.png">
+<meta property="og:image" content="http://yoursite.com/blog/2014/06/19/lexical-environments-common-theory/call-stack.png">
+<meta property="og:image" content="http://yoursite.com/blog/2014/06/19/lexical-environments-common-theory/call-stack-with-closures.png">
+<meta property="og:image" content="http://yoursite.com/blog/2014/06/19/lexical-environments-common-theory/environment.png">
+<meta property="og:image" content="http://yoursite.com/blog/2014/06/19/lexical-environments-common-theory/common-parent-environment.png">
+<meta property="og:image" content="http://yoursite.com/blog/2014/06/19/lexical-environments-common-theory/function-object.png">
+<meta property="og:updated_time" content="2016-10-10T15:01:31.027Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="词法环境：公共理论">
+<meta name="twitter:description" content="原文：ECMA-262-5 in detail. Chapter 3.1. Lexical environments: Common Theory.
+简介本章我们将详细讨论词法环境——在相同的语言中用于管理静态作用域的一种机制。为了完全理解这个概念，我们也将选择性地讨论另外一个方面——动态作用域（尽管没在ECMAScript中直接使用）。我们也将看到是怎样的环境管理代码层级词法结构，以及提供完整的">
+<meta name="twitter:image" content="http://yoursite.com/blog/2014/06/19/lexical-environments-common-theory/rebinding.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/06/19/lexical-environments-common-theory/"/>
+
+  <title> 词法环境：公共理论 | G01 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">G01</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Living Life Over</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                词法环境：公共理论
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-06-19T22:12:50+08:00" content="2014-06-19">
+              2014-06-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/Frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">Frontend</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文：<a href="http://dmitrysoshnikov.com/ecmascript/es5-chapter-3-1-lexical-environments-common-theory/" target="_blank" rel="external">ECMA-262-5 in detail. Chapter 3.1. Lexical environments: Common Theory.</a></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本章我们将详细讨论<em>词法环境</em>——在相同的语言中用于管理<em>静态作用域</em>的一种机制。为了完全理解这个概念，我们也将选择性地讨论另外一个方面——<em>动态作用域</em>（尽管没在ECMAScript中直接使用）。我们也将看到是怎样的环境管理代码层级词法结构，以及提供完整的<em>闭包</em>支持。</p>
+<p>词法环境在ECMA-262-5规范中介绍，它不是一个独特的理论概念，在其他语言中也有被使用到。</p>
+<p>实际上，技术相关的一些话题我们在ES3中已经讨论了——当讨论 VO、AO和scope chain 时。</p>
+<p>严格说来，相对于ES3中的概念，<em>词法环境</em>只是更贴切和更抽象的替代，在关于ECMAScript的相关讨论中，我推荐使用这些新的概念，例如一个<em>调用堆栈</em>（ES3中的执行上下文堆栈execution context stack）的一条<em>活动记录</em>（ES3中的 activation object）。</p>
+<a id="more"></a>
+<h2 id="公共概念"><a href="#公共概念" class="headerlink" title="公共概念"></a>公共概念</h2><h3 id="作用域-Scope"><a href="#作用域-Scope" class="headerlink" title="作用域 Scope"></a>作用域 Scope</h3><p>作用域被用来管理不同区域的程序的变量的可见性和可访问性。</p>
+<p>几种抽象的封装（例如命名空间，模块等）相对于作用域而言，提供了更好的模块化以避免命名变量冲突。</p>
+<blockquote>
+<p>作用域是一个变量与一个值相关联的封闭的上下文</p>
+</blockquote>
+<p>目前版本的 ES 不支持块级作用域，只支持函数作用域</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</div><div class="line">  <span class="keyword">var</span> x = <span class="number">20</span>;</div><div class="line">  <span class="built_in">console</span>.log(x); <span class="comment">// 20</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(x); <span class="comment">// 20</span></div></pre></td></tr></table></figure>
+<p>然而，一些实现（例如 1.7版本的SpiderMonkey）支持 <code>let</code> 指令，允许块级作用域，这种指令将在未来的ES6版本中标准化：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> x = <span class="number">10</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</div><div class="line">  <span class="keyword">let</span> x = <span class="number">20</span>;</div><div class="line">  <span class="built_in">console</span>.log(x); <span class="comment">// 20</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(x); <span class="comment">// 10</span></div></pre></td></tr></table></figure>
+<p><code>let</code> 是种语法糖，与之等价的代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</div><div class="line">  (<span class="function"><span class="keyword">function</span> (<span class="params">x</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(x); <span class="comment">// 20</span></div><div class="line">  &#125;)(<span class="number">20</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(x); <span class="comment">// 10</span></div></pre></td></tr></table></figure>
+<h4 id="静态作用域-Static-lexical-scope"><a href="#静态作用域-Static-lexical-scope" class="headerlink" title="静态作用域 Static(lexical) scope"></a>静态作用域 Static(lexical) scope</h4><p>静态的意义是指一个标识符作用域的确定是在一段程序的解析阶段，也就是在程序开始之前就能确定。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</div><div class="line"><span class="keyword">var</span> y = <span class="number">20</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(x, y);</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo(); <span class="comment">// 10, 20</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> y = <span class="number">30</span>;</div><div class="line">  <span class="built_in">console</span>.log(x, y); <span class="comment">// 10, 30</span></div><div class="line">  foo(); <span class="comment">// 10, 20</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">bar();</div></pre></td></tr></table></figure>
+<p>在例子中，变量 x 词法定义在全局作用域中，y 有两个定义，但是我们总是使用最近的词法作用域（nearest lexical scope），并且自己作用域内的变量具有最高优先级，因此在 bar 方法中，y 的值为 30，bar 中的本地变量 y 被称作全局作用域中的 y 的影子 （shadow）。</p>
+<p>然而同样的 y 被解析成 20，即使它在 bar 方法中的 foo 调用，也就是说标识符解析不依赖于 caller 的环境，因为在 foo 定义的时候，y 的 最近此法作用域就已经确定了，就是全局上下文。</p>
+<p>静态作用域被使用在许多语言中：C，Java，ECMAScript，Python，Ruby，Lua，等。</p>
+<h4 id="动态作用域-Dynamic-scope"><a href="#动态作用域-Dynamic-scope" class="headerlink" title="动态作用域 Dynamic scope"></a>动态作用域 Dynamic scope</h4><p>变量的值不是在词法环境中指定，而是在一个全局变量堆栈中动态的组成，在这个变量的作用域生命周期结束后，变量将从该堆栈中移除。</p>
+<p>这意味着，同一个函数的同一个变量我们将存在无限多种解析值的途径——这取决于函数被调用的上下文。</p>
+<p>明显地，在动态作用域下，不可能为一个变量创建闭包。</p>
+<p>例如下面的例子，使用类似于 pascal 的 pseudo-code 语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">// *pseudo* code - with dynamic scope</div><div class="line"></div><div class="line">y = 20;</div><div class="line"></div><div class="line">procedure foo()</div><div class="line">  print(y)</div><div class="line">end</div><div class="line"></div><div class="line"></div><div class="line">// on the stack of the &quot;y&quot; name</div><div class="line">// currently only one value 20</div><div class="line">// &#123;y: [20]&#125;</div><div class="line"></div><div class="line">foo() // 20, OK</div><div class="line"></div><div class="line">procedure bar()</div><div class="line"></div><div class="line">  // and now on the stack there</div><div class="line">  // are two &quot;y&quot; values: &#123;y: [20, 30]&#125;;</div><div class="line">  // the first found (from the top) is taken</div><div class="line"></div><div class="line">  y = 30</div><div class="line"></div><div class="line">  // therefore:</div><div class="line">  foo() // 30!, not 20</div><div class="line"></div><div class="line">end</div><div class="line"></div><div class="line">bar()</div></pre></td></tr></table></figure>
+<p>大多数现代语言不支持动态作用域，然而，在一些语言中，例如 Perl，程序员可选择指定一个变量是使用静态作用域还是动态作用域解析值。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Perl example of static and dynamic scopes</span></div><div class="line"></div><div class="line">$a = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">sub</span> <span class="title">foo</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> $a;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">sub</span> <span class="title">staticScope</span> </span>&#123;</div><div class="line">  <span class="keyword">my</span> $a = <span class="number">1</span>; <span class="comment"># lexical (static)</span></div><div class="line">  <span class="keyword">return</span> foo();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">print</span> staticScope(); <span class="comment"># 0 (from the saved global frame)</span></div><div class="line"></div><div class="line">$b = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">sub</span> <span class="title">bar</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> $b;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">sub</span> <span class="title">dynamicScope</span> </span>&#123;</div><div class="line">  <span class="keyword">local</span> $b = <span class="number">1</span>; <span class="comment"># dynamic</span></div><div class="line">  <span class="keyword">return</span> bar();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">print</span> dynamicScope(); <span class="comment"># 1 (from the caller's frame)</span></div></pre></td></tr></table></figure>
+<h5 id="ECMAScript中的动态作用域特性：With和eval"><a href="#ECMAScript中的动态作用域特性：With和eval" class="headerlink" title="ECMAScript中的动态作用域特性：With和eval"></a>ECMAScript中的动态作用域特性：With和eval</h5><p>这种称为“运行时作用域增加”（Runtime scope augmentation）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> o = &#123;x: <span class="number">30</span>&#125;;</div><div class="line"><span class="keyword">var</span> storage = &#123;&#125;;</div><div class="line"></div><div class="line">(<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">flag</span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (flag == <span class="number">2</span>) &#123;</div><div class="line">    <span class="built_in">eval</span>(<span class="string">"var x = 20;"</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (flag == <span class="number">3</span>) &#123;</div><div class="line">    storage = o;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">with</span> (storage) &#123;</div><div class="line"></div><div class="line">    <span class="comment">// "x" may be resolved either</span></div><div class="line">    <span class="comment">// in the global scope - 10, or</span></div><div class="line">    <span class="comment">// in the local scope of a function - 20</span></div><div class="line">    <span class="comment">// (created via "eval" function), or even</span></div><div class="line">    <span class="comment">// in the "storage" object - 30</span></div><div class="line"></div><div class="line">    alert(x); <span class="comment">// ? - scope of "x" is undetermined at compile time</span></div><div class="line"></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// organize recursion on 3 calls</span></div><div class="line"></div><div class="line">  <span class="keyword">if</span> (flag &lt; <span class="number">3</span>) &#123;</div><div class="line">    foo(++flag);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;)(<span class="number">1</span>);</div></pre></td></tr></table></figure>
+<p>在ES5严格模式下，with被移除，eval也被限制不能创建变量。</p>
+<h3 id="名称绑定-Name-binding"><a href="#名称绑定-Name-binding" class="headerlink" title="名称绑定 Name binding"></a>名称绑定 Name binding</h3><p>在高级语言中，我们通常不必通过低等级的地址去操作内存中的数据，而通过变量名（标识符）去关联这些数据。</p>
+<blockquote>
+<p>名称绑定是一个标识符（identifier）和一个对象（object）间的联系</p>
+</blockquote>
+<p>标识符能被绑定和解绑，计入一个标识符绑定了一个对象，则称为它<em>引用</em>这个对象。</p>
+<p>对于绑定的概念有两个相关的操作（这通常与按引用传递、按值传递参数相混淆）：重绑定（rebinding）和突变（mutation）。</p>
+<h4 id="重绑定-Rebinding"><a href="#重绑定-Rebinding" class="headerlink" title="重绑定 Rebinding"></a>重绑定 Rebinding</h4><p>重绑定与标识符有关，该操作解除标识符的绑定，从一个老的对象到一个新的，通常通过赋值这种简单的操作完成。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bind "foo" to &#123;x: 10&#125; object</span></div><div class="line"><span class="keyword">var</span> foo = &#123;x: <span class="number">10</span>&#125;;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(foo.x); <span class="comment">// 10</span></div><div class="line"></div><div class="line"><span class="comment">// bind "bar" to the *same* object</span></div><div class="line"><span class="comment">// as "foo" identifier is bound</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> bar = foo;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(foo === bar); <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(bar.x); <span class="comment">// OK, also 10</span></div><div class="line"></div><div class="line"><span class="comment">// and now rebind "foo"</span></div><div class="line"><span class="comment">// to the new object</span></div><div class="line"></div><div class="line">foo = &#123;x: <span class="number">20</span>&#125;;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(foo.x); <span class="comment">// 20</span></div><div class="line"></div><div class="line"><span class="comment">// and "bar" still points</span></div><div class="line"><span class="comment">// to the old object</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(bar.x); <span class="comment">// 10</span></div><div class="line"><span class="built_in">console</span>.log(foo === bar); <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<p>通常重绑定与按引用赋值有混淆，如果是按引用传递的话，当 foo 指定新值时， bar同样也应指向新对象，然而，像我们看到的那样，bar 一致关联老的对象， 意味着 foo 重绑定到新的内存块。</p>
+<img src="/blog/2014/06/19/lexical-environments-common-theory/rebinding.png" alt="rebinding.png" title="">
+<p>绑定不是按引用传递，从C语言的观点来说，可作为按指针或者by-sharing，通常，它也被看作按值的特殊的例子，只不过值是一个地址而已。</p>
+<h4 id="突变-Mutation"><a href="#突变-Mutation" class="headerlink" title="突变 Mutation"></a>突变 Mutation</h4><p>相比之下rebinding，mutation 操作影响对象的内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// bind an array to the "foo" identifier</span></div><div class="line"><span class="keyword">var</span> foo = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div><div class="line"></div><div class="line"><span class="comment">// and here is a *mutation* of</span></div><div class="line"><span class="comment">// the array object contents</span></div><div class="line">foo.push(<span class="number">4</span>);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(foo); <span class="comment">// 1,2,3,4</span></div><div class="line"></div><div class="line"><span class="comment">// also mutations</span></div><div class="line">foo[<span class="number">4</span>] = <span class="number">5</span>;</div><div class="line">foo[<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(foo); <span class="comment">// 0,2,3,4,5</span></div></pre></td></tr></table></figure>
+<img src="/blog/2014/06/19/lexical-environments-common-theory/mutation.png" alt="mutation.png" title="">
+<h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><p>在本节中，我们将提到词法作用域的技术实现。而且，由于我们运用高抽象的实体谈论词法作用域，我们将主要使用 environment 的概念，而不是 scope，因为这个术语实在ES5中被使用的，例如，global environment， 函数的 local environment 等。</p>
+<p>像我们提到的那样，environment 指定表达式中标识符（符号）的含义，离开具体的环境讨论表达式的值是没有意义的 。</p>
+<p>ECMAScript通过使用调用堆栈模型去管理函数的执行，这个模型被称为 execution contexts stack。</p>
+<h4 id="活动记录模型-Activation-record-model"><a href="#活动记录模型-Activation-record-model" class="headerlink" title="活动记录模型 Activation record model"></a>活动记录模型 Activation record model</h4><p>调用堆栈的一种特殊数据结构，被称为 <em>活动记录</em>，用于存储环境绑定。有时它也被称为：调用堆栈结构（call-stack frame）。</p>
+<p>每次函数被激活，他的活动记录（拥有形参和本地变量）被压入调用堆栈中。因此，假如这个函数调用其他函数（或者递归地调用自身），另一个堆栈结构被压入栈中。在这个上下文完成的时候，活动记录从堆栈中移除（意味着所有的本地变量被销毁）。下面是一个C语言的例子。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> y = <span class="number">20</span>;</div><div class="line">  bar(<span class="number">30</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">bar</span><span class="params">(x)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> z = <span class="number">40</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo(<span class="number">10</span>);</div></pre></td></tr></table></figure>
+<p>调用堆栈的变化情况：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">callStack = [];</div><div class="line"></div><div class="line"><span class="comment">// "foo" function activation</span></div><div class="line"><span class="comment">// record is pushed onto the stack</span></div><div class="line"></div><div class="line">callStack.push(&#123;</div><div class="line">  x: <span class="number">10</span>,</div><div class="line">  y: <span class="number">20</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// "bar" function activation</span></div><div class="line"><span class="comment">// record is pushed onto the stack</span></div><div class="line"></div><div class="line">callStack.push(&#123;</div><div class="line">  x: <span class="number">30</span>,</div><div class="line">  z: <span class="number">40</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// callStack at the moment of</span></div><div class="line"><span class="comment">// the "bar" activation</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(callStack); <span class="comment">// [&#123;x: 10, y: 20&#125;, &#123;x: 30, z: 40&#125;]</span></div><div class="line"></div><div class="line"><span class="comment">// "bar" function ends</span></div><div class="line">callStack.pop();</div><div class="line"></div><div class="line"><span class="comment">// "foo" function ends</span></div><div class="line">callStack.pop();</div></pre></td></tr></table></figure>
+<p>在下图中，我们看到两个活动记录被压到堆栈中，并且当前是bar函数处于活动状态：</p>
+<img src="/blog/2014/06/19/lexical-environments-common-theory/call-stack.png" alt="call-stack.png" title="">
+<p>在ECMAScript中，对于函数的执行采用上面讲到的相同的逻辑处理。然而又有一些非常重要的不同点。</p>
+<p>首先，术语称呼上不同，上面所说的 call-stack 的概念，在ES中称为执行上下文堆栈（execution contexts stack），activation record 称为（ES3中） activation object。</p>
+<p>其次，术语的不同不是重点，与C语言的主要的不同是：在ECMAScript中，如果存在闭包，那么将不会从内存中移除活动对象。这意味着 activation object 不应该存储在 stack 里，而应该存在 heap（一段动态分配的内存；有时这样的语言称为 heap-based 语言，另外的称为 stack-based 语言）。如果有必要，所有的父级 activation object 也将被存储。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> bar = (<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> x = <span class="number">10</span>;</div><div class="line">  <span class="keyword">var</span> y = <span class="number">20</span>;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> x + y;</div><div class="line">  &#125;;</div><div class="line">&#125;)();</div><div class="line"></div><div class="line">bar(); <span class="comment">// 30</span></div></pre></td></tr></table></figure>
+<p>Heap-based call-frames.</p>
+<img src="/blog/2014/06/19/lexical-environments-common-theory/call-stack-with-closures.png" alt="call-frames" title="call-frames">
+<p>这里有个术语，这些 activation objects 是 environment frames（有别于 call-stack frames）。我们使用这个术语强调两种实现的不同 —— 假如闭包中存在它们的引用，那么 environment frames 将继续在内存中存在而不被销毁。</p>
+<h4 id="环境框架模型-Environment-frames-model"><a href="#环境框架模型-Environment-frames-model" class="headerlink" title="环境框架模型 Environment frames model"></a>环境框架模型 Environment frames model</h4><p>相比C语言，在ECMAScript中，我们有内部函数和闭包。此外，在ES中的所有函数是first-class。在其他函数式编程中也有类似的定义，这个概念与词法环境模型密切相关。</p>
+<p>我们将阐明闭包的问题（“funarg problem”也会在接下来被提到），它与词法环境密切相关，这就是为什么我们主要讨论这个函数式语言的基本概念。</p>
+<h5 id="First-class-函数"><a href="#First-class-函数" class="headerlink" title="First-class 函数"></a>First-class 函数</h5><blockquote>
+<p>first-class function 当作普通数据对待，也就是它能在运行时逐字被创建，能被作为参数传递，或者作为另外一个函数的返回值</p>
+</blockquote>
+<p>一个简单的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// create a function expression</span></div><div class="line"><span class="comment">// dynamically at runtime and</span></div><div class="line"><span class="comment">// bind it to "foo" identifier</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> foo = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"foo"</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// pass it to another function,</span></div><div class="line"><span class="comment">// which in turn is also created</span></div><div class="line"><span class="comment">// at runtime and called immediately</span></div><div class="line"><span class="comment">// right after the creation; result</span></div><div class="line"><span class="comment">// of this function is again bound</span></div><div class="line"><span class="comment">// to the "foo" identifier</span></div><div class="line"></div><div class="line">foo = (<span class="function"><span class="keyword">function</span> (<span class="params">funArg</span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// activate the "foo" function</span></div><div class="line">  funArg(); <span class="comment">// "foo"</span></div><div class="line"></div><div class="line">  <span class="comment">// and return it back as a value</span></div><div class="line">  <span class="keyword">return</span> funArg;</div><div class="line"></div><div class="line">&#125;)(foo);</div></pre></td></tr></table></figure>
+<p>First-class 函数可能在子定义中被分为不同的层次。</p>
+<h5 id="函数参数和高阶函数-Funargs-and-higher-order-functions"><a href="#函数参数和高阶函数-Funargs-and-higher-order-functions" class="headerlink" title="函数参数和高阶函数 Funargs and higher-order functions"></a>函数参数和高阶函数 Funargs and higher-order functions</h5><p>当一个函数被作为参数传递时，称为“funarg”，它是 functional argument 的缩写。</p>
+<p>反过来，一个函数接受 “funarg” 被称为 higher-order function (HOF)，或者用更数学的术语：operator。</p>
+<p>函数的返回值是另一个函数的函数被称为 function with a functional value（或者 function-valued 函数）。</p>
+<p>这些概念与下面我们提到的“funarg-problem”相关，这个问题可通过闭包和词法环境完全解决。</p>
+<p>在上面的例子中， foo 函数是一个“funarg” 被传递到一个匿名的高阶函数（它接收 foo “funarg” 通过名为 funArg 的形参）。这个匿名函数返回 functional value，所有的这些函数是划分为 first-class 函数定义。</p>
+<h5 id="自由变量-Free-variable"><a href="#自由变量-Free-variable" class="headerlink" title="自由变量 Free variable"></a>自由变量 Free variable</h5><blockquote>
+<p>自由变量是一种变量，它既不是函数参数，也不是函数的本地变量。</p>
+</blockquote>
+<p>换句话说，自由变量不位于 own 环境中，但是可能在周围的环境中。自由变量可能是 bound （受约束的，也就是在一些父级环境中被找到），或者是 unbound（不受约束的）。后者可能会引发 ReferenceError。</p>
+<p>看一下这个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Global environment (GE)</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">y</span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// environment of "foo" function (E1)</span></div><div class="line"></div><div class="line">  <span class="keyword">var</span> z = <span class="number">30</span>;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params">q</span>) </span>&#123;</div><div class="line">    <span class="comment">// environment of "bar" function (E2)</span></div><div class="line">    <span class="keyword">return</span> x + y + z + q;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// return "bar" to the outside</span></div><div class="line">  <span class="keyword">return</span> bar;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> bar = foo(<span class="number">20</span>);</div><div class="line"></div><div class="line">bar(<span class="number">40</span>); <span class="comment">// 100</span></div></pre></td></tr></table></figure>
+<p>在上面的例子中，我们有三个环境：GE、E1 和 E2，分别对应全局对象，foo 函数和bar 函数。</p>
+<p>因此对于 bar 函数，x，y 和 z 变量是 free —— 它们既不是形参，也不是 bar 的本地变量。</p>
+<p>注意，foo 函数不使用自由变量。然而，由于 x 变量bar函数内部使用，因为 bar 函数在 foo 函数 execution 期间被创建，后者仍应保存父环境的绑定 —— 为了将 x 绑定的信息传递到更深层次的嵌套函数中。</p>
+<p>在bar函数调用后，正确得到100的结果，bar函数在某种程度上记住了foo函数调用时的环境（在内部的bar被创建时），即使foo的上下文已经完成。再次说来，这也是与C语言中实用的 stack-based activation record model的不同。</p>
+<p>显然，如果我们允许嵌套的内部函数，想拥有静态词法作用域，同时，将左右的这些函数作为 first-class，那么我们应该在函数创建的时候保存所有的这个函数使用的自由变量。</p>
+<h5 id="环境定义-Environment-definition"><a href="#环境定义-Environment-definition" class="headerlink" title="环境定义 Environment definition"></a>环境定义 Environment definition</h5><p>实现这样的算法的最直接和最简单的方法就是保存我们所创建的完整的父环境。接下来，在我们自己的调用中（在这个例子中，指的是 bar 函数的调用），我们将创建我们的 own environment，用本地变量和参数填充它，并将保存的那个父环境设置成我们的 outer environment  —— 为了找到自由变量的存在。</p>
+<p>无论对单个绑定对象，还是对应深层嵌套级别的所有绑定对象的整个列表，都可能使用术语 environment。在稍后的案例中我们将称呼这个绑定对象为这个环境的 frames。从这个角度看：</p>
+<blockquote>
+<p>environment 是 frames 的序列。每个 frame 是 一条 bingings record（可能为空），这条记录将变量名和他们对应的值关联起来。</p>
+</blockquote>
+<p>注意，由于这是一个通用的定义，我们使用 record 这种抽象的概念，无需指定具体的实现结构 —— 它可能是个放置在堆或者栈存储器中的哈希表，或是在虚拟机中的寄存器等。</p>
+<p>举例说明，E2 环境有三个 frames：自身 —— bar，foo 和 global。E2 环境包括两个 frames： foo（自身） 和 global frame。全局环境 GE 只包含一个 global frame。</p>
+<img src="/blog/2014/06/19/lexical-environments-common-theory/environment.png" alt="An environment with frames" title="An environment with frames">
+<p>单个 frame 可能包含最多一个任意变量的绑定。每个 frame 还具有它的 enclosing（或者 outer）环境的一个指针。全局 frame 的 outer 引用是 null。一个变量相对于一个环境的值是被包含这个变量绑定的环境中的第一个frame的变量绑定所赋予。假如序列中没有 frame 指定这个变量的绑定，则这个变量被称作是在该环境下 unbound（引发 ReferenceError 的一种情况）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</div><div class="line"></div><div class="line">(<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">y</span>) </span>&#123;</div><div class="line">  </div><div class="line">  <span class="comment">// use of free-bound "x" variable</span></div><div class="line">  <span class="built_in">console</span>.log(x);</div><div class="line"></div><div class="line">  <span class="comment">// own-bound "y" variable</span></div><div class="line">  <span class="built_in">console</span>.log(y); <span class="comment">// 20</span></div><div class="line">  </div><div class="line">  <span class="comment">// and free-unbound variable "z"</span></div><div class="line">  <span class="built_in">console</span>.log(z); <span class="comment">// ReferenceError: "z" is not defined</span></div><div class="line"></div><div class="line">&#125;)(<span class="number">20</span>);</div></pre></td></tr></table></figure>
+<p>换言之，再次回到 scopes 的概念，environment frame的序列（或者从不同的角度 —— environments 的链表）组成了我们可以称之为作用域链的东西，这并不奇怪，ES3 正是对它有这个术语 —— a scope chain。</p>
+<p>注意的是，一个环境可能作为几个内部环境的一个 enclosing 环境：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Global environment (GE)</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// "foo" environment (E1)</span></div><div class="line"></div><div class="line">  <span class="keyword">var</span> x = <span class="number">20</span>;</div><div class="line">  <span class="keyword">var</span> y = <span class="number">30</span>;</div><div class="line"></div><div class="line">  <span class="built_in">console</span>.log(x + y);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  </div><div class="line">  <span class="comment">// "bar" environment (E2)</span></div><div class="line"></div><div class="line">  <span class="keyword">var</span> z = <span class="number">40</span>;</div><div class="line"></div><div class="line">  <span class="built_in">console</span>.log(x + z);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>因此，在伪代码中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// global</span></div><div class="line">GE = &#123;</div><div class="line">  x: <span class="number">10</span>,</div><div class="line">  outer: <span class="literal">null</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// foo</span></div><div class="line">E1 = &#123;</div><div class="line">  x: <span class="number">20</span>,</div><div class="line">  y: <span class="number">30</span>,</div><div class="line">  outer: GE</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// bar</span></div><div class="line">E2 = &#123;</div><div class="line">  z: <span class="number">40</span>,</div><div class="line">  outer: GE</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>下图展示了这些关系：</p>
+<img src="/blog/2014/06/19/lexical-environments-common-theory/common-parent-environment.png" alt="environment frame" title="environment frame">
+<p>E1 黄静中的绑定 x 映射 global frame 中的同名绑定。</p>
+<h5 id="函数的创建和应用规则-Rules-of-function-creation-and-application"><a href="#函数的创建和应用规则-Rules-of-function-creation-and-application" class="headerlink" title="函数的创建和应用规则 Rules of function creation and application"></a>函数的创建和应用规则 Rules of function creation and application</h5><p>创建和应用（调用）函数的通用规则：</p>
+<blockquote>
+<p>函数相对于给定的环境创建，由此产生的函数对象是一个 pair，包括：code（函数体）和 a pointer to the environment in which the function was created.</p>
+</blockquote>
+<p>这段代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// global "x"</span></div><div class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</div><div class="line"></div><div class="line"><span class="comment">// function "foo" is created relatively</span></div><div class="line"><span class="comment">// to the global environment</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">y</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> z = <span class="number">30</span>;</div><div class="line">  <span class="built_in">console</span>.log(x + y + z);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对应的伪代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// create "foo" function</span></div><div class="line"></div><div class="line">foo = functionObject &#123;</div><div class="line">  code: <span class="string">"console.log(x + y + z);"</span></div><div class="line">  environment: &#123;x: <span class="number">10</span>, outer: <span class="literal">null</span>&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>用图展示如下：</p>
+<img src="/blog/2014/06/19/lexical-environments-common-theory/function-object.png" alt="A function" title="A function">
+<p>注意，函数指向它的环境，而环境中的一个绑定 —— 函数 —— 指回这个函数对象。</p>
+<blockquote>
+<p>一个函数带一堆参数被调用，通过构建一个新 frame，在这个frame中，将这个函数的形参绑定到调用的参数上，创建本地变量的绑定，然后在构建的新的环境上下文中执行该函数体。新的 frame 作为 它的 enclosing 环境以及这个函数对象的环境的一部分被应用。</p>
+</blockquote>
+<p>例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// function "foo" is applied</span></div><div class="line"><span class="comment">// to the argument 20</span></div><div class="line"></div><div class="line">foo(<span class="number">20</span>);</div></pre></td></tr></table></figure>
+<p>对应的伪代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// create a new frame with formal </span></div><div class="line"><span class="comment">// parameters and local variables</span></div><div class="line"></div><div class="line">fooFrame = &#123;</div><div class="line">  y: <span class="number">20</span>,</div><div class="line">  z: <span class="number">30</span>,</div><div class="line">  outer: foo.environment</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// and evaluate the code</span></div><div class="line"><span class="comment">// of the "foo" function </span></div><div class="line"></div><div class="line">execute(foo.code, fooFrame); <span class="comment">// 60</span></div></pre></td></tr></table></figure>
+<p>下图展示函数的应用：</p>
+
+<p>这个结论的第一点直接给了我们闭包的定义。</p>
+<h5 id="闭包-Closure"><a href="#闭包-Closure" class="headerlink" title="闭包 Closure"></a>闭包 Closure</h5><blockquote>
+<p>闭包是一个pair，包括函数的 code 和 函数被创建的 environment</p>
+</blockquote>
+<p>正如我们上面提到的，闭包的发明是为了解决“funarg problem”，让我们回顾一下以便有完整的了解。</p>
+<h5 id="Funarg-问题-Funarg-problem"><a href="#Funarg-问题-Funarg-problem" class="headerlink" title="Funarg 问题 Funarg problem"></a>Funarg 问题 Funarg problem</h5><p>funarg 问题被分为两个子问题，他们直接与 scope，environments和closures 这些概念相关。</p>
+<blockquote>
+<p>Upward funarg 问题对应从内部函数返回到外部的复杂性 —— 即我们怎么实现函数的返回，假如这个函数使用创建它的父环境的自由变量？</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">x</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">y</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> x + y;</div><div class="line">  &#125;;</div><div class="line">&#125;)(<span class="number">10</span>)(<span class="number">20</span>); <span class="comment">// 30</span></div></pre></td></tr></table></figure>
+<p>正如我们已经知道的，词法作用域在堆上保存 enclosing frame —— 这是答案也是关键。在栈上保存绑定的策略不再适用了（被使用在C语言中）。让我们重申，保存的代码块和环境 —— 是闭包。 </p>
+<blockquote>
+<p>Downward funarg 问题对应变量解析的模糊性，当我们向其他函数中传递一个使用了自由变量的函数作为一个参数时。哪一个作用域中的自由变量应该被解析 —— 函数定义时的作用域还是函数执行时的作用域？</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</div><div class="line"></div><div class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">funArg</span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> x = <span class="number">20</span>;</div><div class="line">  funArg(); <span class="comment">// 10, not 20</span></div><div class="line"></div><div class="line">&#125;)(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="comment">// create and pass a funarg</span></div><div class="line">  <span class="built_in">console</span>.log(x);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>换言之， downward funarg 问题涉及到本章开头讨论的 静态词法作用域和动态作用域的选择问题。就像我们已经知道和已经说过的那样，答案是静态此法作用域，我们应该精确保存词法变量以避免模糊不清的状况，再次重申 —— 保存词法变量和函数的代码 —— 就是所谓的闭包。</p>
+<p>所以，最后我们明白什么？ first-class 函数，闭包，词法环境这些概念是非常密切的。词法环境正是用来实现闭包和静态作用域的通用技术。</p>
+<h4 id="Combined-environment-frame-model"><a href="#Combined-environment-frame-model" class="headerlink" title="Combined environment frame model"></a>Combined environment frame model</h4><p>总是记住，为了深入了解一些具体的技术（例如ECMAScript），我们总是应该首先了解常见的理论机制，或者看看其他语言是怎么实现该技术的。然后我们将看到这些通用的机制在许多类似的语言中变得清晰明了，尽管不同的语言可能具体实现不同。本节就讲述在Python、Ruby和Lua这些语言中的环境。</p>
+<h2 id="结论-Conclusion"><a href="#结论-Conclusion" class="headerlink" title="结论 Conclusion"></a>结论 Conclusion</h2><p>本章摘要：</p>
+<ul>
+<li>enviroment的概念和scope的概念相关。</li>
+<li>理论上有两种类型的作用域：dynamic 和 static。</li>
+<li>ECMAScript 使用 static (lexical) 作用域。</li>
+<li>然而， with 和 eval 指令可以被认为 bringing a dynamics 到静态作用域。</li>
+<li>scope，environment，activation object，activation record，call-stack frame，environment frame，environment record 和 execution context 这些概念都是近义词，可能在讨论中被使用。因此，技术上在ECMAScript中，它们中的一些是另外一些的一部分。例如， environment record 是 lexical environment的一部分，也是 execution context的一部分。然而，逻辑上的抽象定义都可以几乎等价使用。以下说法都是正常的： “a global scope”，“a global environment”，“a global context”等。</li>
+<li>ECMAScript 使用 chained environment frames 的模型，在ES3中，它称作 scope chain。在ES5中，我们也会看到一个 environment frame 被称作一个 environment record。</li>
+<li>一个环境可能会附上几个内部环境。</li>
+<li>词法环境被用来实现闭包，解决 funarg 问题。</li>
+<li>ECMAScript中，所有的函数是 first-class 和 闭包。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/blog/tags/ECMA-262/" rel="tag">#ECMA-262</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2014/05/12/css-table/" rel="next" title="表格式化">
+                <i class="fa fa-chevron-left"></i> 表格式化
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2014/06/21/lexical-environments-ecmascript-implementation/" rel="prev" title="词法环境：ECMAScript 实现">
+                词法环境：ECMAScript 实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="gochant" />
+          <p class="site-author-name" itemprop="name">gochant</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公共概念"><span class="nav-number">2.</span> <span class="nav-text">公共概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域-Scope"><span class="nav-number">2.1.</span> <span class="nav-text">作用域 Scope</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#静态作用域-Static-lexical-scope"><span class="nav-number">2.1.1.</span> <span class="nav-text">静态作用域 Static(lexical) scope</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态作用域-Dynamic-scope"><span class="nav-number">2.1.2.</span> <span class="nav-text">动态作用域 Dynamic scope</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ECMAScript中的动态作用域特性：With和eval"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">ECMAScript中的动态作用域特性：With和eval</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#名称绑定-Name-binding"><span class="nav-number">2.2.</span> <span class="nav-text">名称绑定 Name binding</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重绑定-Rebinding"><span class="nav-number">2.2.1.</span> <span class="nav-text">重绑定 Rebinding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#突变-Mutation"><span class="nav-number">2.2.2.</span> <span class="nav-text">突变 Mutation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Environment"><span class="nav-number">2.3.</span> <span class="nav-text">Environment</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#活动记录模型-Activation-record-model"><span class="nav-number">2.3.1.</span> <span class="nav-text">活动记录模型 Activation record model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#环境框架模型-Environment-frames-model"><span class="nav-number">2.3.2.</span> <span class="nav-text">环境框架模型 Environment frames model</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#First-class-函数"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">First-class 函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#函数参数和高阶函数-Funargs-and-higher-order-functions"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">函数参数和高阶函数 Funargs and higher-order functions</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自由变量-Free-variable"><span class="nav-number">2.3.2.3.</span> <span class="nav-text">自由变量 Free variable</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#环境定义-Environment-definition"><span class="nav-number">2.3.2.4.</span> <span class="nav-text">环境定义 Environment definition</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#函数的创建和应用规则-Rules-of-function-creation-and-application"><span class="nav-number">2.3.2.5.</span> <span class="nav-text">函数的创建和应用规则 Rules of function creation and application</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#闭包-Closure"><span class="nav-number">2.3.2.6.</span> <span class="nav-text">闭包 Closure</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Funarg-问题-Funarg-problem"><span class="nav-number">2.3.2.7.</span> <span class="nav-text">Funarg 问题 Funarg problem</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Combined-environment-frame-model"><span class="nav-number">2.3.3.</span> <span class="nav-text">Combined environment frame model</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论-Conclusion"><span class="nav-number">3.</span> <span class="nav-text">结论 Conclusion</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gochant</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,971 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript,Basic," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 基础（三） 浏览器、DOM、CSS 操纵">
+<meta property="og:url" content="http://yoursite.com/2014/10/12/js-base-client/index.html">
+<meta property="og:site_name" content="G01">
+<meta property="og:description" content="这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点">
+<meta property="og:updated_time" content="2016-10-10T15:01:30.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 基础（三） 浏览器、DOM、CSS 操纵">
+<meta name="twitter:description" content="这一系列文章主要是给团队内的前端新人建立一个较为完整的基础知识体系，每一小节不做太深入的解释，主要是是罗列一些重要的或者平时不会太注意的点">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/10/12/js-base-client/"/>
+
+  <title> JavaScript 基础（三） 浏览器、DOM、CSS 操纵 | G01 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">G01</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Living Life Over</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaScript 基础（三） 浏览器、DOM、CSS 操纵
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-10-12T18:01:54+08:00" content="2014-10-12">
+              2014-10-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/Frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">Frontend</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>客户端JavaScript的内容：</p>
+<ul>
+<li>基础</li>
+<li>Window对象</li>
+<li>操作DOM</li>
+<li>操作CSS</li>
+<li>事件</li>
+<li>操作HTTP</li>
+<li>存储</li>
+<li>多媒体图形</li>
+<li>HTML5</li>
+</ul>
+<a id="more"></a>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>Web页面的类型：</p>
+<ul>
+<li>Web文档</li>
+<li>Web应用</li>
+</ul>
+<h3 id="引入JavaScript的方法"><a href="#引入JavaScript的方法" class="headerlink" title="引入JavaScript的方法"></a>引入JavaScript的方法</h3><ul>
+<li>内联</li>
+<li>外部脚本</li>
+<li>HTML事件处理程序</li>
+<li>url（javascript: 协议）</li>
+</ul>
+<p>根据不唐突的JavaScript设计准则，使用src方式优先</p>
+<h4 id="内联"><a href="#内联" class="headerlink" title="内联"></a>内联</h4><p>如果在XHTML文档里，应使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;&lt;![CDATA[</div><div class="line">    // ……</div><div class="line">]]&gt;&lt;/script&gt;</div></pre></td></tr></table></figure>
+<h4 id="外部脚本src"><a href="#外部脚本src" class="headerlink" title="外部脚本src"></a>外部脚本src</h4><ul>
+<li>如果指定了src，script标签内有内容，那这些内容被忽略，并且如果出现非注释，HTML5校验会报错</li>
+</ul>
+<blockquote>
+<p>注意下面这种写法的意义</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;script src=&quot;core.js&quot;&gt;</div><div class="line">    config = &#123; &#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>当type为未知类型，则浏览器不执行里面的代码，这个特性用来保存模板等文本数据</li>
+<li>如果同时指定src和未知type，则不会请求脚本</li>
+</ul>
+<h4 id="url方式"><a href="#url方式" class="headerlink" title="url方式"></a>url方式</h4><ul>
+<li>使用 javascript:void … 阻止返回内容，chrome 和 safari 默认忽略返回值</li>
+<li>制作书签：bookmarklet</li>
+</ul>
+<h3 id="JS程序的执行"><a href="#JS程序的执行" class="headerlink" title="JS程序的执行"></a>JS程序的执行</h3><ul>
+<li>第一阶段：同步，文档载入执行阶段。载入文档内容，并执行 script标签的代码，基本上按照文档出现的顺序执行</li>
+<li>第二阶段：异步，事件驱动阶段</li>
+</ul>
+<p>脚本的下载和执行都是同步阻塞的，这意味着，在它执行完成之前，HTML文档虽然已经载入，但不会被渲染成DOM树，可指定 defer 或 async 异步下载执行</p>
+<blockquote>
+<p>关于async和defer的区别，见：<a href="http://segmentfault.com/q/1010000000640869" target="_blank" rel="external">http://segmentfault.com/q/1010000000640869</a> 和 <a href="http://ued.ctrip.com/blog/?p=3121" target="_blank" rel="external">http://ued.ctrip.com/blog/?p=3121</a></p>
+</blockquote>
+<h4 id="线程模型"><a href="#线程模型" class="headerlink" title="线程模型"></a>线程模型</h4><h4 id="时间线"><a href="#时间线" class="headerlink" title="时间线"></a>时间线</h4><ol>
+<li>创建Document对象，Parse页面，document.readystate是 loading</li>
+<li>遇到同步script元素，停止解析，加载执行脚本，该脚本可使用document.write，并访问部分dom树（它之前的元素）</li>
+<li>async脚本下载并执行（基本不能访问dom树，不能用document.write）</li>
+<li>文档解析完毕后，readyState变成 interactive</li>
+<li>defer脚本执行，并能访问完整DOM树，不能使用document.write</li>
+<li>Document 触发 DOMContentLoaded 事件，进入异步事件驱动阶段</li>
+<li>加载图片等内容，执行完异步脚本，readyState变成 complete，Window 上触发 load 事件</li>
+</ol>
+<blockquote>
+<p>一些兼容性问题<br>IE 不支持 DOMContentLoaded，defer和async还不通用</p>
+</blockquote>
+<h3 id="兼容性和可用性"><a href="#兼容性和可用性" class="headerlink" title="兼容性和可用性"></a>兼容性和可用性</h3><p>分类：</p>
+<ul>
+<li>版本演化</li>
+<li>未实现和实现差异</li>
+<li>bug</li>
+</ul>
+<p>解决问题的方式：</p>
+<ul>
+<li>查阅一下bug描述的网站（TODO）</li>
+</ul>
+<p><a href="http://caniuse.com/" target="_blank" rel="external">http://caniuse.com/</a></p>
+<ul>
+<li><p>使用解决兼容性的库</p>
+</li>
+<li><p>分级浏览器支持</p>
+</li>
+<li><p>特征检测</p>
+</li>
+<li><p>浏览器嗅探</p>
+</li>
+<li><p>更改渲染模式</p>
+</li>
+</ul>
+<p>标准模式，怪异模式（IE5）<br>使用 doctype 去更改它<br>document.compatMode 属性检测它（已纳入HTML5标准）</p>
+<ul>
+<li>IE下的条件注释</li>
+</ul>
+<p>HTML条件注释<br>JS条件注释</p>
+<h3 id="可访问性"><a href="#可访问性" class="headerlink" title="可访问性"></a>可访问性</h3><p>主要针对人群：</p>
+<ul>
+<li>盲人</li>
+<li>残疾人</li>
+</ul>
+<p>方式：</p>
+<ul>
+<li>是否支持禁用JavaScript，语义化HTML，以便更好的使用屏幕阅读器</li>
+<li>尽可能使用独立于设备的事件（不依赖于鼠标或键盘）</li>
+</ul>
+<p>相关文档规范：</p>
+<h3 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h3><h4 id="一些限制"><a href="#一些限制" class="headerlink" title="一些限制"></a>一些限制</h4><ul>
+<li>只有响应鼠标单击事件时才能弹出新窗口，否则会被拦截</li>
+</ul>
+<p>相关研究：<a href="http://hi.barretlee.com/2014/09/07/onclick-in-javascript/" target="_blank" rel="external">http://hi.barretlee.com/2014/09/07/onclick-in-javascript/</a></p>
+<ul>
+<li>可以关闭自己的窗口，但必须经过确认才能关闭其他窗口</li>
+<li>file upload 元素的value是只读的</li>
+</ul>
+<h4 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h4><p>这是对JS能够操作哪些Web内容的一条完整的安全限制。在使用iframe和打开新窗口生效</p>
+<p>同源：即同协议、同主机、同端口</p>
+<p>适用范围：</p>
+<ul>
+<li>绝大多数窗口和文档属性（脚本只能读取它所属文档来源相同的，但使用iframe可以访问父子窗口对象，但访问文档对象受限）</li>
+<li>XMLHttpRequest请求</li>
+</ul>
+<p>合理打破同源策略：</p>
+<ul>
+<li>子站点共享：改变 document.domain，可避免各子站点同源策略约束</li>
+<li>跨域资源共享（CORS）：使用 Origin 请求和Access-Control-Allow-Origin响应扩展HTTP，使Ajax请求规避同源策略</li>
+<li>跨文档消息：使用postMessage，实现安全通信</li>
+</ul>
+<h4 id="脚本化插件"><a href="#脚本化插件" class="headerlink" title="脚本化插件"></a>脚本化插件</h4><ul>
+<li>Java和Flash插件</li>
+<li>ActiveX 控件</li>
+</ul>
+<h4 id="跨站脚本"><a href="#跨站脚本" class="headerlink" title="跨站脚本"></a>跨站脚本</h4><p>XSS[TODO] WEB前端安全</p>
+<h4 id="拒绝服务攻击"><a href="#拒绝服务攻击" class="headerlink" title="拒绝服务攻击"></a>拒绝服务攻击</h4><h2 id="Window-对象"><a href="#Window-对象" class="headerlink" title="Window 对象"></a>Window 对象</h2><h3 id="计时器"><a href="#计时器" class="headerlink" title="计时器"></a>计时器</h3><p>setTimeout setInterval</p>
+<h3 id="导航-location"><a href="#导航-location" class="headerlink" title="导航 location"></a>导航 location</h3><p>window.location === document.location</p>
+<p>location 的属性：href，protocol，host，hostname，port，pathname，search，hash</p>
+<p>？载入文档有哪些方法</p>
+<ul>
+<li>使用方法 assign、replace、reload</li>
+</ul>
+<blockquote>
+<p>assign 与 replace区别：replace 不会存储历史记录</p>
+</blockquote>
+<ul>
+<li>直接赋值</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">location = &quot;http://www.sxxx.com&quot;;</div><div class="line">location = “page2.html”;</div><div class="line">location = &quot;#top&quot;; // hash 不会载入新页面，“#top” 是特殊写法，会跳转到页首</div><div class="line">location.search = &quot;?sdfx&quot;</div></pre></td></tr></table></figure>
+<h3 id="浏览历史"><a href="#浏览历史" class="headerlink" title="浏览历史"></a>浏览历史</h3><p>history</p>
+<p>history.length：不能访问已保存的历史记录（安全性考虑）<br>back、forward、go</p>
+<blockquote>
+<p>iframe 会将历史记录穿插到父窗体中，利用这点，可以实现 单页面的 history 管理</p>
+</blockquote>
+<h3 id="浏览器信息"><a href="#浏览器信息" class="headerlink" title="浏览器信息"></a>浏览器信息</h3><p>navigator</p>
+<p>useAgent、appName、appVersion、platform ……</p>
+<h3 id="屏幕信息"><a href="#屏幕信息" class="headerlink" title="屏幕信息"></a>屏幕信息</h3><p>screen</p>
+<p>非标准属性</p>
+<h3 id="对话框"><a href="#对话框" class="headerlink" title="对话框"></a>对话框</h3><p>alert、confirm、prompt、showModalDialog（chrome 37 以后不支持）</p>
+<p>有节制的使用</p>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p>window.onerror</p>
+<p>早期产物，不建议使用，除非开发阶段调试</p>
+<h3 id="文档属性"><a href="#文档属性" class="headerlink" title="文档属性"></a>文档属性</h3><p>所有以id命名的元素会成为全局变量，但如果显式定义，则会被忽略</p>
+<ul>
+<li>以下元素：a、applet、area、form、iframe、img、object 等得name也会创建全局变量，但 name 如果是多个（或者一个id，一个name），则返回值是个类数组</li>
+<li>iframe 引用的时它内部的窗口对象，而不是它自己</li>
+</ul>
+<blockquote>
+<p>遗留问题，不建议使用该特性，因为浏览器厂商可随时定义新属性覆盖掉你所定义的</p>
+</blockquote>
+<h3 id="多窗口和窗体"><a href="#多窗口和窗体" class="headerlink" title="多窗口和窗体"></a>多窗口和窗体</h3><h4 id="打开窗口"><a href="#打开窗口" class="headerlink" title="打开窗口"></a>打开窗口</h4><p>open</p>
+<p>可以结合 window.name 属性打开指定窗口或已存在的窗口，它的限制时：只有允许导航的页面才能（同源或者是该脚本打开的窗口）</p>
+<p>特殊的名称：_blank、_top、_parent</p>
+<h4 id="关闭窗口"><a href="#关闭窗口" class="headerlink" title="关闭窗口"></a>关闭窗口</h4><p>不要混淆 window.close 和 document.close</p>
+<p>关闭的限制：</p>
+<ul>
+<li>只能关闭自己创建的窗口，否则会弹出提示</li>
+<li>在窗体上执行 close 没有效果（可直接删除它的iframe）</li>
+</ul>
+<p>窗口关闭后window对象扔存在，可检测 closed 为 true，但不能工作</p>
+<h4 id="窗体互操作"><a href="#窗体互操作" class="headerlink" title="窗体互操作"></a>窗体互操作</h4><p>parent、self、top</p>
+<p>如果顶级窗口：parent === self</p>
+<p>[iframe].contentWindow、[window].frameElement</p>
+<h4 id="交互窗口JS"><a href="#交互窗口JS" class="headerlink" title="交互窗口JS"></a>交互窗口JS</h4><p>如果不受同源策略影响，则JS可调用另一窗口的方法，但词法环境是定义的那个窗口</p>
+<p>WindowProxy：所访问的window对象实际不是真正的全局对象，而是一个代理</p>
+<p>全局对象被每次载入新内容时被替换</p>
+<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><h3 id="获取DOM元素"><a href="#获取DOM元素" class="headerlink" title="获取DOM元素"></a>获取DOM元素</h3><ul>
+<li>id</li>
+</ul>
+<p>区分大小写</p>
+<p>document.getElementById</p>
+<blockquote>
+<p>bug: 在低于IE8版本中，不区分大小写，并且会返回name匹配的</p>
+</blockquote>
+<ul>
+<li>name</li>
+</ul>
+<p>document.getElementsByName</p>
+<blockquote>
+<p>IE8下会返回id匹配的</p>
+</blockquote>
+<ul>
+<li>标签</li>
+</ul>
+<p>匹配不区分大小写</p>
+<p>返回 NodeList 对象</p>
+<p>document.getElementsByTagName<br>el.getElementsByTagName</p>
+<p>以下为 HTMLCollection 对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">document.images</div><div class="line">document.forms</div><div class="line">document.links</div><div class="line">---</div><div class="line">document.plugins</div><div class="line">document.embeds</div><div class="line">document.scripts // 未普遍实现</div><div class="line">document.anchors  // 非标准</div><div class="line">---</div><div class="line">document.body</div><div class="line">document.head</div><div class="line">document.documentElement  // html</div></pre></td></tr></table></figure>
+<p>NodeList 和 HTMLCollection 是动态的，静态化可使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Array.prototype.slice.call(nodelist, 0);</div></pre></td></tr></table></figure>
+<ul>
+<li>类</li>
+</ul>
+<p>匹配区分大小写</p>
+<p>document.getElementsByClassName<br>el..getElementsByClassName</p>
+<blockquote>
+<p>兼容性：IE8未实现，但它实现了 querySelectorAll，怪异模式下，匹配不区分大小写</p>
+</blockquote>
+<ul>
+<li>CSS选择器</li>
+</ul>
+<p>document.querySelectorAll：返回所有<br>document.querySelector：返回第一个</p>
+<p>返回的NodeList是个静态集合<br>element和documentfragment元素也能使用<br>IE7、8只支持CSS2</p>
+<p>document.all 遗留方法，IE4引入，不应该使用</p>
+<h3 id="DOM结构和遍历"><a href="#DOM结构和遍历" class="headerlink" title="DOM结构和遍历"></a>DOM结构和遍历</h3><p>Document、Element、Text都是Node</p>
+<h4 id="Node-的属性"><a href="#Node-的属性" class="headerlink" title="Node 的属性"></a>Node 的属性</h4><ul>
+<li>NodeType</li>
+</ul>
+<p>1 Element<br>3 Text<br>8 Comment<br>9 Document<br>11 DocumentFragment</p>
+<ul>
+<li>nodeValue 文本内容</li>
+<li>nodeName 标签名（大写）</li>
+</ul>
+<h4 id="基于Node的遍历"><a href="#基于Node的遍历" class="headerlink" title="基于Node的遍历"></a>基于Node的遍历</h4><p>遍历包括文本、注释和元素</p>
+<p>parentNode、childNodes、firstChild、lastChild、nextSibling、previousSibling</p>
+<blockquote>
+<p>注意: 浏览器兼容问题，chrome、firefox等浏览器标签之间的空白也算是一个文本节点。</p>
+</blockquote>
+<p>childNodes 返回 NodeList</p>
+<p>textContent 和 innerText</p>
+<h4 id="基于元素的遍历"><a href="#基于元素的遍历" class="headerlink" title="基于元素的遍历"></a>基于元素的遍历</h4><p>仅在Element上才有，并且遍历仅包括Element元素</p>
+<p>children、parentNode<br>firstElementChild、lastElementChild、nextElementSibling、previousSibling<br>childElementCount</p>
+<blockquote>
+<p>兼容性：Firefox 3.5 以前不支持 children<br>IE8 不支持 基于元素的遍历</p>
+</blockquote>
+<h3 id="元素属性"><a href="#元素属性" class="headerlink" title="元素属性"></a>元素属性</h3><ul>
+<li>html 属性</li>
+</ul>
+<p>直接通过名称访问，驼峰命名法<br>保留字加”html”前缀，如htmlFor、className（特殊）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">img.src = &quot;http://localhost/test.jpg&quot;;</div><div class="line">form.action = &quot;POST&quot;;</div></pre></td></tr></table></figure>
+<ul>
+<li>非标准属性</li>
+</ul>
+<p>getAttribute（返回的都是字符串）、setAttribute、hasAttribute、removeAttribute</p>
+<ul>
+<li>数据集</li>
+</ul>
+<p>data-*，通过dataset（还未浏览器实现）</p>
+<p>可通过获取非标准属性属性方式获取<br>dataset.xxx(驼峰命名法)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">element.dataset.template</div></pre></td></tr></table></figure>
+<ul>
+<li>attributes</li>
+</ul>
+<p>作为 Node 的属性，获取属性节点，它是只读的、实时的列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">document.body.attributes.bgcolor</div></pre></td></tr></table></figure>
+<h3 id="内容文本"><a href="#内容文本" class="headerlink" title="内容文本"></a>内容文本</h3><ul>
+<li>HTML</li>
+</ul>
+<p>innerHTML<br>outerHTML<br>insertAdjacentHTML（firefox不支持）</p>
+<ul>
+<li>Text</li>
+</ul>
+<p>textContent 标准属性(IE不支持)<br>innerText（Firefox不支持）</p>
+<h3 id="DOM操作"><a href="#DOM操作" class="headerlink" title="DOM操作"></a>DOM操作</h3><h4 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">document.createElement</div><div class="line">document.createTextNode</div><div class="line">document.createComment</div><div class="line">document.createDocumentFragment</div><div class="line"></div><div class="line"></div><div class="line">element.cloneNode(true or false) // 克隆，深拷贝（复制子孙）还是浅拷贝</div></pre></td></tr></table></figure>
+<h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">node.appendChild</div><div class="line">node.insertBefore</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如果用一个已有节点插入，则会删除原来位置的节点，放到新的位置上</p>
+</blockquote>
+<h4 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node.replaceChild</div></pre></td></tr></table></figure>
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node.removeChild</div></pre></td></tr></table></figure>
+<h4 id="DocumentFragment"><a href="#DocumentFragment" class="headerlink" title="DocumentFragment"></a>DocumentFragment</h4><p>把多个节点当成一个节点来看，如果插入 docuemtnfragment，则是插入它的子节点</p>
+<p>提高性能</p>
+<h3 id="位置、滚动"><a href="#位置、滚动" class="headerlink" title="位置、滚动"></a>位置、滚动</h3><p>坐标系：文档坐标、视口坐标</p>
+<h4 id="查询窗口视口尺寸"><a href="#查询窗口视口尺寸" class="headerlink" title="查询窗口视口尺寸"></a>查询窗口视口尺寸</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">window.innerWidth  // 包含滚动条</div><div class="line">// 不含滚动条</div><div class="line">document.documentElement.clientWidth</div><div class="line">document.body.clientWidth</div></pre></td></tr></table></figure>
+<blockquote>
+<p>兼容性：IE8不支持innerWidth</p>
+</blockquote>
+<h4 id="获取元素位置和尺寸"><a href="#获取元素位置和尺寸" class="headerlink" title="获取元素位置和尺寸"></a>获取元素位置和尺寸</h4><p><strong>万能的 <code>Element.getBoundingClientRect()</code> 方法</strong></p>
+<p>该方法获取元素的位置坐标，该方法返回ClientRect对象，包括：top、left、right、bottom，还有 width、height（包括内边距和边框）</p>
+<p>这里相对的坐标系是视口坐标系，即原点在视口左上角，为(0, 0)，可以为负数。</p>
+<p>行内元素如果分为两行，则上面的方法获取到的是该元素的边界矩形，即将它们包裹住的一个矩形，如果要分别获取两行的矩形坐标，则使用 <code>Element.getClientRects()</code>，以上返回的是个静态数组，不是如NodeList那样是实时的。</p>
+<p><strong>offsetXXX 类属性</strong></p>
+<p>通过 <code>Element.offsetWidth</code> 和 <code>Element.offsetHeight</code> 获取元素的尺寸（包括内边距和边框）是最好的方案，虽然通过 getBoundingClientRect 能够获取到，但可能是个位数很大的小数（因为通过坐标算出来的）。</p>
+<p><code>Element.offsetLeft</code> 和 <code>Element.offsetTop</code> 可以获取元素的位置，但与上面有两点不同：</p>
+<ul>
+<li>该API获取到的是文档坐标系下的坐标</li>
+<li>如果该元素已定位，则该坐标是相对于定位祖先元素的坐标</li>
+</ul>
+<p><strong>clientXXX 类属性</strong></p>
+<p><code>Element.clientWidth</code> 和 <code>Element.clientHeight</code> 与 offset*类方法相比，它们不包括边框，都不包括滚动条</p>
+<p>clientTop 和 clientLeft 没啥用，指的是左（上）内边距上缘和边框上缘的距离，通常等于该地方的边框（除非有滚动条，但把滚动条放在左边、上边的浏览器，也太奇葩了）</p>
+<p><strong>scrollXXX 类属性</strong></p>
+<p><code>Element.scrollWidth</code> 和 <code>Element.scrollHeight</code> 是元素的内容区域（clientXXX）加上元素溢出的内容部分<br>scrollLeft 和 scrollTop 则是获取或设置滚动条的位置</p>
+<h4 id="获取某位置有什么元素"><a href="#获取某位置有什么元素" class="headerlink" title="获取某位置有什么元素"></a>获取某位置有什么元素</h4><p>使用 document 的 elementFromPoint：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">document.elementFromPoint(x, y);  // 返回指定坐标下的元素</div></pre></td></tr></table></figure>
+<p>该方法传入视口坐标，返回DOM树中嵌套最里面和z-index最上面的元素。如果该点在视口坐标外，则返回null</p>
+<p>由于通常在事件处理函数中，事件对象已经包含了目标元素和坐标，因此该方法一般不常用。</p>
+<h4 id="滚动"><a href="#滚动" class="headerlink" title="滚动"></a>滚动</h4><p><strong>获取（设置）元素滚动条偏移量</strong></p>
+<p>使用 Element.scrollTop 或 scrollLeft：获取或设置某个元素的偏移量。当该元素没有出现滚动条时，该属性为 0，且设置无效</p>
+<p><strong>获取整个窗口滚动条偏移量</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 或 浏览器滚动条位置（标准方法）</div><div class="line">window.pageXOffset</div><div class="line">window.pageYOffset</div><div class="line">// 或 body、documentElement 元素</div><div class="line">document.body.scrollTop</div><div class="line">document.body.scrollLeft</div></pre></td></tr></table></figure>
+<blockquote>
+<p>兼容性：IE8不支持pageYOffset，pageXOffset</p>
+</blockquote>
+<p><strong>浏览器窗口滚动方法</strong></p>
+<p><code>window.scrollTo(x, y)</code>（scroll 等价），传入 x，y，代表该坐标点出现在视口的左上角</p>
+<p>滚动到页面底部：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var dh = document.documentElement.offsetHeight;</div><div class="line">var wh = window.innerHeight;</div><div class="line">window.scrollTo(0, dh - wh);</div></pre></td></tr></table></figure>
+<p><code>window.scrollBy(x, y)</code> 使用相对参数，相对当前左上角坐标的偏移</p>
+<p>页面自动滚动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">setInterval(function()&#123; scrollBy(0, 20); &#125;, 200)</div></pre></td></tr></table></figure>
+<p>滚动到某个元素：</p>
+<p><code>Element.scrollIntoView()</code> 滚动到该元素可见，默认为上缘可见，传入 false 则是下缘可见</p>
+<h3 id="获取文本选中文本"><a href="#获取文本选中文本" class="headerlink" title="获取文本选中文本"></a>获取文本选中文本</h3><p><code>window.getSelection().toString()</code></p>
+<blockquote>
+<p>兼容性：</p>
+<ol>
+<li>IE 下面使用：<code>document.selection.createRange().text</code></li>
+<li>getSelection 无法返回 input、textarea 内选中的文本，需要使用 <code>selectionStart</code> input.value.substring(input.selectionStart, input.selectionEnd)，该方法IE8不支持</li>
+</ol>
+</blockquote>
+<h3 id="编辑"><a href="#编辑" class="headerlink" title="编辑"></a>编辑</h3><p>标签上配置 contenteditable</p>
+<p>document.designMode = “on”</p>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><h3 id="设置内联样式"><a href="#设置内联样式" class="headerlink" title="设置内联样式"></a>设置内联样式</h3><p><code>Element.style</code> 它是一个 CSSStyleDeclaration 对象，它只返回显示设置在这个元素上的值，因此用作查询样式时用处不大</p>
+<blockquote>
+<p>名字约定</p>
+<ul>
+<li>连字符大写，如：borderLeftWidth</li>
+<li>如果保留字加css前缀，如：cssFloat</li>
+</ul>
+</blockquote>
+<p>设置属性时，必须要带上单位，直接赋 Number 是错误的</p>
+<p>一种简单的设置内联样式的方式是直接设置style属性的字符串文本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">e.setAttribute(&apos;style&apos;, s);</div><div class="line">e.style.cssText = s;</div></pre></td></tr></table></figure>
+<h3 id="查询计算出的样式"><a href="#查询计算出的样式" class="headerlink" title="查询计算出的样式"></a>查询计算出的样式</h3><p>window.getComputedStyle(element, null);</p>
+<ul>
+<li>该方法返回只读的 CSSStyleDeclaration</li>
+<li>样式都是绝对值，没有相对单位（em、%）或颜色（‘red’，都是rgb(a)）</li>
+<li>没有复合属性，因此没有 margin 只有 marginLeft</li>
+<li>cssText 属性未定义</li>
+</ul>
+<blockquote>
+<p>兼容性：IE8不支持，因此它使用 element.currentStyle，与之不同的是，该方法未将相对值转化为绝对值（也就是设置什么就是什么）</p>
+</blockquote>
+<h3 id="操作-CSS-类"><a href="#操作-CSS-类" class="headerlink" title="操作 CSS 类"></a>操作 CSS 类</h3><p><code>Element.className</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">e.className = &apos;panel panel-default&apos;;</div></pre></td></tr></table></figure>
+<p>该属性是个字符串，因此多个类名不好操作，HTML5定义了：<code>Element.classList</code>，是个 DOMTokenList 对象，是实时的，定义了 add、remove、toggle、contains 等多个方法</p>
+<blockquote>
+<p>兼容性：IE9及以下都不支持该属性</p>
+</blockquote>
+<h3 id="操作样式表"><a href="#操作样式表" class="headerlink" title="操作样式表"></a>操作样式表</h3><p>使用 <code>document.styleSheets</code> 获取一个 CSSStyleSheet 对象（简称：Sheet对象）的只读数组，包括 style 和 link 设置的样式表</p>
+<p><strong>启用禁用样式表</strong></p>
+<p>设置某个 Sheet 对象的 <code>disabled</code> 属性为 true 或 false，启用或禁用该样式表</p>
+<p><strong>设置规则</strong></p>
+<p>Sheet对象的 <code>cssRules</code> 属性，它是一个 CSSRule 数组，包含该样式表的所有规则，Rule 有一个 cssText 属性，可获取定义时的CSS文本</p>
+<blockquote>
+<p>兼容性：IE8 不支持 cssRules，使用 rules 对象，与之等价，其他方法也有细微差异</p>
+</blockquote>
+<p>Sheet 对象通过 insertRule、deleteRule 设置规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">document.styleSheet[0].insertRule(&quot;h1 &#123; font-size: 25px; &#125;&quot;, 0)</div></pre></td></tr></table></figure>
+<p><strong>创建新样式表</strong></p>
+<p>创建 style 元素，设置其 innerHTML</p>
+<blockquote>
+<p>兼容性：IE8及以前版本中可使用 document.createStyleSheet 创建</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/blog/tags/Basic/" rel="tag">#Basic</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2014/10/07/js-base-object/" rel="next" title="JavaScript 基础（二） 对象、数组">
+                <i class="fa fa-chevron-left"></i> JavaScript 基础（二） 对象、数组
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2014/10/16/js-base-event/" rel="prev" title="JavaScript 基础（四）事件、HTTP">
+                JavaScript 基础（四）事件、HTTP <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="gochant" />
+          <p class="site-author-name" itemprop="name">gochant</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入JavaScript的方法"><span class="nav-number">1.1.</span> <span class="nav-text">引入JavaScript的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内联"><span class="nav-number">1.1.1.</span> <span class="nav-text">内联</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外部脚本src"><span class="nav-number">1.1.2.</span> <span class="nav-text">外部脚本src</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#url方式"><span class="nav-number">1.1.3.</span> <span class="nav-text">url方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS程序的执行"><span class="nav-number">1.2.</span> <span class="nav-text">JS程序的执行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程模型"><span class="nav-number">1.2.1.</span> <span class="nav-text">线程模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时间线"><span class="nav-number">1.2.2.</span> <span class="nav-text">时间线</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#兼容性和可用性"><span class="nav-number">1.3.</span> <span class="nav-text">兼容性和可用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可访问性"><span class="nav-number">1.4.</span> <span class="nav-text">可访问性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全性"><span class="nav-number">1.5.</span> <span class="nav-text">安全性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一些限制"><span class="nav-number">1.5.1.</span> <span class="nav-text">一些限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同源策略"><span class="nav-number">1.5.2.</span> <span class="nav-text">同源策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#脚本化插件"><span class="nav-number">1.5.3.</span> <span class="nav-text">脚本化插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#跨站脚本"><span class="nav-number">1.5.4.</span> <span class="nav-text">跨站脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拒绝服务攻击"><span class="nav-number">1.5.5.</span> <span class="nav-text">拒绝服务攻击</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Window-对象"><span class="nav-number">2.</span> <span class="nav-text">Window 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计时器"><span class="nav-number">2.1.</span> <span class="nav-text">计时器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导航-location"><span class="nav-number">2.2.</span> <span class="nav-text">导航 location</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览历史"><span class="nav-number">2.3.</span> <span class="nav-text">浏览历史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器信息"><span class="nav-number">2.4.</span> <span class="nav-text">浏览器信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#屏幕信息"><span class="nav-number">2.5.</span> <span class="nav-text">屏幕信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对话框"><span class="nav-number">2.6.</span> <span class="nav-text">对话框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误处理"><span class="nav-number">2.7.</span> <span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文档属性"><span class="nav-number">2.8.</span> <span class="nav-text">文档属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多窗口和窗体"><span class="nav-number">2.9.</span> <span class="nav-text">多窗口和窗体</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#打开窗口"><span class="nav-number">2.9.1.</span> <span class="nav-text">打开窗口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭窗口"><span class="nav-number">2.9.2.</span> <span class="nav-text">关闭窗口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#窗体互操作"><span class="nav-number">2.9.3.</span> <span class="nav-text">窗体互操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#交互窗口JS"><span class="nav-number">2.9.4.</span> <span class="nav-text">交互窗口JS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM"><span class="nav-number">3.</span> <span class="nav-text">DOM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取DOM元素"><span class="nav-number">3.1.</span> <span class="nav-text">获取DOM元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM结构和遍历"><span class="nav-number">3.2.</span> <span class="nav-text">DOM结构和遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-的属性"><span class="nav-number">3.2.1.</span> <span class="nav-text">Node 的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于Node的遍历"><span class="nav-number">3.2.2.</span> <span class="nav-text">基于Node的遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于元素的遍历"><span class="nav-number">3.2.3.</span> <span class="nav-text">基于元素的遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元素属性"><span class="nav-number">3.3.</span> <span class="nav-text">元素属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内容文本"><span class="nav-number">3.4.</span> <span class="nav-text">内容文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM操作"><span class="nav-number">3.5.</span> <span class="nav-text">DOM操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建"><span class="nav-number">3.5.1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入"><span class="nav-number">3.5.2.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#替换"><span class="nav-number">3.5.3.</span> <span class="nav-text">替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除"><span class="nav-number">3.5.4.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DocumentFragment"><span class="nav-number">3.5.5.</span> <span class="nav-text">DocumentFragment</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位置、滚动"><span class="nav-number">3.6.</span> <span class="nav-text">位置、滚动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查询窗口视口尺寸"><span class="nav-number">3.6.1.</span> <span class="nav-text">查询窗口视口尺寸</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取元素位置和尺寸"><span class="nav-number">3.6.2.</span> <span class="nav-text">获取元素位置和尺寸</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取某位置有什么元素"><span class="nav-number">3.6.3.</span> <span class="nav-text">获取某位置有什么元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#滚动"><span class="nav-number">3.6.4.</span> <span class="nav-text">滚动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取文本选中文本"><span class="nav-number">3.7.</span> <span class="nav-text">获取文本选中文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑"><span class="nav-number">3.8.</span> <span class="nav-text">编辑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS"><span class="nav-number">4.</span> <span class="nav-text">CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置内联样式"><span class="nav-number">4.1.</span> <span class="nav-text">设置内联样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询计算出的样式"><span class="nav-number">4.2.</span> <span class="nav-text">查询计算出的样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-CSS-类"><span class="nav-number">4.3.</span> <span class="nav-text">操作 CSS 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作样式表"><span class="nav-number">4.4.</span> <span class="nav-text">操作样式表</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gochant</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

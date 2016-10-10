@@ -1,0 +1,642 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Veronica," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="几年前（2012年左右）写了一个库：veronica，主要为了组织前后端分离开发模式下的前端应用程序，解决当时主流的 Backbone 这个 MVC 库没有解决的大规模应用程序开发的问题，也经历了多个项目和 n00+ 业务组件的大型前端应用程序的考验， 后来很长一段时间都没有做大的更改，主要是各项目也日渐成熟，也不适合做大的改动。
+这段时间前端发展也比较快。涌现出了很多优秀的框架，包括关注度较高的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Veronica2 设计思想">
+<meta property="og:url" content="http://yoursite.com/2016/09/28/veronica2-design/index.html">
+<meta property="og:site_name" content="G01">
+<meta property="og:description" content="几年前（2012年左右）写了一个库：veronica，主要为了组织前后端分离开发模式下的前端应用程序，解决当时主流的 Backbone 这个 MVC 库没有解决的大规模应用程序开发的问题，也经历了多个项目和 n00+ 业务组件的大型前端应用程序的考验， 后来很长一段时间都没有做大的更改，主要是各项目也日渐成熟，也不适合做大的改动。
+这段时间前端发展也比较快。涌现出了很多优秀的框架，包括关注度较高的">
+<meta property="og:updated_time" content="2016-10-10T15:01:31.276Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Veronica2 设计思想">
+<meta name="twitter:description" content="几年前（2012年左右）写了一个库：veronica，主要为了组织前后端分离开发模式下的前端应用程序，解决当时主流的 Backbone 这个 MVC 库没有解决的大规模应用程序开发的问题，也经历了多个项目和 n00+ 业务组件的大型前端应用程序的考验， 后来很长一段时间都没有做大的更改，主要是各项目也日渐成熟，也不适合做大的改动。
+这段时间前端发展也比较快。涌现出了很多优秀的框架，包括关注度较高的">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/28/veronica2-design/"/>
+
+  <title> Veronica2 设计思想 | G01 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">G01</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Living Life Over</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Veronica2 设计思想
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-28T10:39:01+08:00" content="2016-09-28">
+              2016-09-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/blog/categories/Architecture/" itemprop="url" rel="index">
+                    <span itemprop="name">Architecture</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>几年前（2012年左右）写了一个库：veronica，主要为了组织前后端分离开发模式下的前端应用程序，解决当时主流的 Backbone 这个 MVC 库没有解决的大规模应用程序开发的问题，也经历了多个项目和 n00+ 业务组件的大型前端应用程序的考验， 后来很长一段时间都没有做大的更改，主要是各项目也日渐成熟，也不适合做大的改动。</p>
+<p>这段时间前端发展也比较快。涌现出了很多优秀的框架，包括关注度较高的 react、angular、vuejs 等框架体系及其生态。JavaScript 语言方面也有了长足的发展，从 es5 到了 es6、7，从 coffeescript 到 babel、typescript。当我开始认真考虑接下来的项目架构时，我想了下这个库有没有继续维护下去的必要（当然团队内部广泛使用的1.x版本还是可以继续修修补补，但没法大改），最后出于一些我认为必要的原因，还是准备投入业余精力去完成一个新的版本，以修正一些我认为确实需要改进的一些东西，同时也为上一个世代（= =）的这个框架做一个总结。</p>
+<a id="more"></a>
+<p>没有作用的轮子是多余的，因此 veronica 在开发选型的时候在某些方面是可以作为一个可选项存在的，首先要明确以下几点：</p>
+<ol>
+<li>它是一个粘合剂，本身只管应用程序的组织、页面功能模块的组合等有限的内容，其他工作交给其他库去做，因此它不是类似于 react、angular 之类的东西（只能说可能某些功能重叠），它需要配合一些视图引擎库（knockout、react等）、UI Widget 库（jquery ui、kendo ui、bootstrap等）、DOM/Polyfill 库等一起使用；</li>
+<li>veronica 中组件的含义很狭义，仅仅表示业务相关组件，它实际就是页面上按业务划分的一个小模块，因此也不是类似于现在许多组件化框架中的小到 radio button，大到 application，都是组件。而在 veronica 中 application 是单独的东西，而界面通用控件，例如 radio、menu、combobox 等则称之为：widget，一般由第三方库提供，例如 jquery 插件</li>
+</ol>
+<p>由于不会引入新的开发模式，而且也不需要对过去写的一些控件进行封装，因此如果你的团队人员不想学习复杂的前端体系栈，也不想搞预编译、开发时构建那一套，而且有许多 es5/jQuery 时代的积累和包袱，那么可以考虑用它</p>
+<p>另外如果你追求一个灵活的架构，需要高度可扩展，并且同时维护许多个定制版，也可以考虑用它，veronica 从设计阶段就是为定制考虑的，并且有一些实践经验</p>
+<h2 id="背景：两个重要的东西"><a href="#背景：两个重要的东西" class="headerlink" title="背景：两个重要的东西"></a>背景：两个重要的东西</h2><p>组件体系和数据驱动，我觉得这两个基础设施是界面编程中开发大规模应用和提高编程效率的基石</p>
+<h3 id="组件化体系"><a href="#组件化体系" class="headerlink" title="组件化体系"></a>组件化体系</h3><p>早期的有 angular, web components 体系下的 polymer，后来又有 react, vuejs……，现在的发展就十分类似于我一开始用的 ASP.NET 服务器端控件，只不过这次是前端自定义标签，其实在从客户端 Winform/WPF 及 ASP.NET 后端开发转向前端开发时候，我当时也比较诟病于纯JS界面编程的原始，可以说是处于一种蛮荒之地的状态，开发效率和可维护性都比较差，一开始我觉得比较好的设计理念是  jQuery UI 的 WidgetFactory，有良好的封装、状态管理和复用机制，但缺乏一种无侵入式的机制实现。Ext/Dojo/KendUI 的 Widget 要更复杂一些，并且可以通过 HTML Markups 初始化，但基本不支持各种嵌套和多层级关系。现代框架的组件体系可以说是越来越符合UI编程的开发习惯，主要是有以下特点：</p>
+<ul>
+<li>使用标记语言开发。不管是JSX也好，还是其他方式的自定义标签也好，都是扩展了原有的HTML体系，如果再加上可视化界面（当然并没什么用），就跟其他平台的开发体验差不多了</li>
+<li>灵活组合与嵌套。UI界面本质上是一棵树，对应到Web上，最后就是DOM Tree，支持组合和嵌套的组件体系对开发人员更加直观并且避免了复杂的传入参数</li>
+<li>高内聚，样式模板和逻辑打包到一起，黑盒得更加彻底了。相比于以前的 HTML Markups，现有的自定义标签模式一般优先支持这种声明式初始化，同时少了与已有 HTML 语法混合，编程体验更佳</li>
+</ul>
+<h3 id="数据驱动"><a href="#数据驱动" class="headerlink" title="数据驱动"></a>数据驱动</h3><p>我维护过一些老项目，最不能忍受的就是一言不合就开始操作DOM，维护起来就是个噩梦，当年jQuery的流行又给操作DOM降低了很大的门槛，因此Web项目的维护首要解决的就是避免DOM操作搞乱项目，这里需要满足两个目标：一是提供一种机制尽量避免DOM操作，二是将操作DOM代码限制在有限的领域范围内。</p>
+<p>有两种主流的模式来满足以上目标：MVC和MVVM，当然也有一些其他变体，核心思想都是通过分层来实现数据驱动界面，同时提供一些钩子（或事件）来规范化DOM操作。从早期的 Backbone、Spine, Knockout，到后来的 angular, avalon, react（flux）…，单向绑定也好，双向绑定也好，均是为了解决数据驱动里面的两个核心问题：1. 数据怎么生成界面；2. 如何管理数据。</p>
+<p>数据生成界面一般是通过模板引擎来实现（jsx之类的也可以归结为广义的模板引擎），数据管理则各有各的模式，主要的都会提供统一的数据源模式，反馈机制，端到端通信等。统一的模式能够便于我们更好地管理界面的各种状态。而诸如RxJS这类响应式编程库则把数据驱动贯彻得更加彻底，同时又顺带解决了界面编程中的异步问题，但整个项目Rx化又会使得现有开发人员的思维成本上升</p>
+<p>下面说说新版本会有哪些变化：</p>
+<h2 id="重构的组件"><a href="#重构的组件" class="headerlink" title="重构的组件"></a>重构的组件</h2><p>这个版本基本上把原来的组件机制重写了，前面提到组件仅是业务功能组件，因此也没有设计多层嵌套的机制（仅单层），同时，事件通信时也不会随着组件树进行冒泡或向下传播，另外一些显著的变化有：</p>
+<h3 id="名称变更：widget-gt-component"><a href="#名称变更：widget-gt-component" class="headerlink" title="名称变更：widget -&gt; component"></a>名称变更：widget -&gt; component</h3><p>从一开始我就一直纠结于组件究竟是使用 widget 命名，还是 component 命名，后来还是觉得 component 比较符合主流意志，widget 现在还是主要指代一些界面控件类型的东西，例如复选框、数据表等原子界面元素</p>
+<h3 id="不用-Backbone-View"><a href="#不用-Backbone-View" class="headerlink" title="不用 Backbone View"></a>不用 Backbone View</h3><p>原有的组件基于 Backbone.View，但是有些机制上的欠缺，因此重写了一下，不基于 Backbone.View 了，所以现在不兼容 Backbone 相关的库，同时也精简了一些机制，比如应用程序生命周期的相关钩子</p>
+<h3 id="没有沙箱"><a href="#没有沙箱" class="headerlink" title="没有沙箱"></a>没有沙箱</h3><p>因为这个框架的模式一开始遵循了 Nicholas Zakas 的 <a href="http://www.slideshare.net/nzakas/scalable-javascript-application-architecture" target="_blank" rel="external">Scalable JavaScript Application Architecture</a>，并且一开始想抽象出独立于 Backbone.View 的组件对象，因此有了 Sandbox 这个对象，后来在框架内部发展出了其他各种表达外观模式的东西，所以这个也没有存在的必要了，反而增加了访问的层次结构</p>
+<h3 id="没有-Window"><a href="#没有-Window" class="headerlink" title="没有 Window"></a>没有 Window</h3><p>window 这个东西这里主要为了解决宿主元素外的 DOM 不能被正确销毁的问题，这个概念不够抽象，现在被更为通用的 outerEl 取代了，而且也不内置对话框的概念和逻辑，用户可以通过 Provider 自己去添加它</p>
+<h3 id="子组件初始化"><a href="#子组件初始化" class="headerlink" title="子组件初始化"></a>子组件初始化</h3><p>支持在组件内通过HTML标签的声明方式初始化组件，并且，原来有两种启动子组件模式：子视图和子组件，现在统一为一种：以子组件的方式初始化，但是又保持子组件视图的引用，更加简单也便于管理</p>
+<h3 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h3><p>组件间通信原来所采用的是一个公共的消息总线所提供的pub/sub 模式，项目大了就有个弊端，因为要确保名称的唯一性，所以名称会很多，消息很混乱，并且很不利于管理，这让开发人员很容易碰到程序员两大难题之一的取名问题。因此在统一了子组件初始化机制后，大部分情况我们父子组件间是通过事件传递信息，组件树内则手动转发事件（通常没必要），而跨组件树通信和全局的广播，则还是通过消息总线，这有效降低了全局消息的使用频率</p>
+<h2 id="灵活的扩展机制"><a href="#灵活的扩展机制" class="headerlink" title="灵活的扩展机制"></a>灵活的扩展机制</h2><h3 id="用部件扩展基础设施"><a href="#用部件扩展基础设施" class="headerlink" title="用部件扩展基础设施"></a>用部件扩展基础设施</h3><p>部件（Part）是作为一种扩展而存在，有<strong>应用程序部件</strong>和<strong>组件部件</strong>，整个 veronica 就是以它为单元构造起来的，如果你有新的基础设施需要引入，那么均作为部件提供，另外还有一类特殊的部件，称为提供者部件（Provider），它提供一组同类型部件，你可以根据注册的名称获取特定的部件，例如应用程序内置有模板引擎提供者部件，然后你可以注册（提供统一的接口） underscore、lodash、handbars 等模板引擎，使用者通过名称或者默认来获取指定的模板引擎提供者。</p>
+<h3 id="定制组件"><a href="#定制组件" class="headerlink" title="定制组件"></a>定制组件</h3><p>定制一个业务组件最基本的要求是不能更改原有的代码，又要最大限度的复用原有代码和替换任何逻辑。以前提供了 aspect 和 mixins 以及 plugin 机制，实践证明，都不太好用，统统不支持了，现在提供了最原始的类式继承，同时有个方法可以获取原始的字面量初始化对象，因此可以随便定制者怎么搞了（得益于JS的灵活性），是直接修改字面量也好，还是封装成高阶组件也好，随意</p>
+<h2 id="少即是多"><a href="#少即是多" class="headerlink" title="少即是多"></a>少即是多</h2><p>更新和删了许多API，因此和 1.x 版本是不兼容的，而且移除了一些杂七杂八的功能，部分功能移到 veronica-ui 这个库去维护。</p>
+<h3 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h3><p>将多个参数组合成一个表达字符串，通过正则提取里面的参数。这种方法在这次新版本中被广泛采用，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 获取部件：component</span></div><div class="line"><span class="keyword">var</span> component = app.get(<span class="string">'part:component'</span>)</div><div class="line"></div><div class="line"><span class="comment">// 启动一个subComponent类型的组件，取名为 hi，挂载到 .root 这个 DOM 节点上</span></div><div class="line">component.start(&#123;</div><div class="line">    name: <span class="string">'hi(subComponent)=&gt;.root'</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="超级方法"><a href="#超级方法" class="headerlink" title="超级方法"></a>超级方法</h3><p>在我过去面向对象的编程经验中，大多数时候遵循的最佳实践是一个方法只干一件事情，并且方法名应尽量详细的表达意图，我在很多场合遵循这个规则，它有很多好处，更易维护也更易测试，但是也更死板。在一些更灵活和动态不确定的场合，以及为了维持简洁API的风格，则需要根据参数来决定方法的行为，因此打破了方法原子性或简单性的一些原则，例如 jQuery 的 $，可谓之为超级方法</p>
+<p>这种封装超级方法的模式有好用的地方，但是如果设计得不好就会成为反模式，而且这样做也牺牲了可以进行的诸如类型检查等校验机制，因此我也谨小慎微的考虑，尽量不给开发人员增加额外的学习成本和更多的出错机会。新增加的超级方法数量比较少，但比较强大，主要包括：get、listen、set 等。举个例子，组件新提供的 <code>get</code> 方法，可以通过表达式获取这个组件的任意子级、成员或组成部件，举例如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> child = <span class="keyword">this</span>.get(<span class="string">'cmp:childForm'</span>)  <span class="comment">// 获取子组件</span></div><div class="line"><span class="keyword">var</span> name = <span class="keyword">this</span>.get(<span class="string">'vm:name'</span>) <span class="comment">// 获取视图模型数据</span></div><div class="line"><span class="keyword">this</span>.listen(<span class="string">'dom:click .btn'</span>, ()=&gt; &#123;&#125;)  <span class="comment">// 监听dom事件</span></div><div class="line"><span class="keyword">this</span>.listen(<span class="string">'bus:globalChange'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;)  <span class="comment">// 监听消息总线</span></div></pre></td></tr></table></figure>
+<p>以上写法结合了特定表达式语法和提供者模式，能以同样的方法获取不同的对象，同时也能在添加了新的部件后，不用再写额外的 get 方法。</p>
+<h2 id="数据访问模式"><a href="#数据访问模式" class="headerlink" title="数据访问模式"></a>数据访问模式</h2><p>所有的数据访问，例如全局共享数据，后台接口数据等都通过一种叫做 Store 的对象进行操作，它提供了一致化的接口，现在有两种类型的 store：multiple 和 single，分别对应列表数据源和单对象数据源，它们都可以通过 backendAPI 对象来进行一致性的后台交互，另外也可提供缓存、本地存储等机制。这一系列对象都在 veronica-ui 这个库里，你可以把它理解为类似于 flux 的东西，都有一些共通的思想，例如提倡使用单向数据流保持简单性，外部不直接更改数据等，但使用方式上有比较大的差异性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在组件中配置 store</span></div><div class="line">stores: &#123;</div><div class="line">    <span class="string">'main'</span>: &#123;</div><div class="line">        <span class="keyword">from</span>: <span class="string">'@system.person'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 批量操作 store</span></div><div class="line"><span class="keyword">this</span>.store(<span class="string">'main'</span>, <span class="string">'second'</span>, <span class="string">'third'</span>).exec(<span class="string">'readApi'</span>)</div></pre></td></tr></table></figure>
+<h2 id="后续发展"><a href="#后续发展" class="headerlink" title="后续发展"></a>后续发展</h2><h3 id="使用-TypeScript"><a href="#使用-TypeScript" class="headerlink" title="使用 TypeScript"></a>使用 TypeScript</h3><p>当我使用 es3/5 来完成这个版本，并建立完备的测试用例以后，我打算使用 TypeScript 来重构它，因为它提供很多有用的语言特性，尤其是接口和类型校验正式我所需要的（这也是为什么我不选择使用babel/es2015的原因）。另外也会将以前的 AMD Module 的组织方式改为使用原生的 es6 module</p>
+<h3 id="添加-SystemJS-Loader"><a href="#添加-SystemJS-Loader" class="headerlink" title="添加 SystemJS Loader"></a>添加 SystemJS Loader</h3><p>原来按需加载默认使用 requirejs loader，后面会添加 systemjs loader</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Veronica2 的大多数更新都是为了更简洁、更灵活以提供更好的开发体验，虽然现在看来也不够先进，但经过项目的实践，它也够实用，比较简单。这次引入一些新的东西（其实也不能叫新，都是经过了一段时间的广泛实践）都是仔细思考的结果，而且在第三方库大小控制、性能优化等方面还有很大的上升空间，这些东西如果后续有需求和精力再说吧</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/Veronica/" rel="tag">#Veronica</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2016/08/11/remember-once-odp-net-troubleshooting/" rel="next" title="记一次 ODP.NET 问题排查">
+                <i class="fa fa-chevron-left"></i> 记一次 ODP.NET 问题排查
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="gochant" />
+          <p class="site-author-name" itemprop="name">gochant</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景：两个重要的东西"><span class="nav-number">1.</span> <span class="nav-text">背景：两个重要的东西</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#组件化体系"><span class="nav-number">1.1.</span> <span class="nav-text">组件化体系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据驱动"><span class="nav-number">1.2.</span> <span class="nav-text">数据驱动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重构的组件"><span class="nav-number">2.</span> <span class="nav-text">重构的组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名称变更：widget-gt-component"><span class="nav-number">2.1.</span> <span class="nav-text">名称变更：widget -> component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不用-Backbone-View"><span class="nav-number">2.2.</span> <span class="nav-text">不用 Backbone View</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#没有沙箱"><span class="nav-number">2.3.</span> <span class="nav-text">没有沙箱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#没有-Window"><span class="nav-number">2.4.</span> <span class="nav-text">没有 Window</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子组件初始化"><span class="nav-number">2.5.</span> <span class="nav-text">子组件初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件通信"><span class="nav-number">2.6.</span> <span class="nav-text">组件通信</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#灵活的扩展机制"><span class="nav-number">3.</span> <span class="nav-text">灵活的扩展机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用部件扩展基础设施"><span class="nav-number">3.1.</span> <span class="nav-text">用部件扩展基础设施</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定制组件"><span class="nav-number">3.2.</span> <span class="nav-text">定制组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#少即是多"><span class="nav-number">4.</span> <span class="nav-text">少即是多</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表达式"><span class="nav-number">4.1.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超级方法"><span class="nav-number">4.2.</span> <span class="nav-text">超级方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据访问模式"><span class="nav-number">5.</span> <span class="nav-text">数据访问模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后续发展"><span class="nav-number">6.</span> <span class="nav-text">后续发展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-TypeScript"><span class="nav-number">6.1.</span> <span class="nav-text">使用 TypeScript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加-SystemJS-Loader"><span class="nav-number">6.2.</span> <span class="nav-text">添加 SystemJS Loader</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gochant</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
